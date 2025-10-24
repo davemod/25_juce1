@@ -58,7 +58,7 @@ private:
     // 1. Rückgabetyp (juce::AudioProcessorEditor*)
     // 2. Funktionsname (createCrashingEditor)
     // 3. Innerhalb der Klammern Argumente
-    juce::AudioProcessorEditor* createCrashingEditor ();
+    juce::AudioProcessorEditor* createCrashsAndLeaks ();
     
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (HelloWorldAudioProcessor)

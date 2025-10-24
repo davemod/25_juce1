@@ -171,12 +171,7 @@ bool HelloWorldAudioProcessor::hasEditor() const
 
 juce::AudioProcessorEditor* HelloWorldAudioProcessor::createEditor()
 {
-    // 1. Memory Leak
-    // 2. Einen Memory Leak selber erstellen
-    // 3. Einen Wege finden um irgendwas zu crashen
-    
-    HelloWorldAudioProcessorEditor editor (*this);
-    return &editor;
+    return new HelloWorldAudioProcessorEditor (*this);
 }
 
 //==============================================================================
@@ -204,17 +199,23 @@ juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 // 1. Rückgabetype (juce::AudioProcessorEditor*)
 // 2. Wo ist die Funktion deklariert? (in der Klasse HelloWorldAudioProcessor)
 // 3. Jetzt erst der Funktionsname
-juce::AudioProcessorEditor* HelloWorldAudioProcessor::createCrashingEditor()
+juce::AudioProcessorEditor* HelloWorldAudioProcessor::createCrashsAndLeaks()
 {
     // Instanz von HelloWorldAudioProcessorEditor auf dem STACK
     HelloWorldAudioProcessorEditor instance1 (*this);
 
     // Erstellen einer Variable die ein pointer ist, der pointer könnte auf einen Instanz zeigen
-    HelloWorldAudioProcessorEditor * editorPtr; // tut er aber noch nicht
+    HelloWorldAudioProcessorEditor * editorPtr = nullptr; // tut er aber noch nicht
     
     // erstellen einer neuen instanz auf dem Heap, editorPtr zeigt jetzt auf diese neue instanz
     editorPtr = new HelloWorldAudioProcessorEditor (*this);
 
+    // erstellen NOCH EINE neue instanz und lassen den selben pointer auf die neue instanz zeigen. ziemlich doof.
+    editorPtr = new HelloWorldAudioProcessorEditor (*this);
+    
+    // nur zugriff auf erste Instanz (instance1 liegt auf dem stack) und dritte Instanz (liegt auf dem heap)
+    // die zweite instanz, liegt irgendwo, aber es zeigt nichts mehr drauf
+    
     // kopieren eines pointers, zeigt auf die selbe instanz
     HelloWorldAudioProcessorEditor * editorPtr2 = editorPtr;
     
@@ -223,4 +224,7 @@ juce::AudioProcessorEditor* HelloWorldAudioProcessor::createCrashingEditor()
     
     // return eines pointers zu einem Objekt DAS GLEICH GELÖSCHT WIRD OJE
     return editorPtr3;
-}
+} // SCOPE ENDE
+
+
+
