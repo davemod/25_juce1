@@ -23,7 +23,6 @@ HelloWorldAudioProcessor::HelloWorldAudioProcessor()
 #endif
 {
     DBG ("PluginProcessor ()");
-    createEditor ()->setSize (100,2100);
 }
 
 HelloWorldAudioProcessor::~HelloWorldAudioProcessor()
