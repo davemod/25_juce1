@@ -11,12 +11,28 @@
 
 //==============================================================================
 HelloWorldAudioProcessorEditor::HelloWorldAudioProcessorEditor (HelloWorldAudioProcessor& p)
-    : AudioProcessorEditor (&p), audioProcessor (p)
+:
+AudioProcessorEditor (&p),
+audioProcessor (p),
+gainSlider()
 {
+    setResizable(true, true);
+
+    
+    // gainSlider.setVisible (true);
+    // addChildComponent (gainSlider);
+    addAndMakeVisible (gainSlider);
+    
+    gainSlider.setSliderStyle (Slider::SliderStyle::RotaryHorizontalVerticalDrag);
+    gainSlider.setTextBoxStyle(Slider::TextEntryBoxPosition::NoTextBox, false, 100, 20);
+
+    DBG ("PluginEditor ()");
+    
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
+    
+    // Make also sure to call this after you've added all your components using addAndMakeVisible.
     setSize (400, 300);
-    DBG ("PluginEditor ()");
 }
 
 HelloWorldAudioProcessorEditor::~HelloWorldAudioProcessorEditor()
@@ -40,6 +56,10 @@ void HelloWorldAudioProcessorEditor::resized()
     // This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..
     
+//    Rectangle<int> bounds = getLocalBounds ();
+//    auto bounds = getLocalBounds ();
+//    auto centre = bounds.getCentre();
+//    DBG ("Centre: " << centre.getX () << ", " << centre.getY ());
     
-    
+    gainSlider.centreWithSize (200, 200);
 }
