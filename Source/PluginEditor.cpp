@@ -17,27 +17,33 @@ audioProcessor (p),
 gainSlider()
 {
     setResizable(true, true);
-
     
-    // gainSlider.setVisible (true);
-    // addChildComponent (gainSlider);
     addAndMakeVisible (gainSlider);
     addAndMakeVisible (textButton);
     addAndMakeVisible (comboBox);
-    addAndMakeVisible (toggleButton);
+    addAndMakeVisible (bypassToggleButton);
     
-    gainSlider.setSliderStyle (Slider::SliderStyle::RotaryHorizontalVerticalDrag);
-    gainSlider.setTextBoxStyle(Slider::TextEntryBoxPosition::NoTextBox, false, 100, 20);
+    textButton.setColour (TextButton::buttonColourId, Colours::purple);
+    textButton.setColour (TextButton::textColourOffId, Colours::black);
+    textButton.setColour (TextButton::textColourOnId, Colours::white);
+    textButton.setClickingTogglesState(true);
 
-    textButton.setButtonText("TextButton");
+    // Nothing selected - Text
+    comboBox.setTextWhenNothingSelected("Select Preset");
+
+    // Add items
+    comboBox.addItem ("Cool Gain Slider", 1);
+    comboBox.addItem ("Groovy Bypass Toggle", 2);
+    comboBox.addItem ("Funky Clicky Textbutton", 3);
+    comboBox.addItem ("Awesome ComboBox", 4);
+
+    // Optionally set a default selection:
+    comboBox.setSelectedId (0);
+
+    gainSlider.setSliderStyle (Slider::SliderStyle::RotaryHorizontalVerticalDrag);
+    gainSlider.setTextBoxStyle(Slider::TextEntryBoxPosition::NoTextBox, false, 100, 10);
     
-    DBG ("PluginEditor ()");
-    
-    // Make sure that before the constructor has finished, you've set the
-    // editor's size to whatever you need it to be.
-    
-    // Make also sure to call this after you've added all your components using addAndMakeVisible.
-    setSize (400, 300);
+    setSize (500, 400);
 }
 
 HelloWorldAudioProcessorEditor::~HelloWorldAudioProcessorEditor()
@@ -57,11 +63,6 @@ void HelloWorldAudioProcessorEditor::resized()
     // This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..
     
-//    Rectangle<int> bounds = getLocalBounds ();
-//    auto bounds = getLocalBounds ();
-//    auto centre = bounds.getCentre();
-//    DBG ("Centre: " << centre.getX () << ", " << centre.getY ());
-    
     FlexBox fb;
     FlexBox col1;
     FlexBox col2;
@@ -71,15 +72,15 @@ void HelloWorldAudioProcessorEditor::resized()
     col1.flexDirection = FlexBox::Direction::column;
     col1.flexWrap = FlexBox::Wrap::noWrap;
     col1.items.addArray({
-        FlexItem(toggleButton).withMinHeight(25),
-        FlexItem(textButton).withMinHeight(50),
-        FlexItem(comboBox).withMinHeight(25)
+        FlexItem(bypassToggleButton).withMinHeight(25),
     });
     
-    col2.justifyContent = FlexBox::JustifyContent::center;
+    col2.justifyContent = FlexBox::JustifyContent::spaceBetween;
     col2.alignContent = FlexBox::AlignContent::center;
     col2.flexDirection = FlexBox::Direction::column;
-    col2.items.add(FlexItem(gainSlider).withFlex(2.5));
+    col2.items.add(FlexItem(comboBox).withFlex(1).withHeight(25).withWidth(200));
+    col2.items.add(FlexItem(gainSlider).withFlex(2.5).withMinHeight(200));
+    col2.items.add(FlexItem(textButton).withFlex(1).withHeight(50).withWidth(200));
     
     fb.flexDirection = FlexBox::Direction::row;
     fb.flexWrap = FlexBox::Wrap::noWrap;
