@@ -168,8 +168,7 @@ bool HelloWorldAudioProcessor::hasEditor() const
     return true; // (change this to false if you choose to not supply an editor)
 }
 
-juce::AudioProcessorEditor* HelloWorldAudioProcessor::createEditor()
-{
+juce::AudioProcessorEditor* HelloWorldAudioProcessor::createEditor() {
     return new HelloWorldAudioProcessorEditor (*this);
 }
 
@@ -203,7 +202,7 @@ juce::AudioProcessorEditor* HelloWorldAudioProcessor::createCrashsAndLeaks()
     // Instanz von HelloWorldAudioProcessorEditor auf dem STACK
     HelloWorldAudioProcessorEditor instance1 (*this);
 
-    // Erstellen einer Variable die ein pointer ist, der pointer könnte auf einen Instanz zeigen
+    // Erstellen einer Variable, die ein pointer ist, der pointer könnte auf eine Instanz zeigen
     HelloWorldAudioProcessorEditor * editorPtr = nullptr; // tut er aber noch nicht
     
     // erstellen einer neuen instanz auf dem Heap, editorPtr zeigt jetzt auf diese neue instanz

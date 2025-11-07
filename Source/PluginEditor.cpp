@@ -19,20 +19,46 @@ gainSlider()
     setResizable(true, true);
 
     
-    // gainSlider.setVisible (true);
-    // addChildComponent (gainSlider);
-    addAndMakeVisible (gainSlider);
-    
-    gainSlider.setSliderStyle (Slider::SliderStyle::RotaryHorizontalVerticalDrag);
-    gainSlider.setTextBoxStyle(Slider::TextEntryBoxPosition::NoTextBox, false, 100, 20);
-
-    DBG ("PluginEditor ()");
-    
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
-    
-    // Make also sure to call this after you've added all your components using addAndMakeVisible.
-    setSize (400, 300);
+    setSize (500, 400);
+
+    //gainSlider.setVisible (true);
+    //addChildComponent (gainSlider);
+
+    addAndMakeVisible (gainSlider);
+    addAndMakeVisible (clickTextButton);
+    clickTextButton.setColour (TextButton::buttonColourId, Colours::purple);
+    clickTextButton.setColour (TextButton::textColourOffId, Colours::black);
+    clickTextButton.setColour (TextButton::textColourOnId, Colours::white);
+    clickTextButton.setClickingTogglesState(true);
+
+
+
+    addAndMakeVisible (selectComboBox);
+
+    // Nothing selected - Text
+    selectComboBox.setTextWhenNothingSelected( "Select Preset" );
+
+
+    // Add items
+    selectComboBox.addItem ("Cool Gain Slider", 1);
+    selectComboBox.addItem ("Groovy Bypass Toggle", 2);
+    selectComboBox.addItem ("Funky Clicky Textbutton", 3);
+    selectComboBox.addItem ("Awesome ComboBox", 4);
+
+    // Optionally set a default selection:
+    selectComboBox.setSelectedId (0);
+
+    addAndMakeVisible (bypassToggleButton);
+
+    //clickTextButton::TextButton ()
+
+    gainSlider.setSliderStyle(Slider::SliderStyle::RotaryVerticalDrag);
+    //gainSlider.hideTextBox(true);
+    gainSlider.setTextBoxStyle(Slider::TextEntryBoxPosition::NoTextBox, false, 100, 10);
+
+    DBG ("PluginEditor ()");
 }
 
 HelloWorldAudioProcessorEditor::~HelloWorldAudioProcessorEditor()
@@ -48,18 +74,36 @@ void HelloWorldAudioProcessorEditor::paint (juce::Graphics& g)
 
     g.setColour (juce::Colours::white);
     g.setFont (juce::FontOptions (15.0f));
-    g.drawFittedText ("Hello World!", getLocalBounds(), juce::Justification::centred, 1);
+    // g.drawFittedText ("Hello World!", getLocalBounds(), juce::Justification::centred, 1);
 }
 
 void HelloWorldAudioProcessorEditor::resized()
 {
     // This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..
-    
-//    Rectangle<int> bounds = getLocalBounds ();
-//    auto bounds = getLocalBounds ();
-//    auto centre = bounds.getCentre();
-//    DBG ("Centre: " << centre.getX () << ", " << centre.getY ());
-    
-    gainSlider.centreWithSize (200, 200);
+
+    auto bounds = getLocalBounds ();
+    auto centre = bounds.getCentre ();
+    DBG ("Centre: " << centre.getX () << ", " << centre.getY ());
+
+    int width = bounds.getWidth ();
+    int height = bounds.getHeight ();
+
+    int xPos = centre.getX ();
+    int yPos = centre.getY ();
+
+    int smallestSide = jmin (width, height);
+    DBG ("smallestSide: " << smallestSide);
+
+    int sliderSide = smallestSide / 3;
+    DBG ("sliderSide: " << sliderSide);
+
+    // Reactivate again once the other elements are figured out!
+    gainSlider.setBounds(xPos - (sliderSide / 2), yPos - (sliderSide / 2), sliderSide, sliderSide);
+    //gainSlider.setBounds(50, 50, 100, 100);
+
+    bypassToggleButton.setBounds(25, JUCE_LIVE_CONSTANT(25), 25, 25);
+
+    selectComboBox.setBounds(xPos - 150, 25, 300, 25);
+    clickTextButton.setBounds(xPos - (width / 8), yPos + (sliderSide / 2) + (sliderSide / 10), width / 4, height / 6);
 }
