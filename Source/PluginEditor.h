@@ -35,6 +35,9 @@ private:
     // Erstellt ebenso eine juce::ComboBox, einen juce::TextButton, einen juce::ToggleButton.
     // Fügt sie dem UI hinzu, findet ein halbwegs ansprechendes Layout :)
     // Individualisiere einige Eigentschaften, Farben etc der einzelnen Components (Tutorium, wenn ihr einen Termin findet)
+    ComboBox comboBox;
+    TextButton textButton;
+    ToggleButton toggleButton;
     
     // Advanced:
     // Erstellen eigener Components, bspw. eine Klasse, die einfach nur den gesamten Bereich rot färbt!
