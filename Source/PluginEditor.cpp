@@ -8,6 +8,7 @@
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
+#include "RedBox.h"
 
 //==============================================================================
 HelloWorldAudioProcessorEditor::HelloWorldAudioProcessorEditor (HelloWorldAudioProcessor& p)
@@ -58,6 +59,9 @@ gainSlider()
     //gainSlider.hideTextBox(true);
     gainSlider.setTextBoxStyle(Slider::TextEntryBoxPosition::NoTextBox, false, 100, 10);
 
+
+    addAndMakeVisible(myRedBox);
+
     DBG ("PluginEditor ()");
 }
 
@@ -102,7 +106,11 @@ void HelloWorldAudioProcessorEditor::resized()
     gainSlider.setBounds(xPos - (sliderSide / 2), yPos - (sliderSide / 2), sliderSide, sliderSide);
     //gainSlider.setBounds(50, 50, 100, 100);
 
-    bypassToggleButton.setBounds(25, JUCE_LIVE_CONSTANT(25), 25, 25);
+    myRedBox.setBounds(xPos - (sliderSide / 2), yPos - (sliderSide / 2), sliderSide, sliderSide);
+    //myRedBox.setBounds(50, 50, 200, 200);
+
+    //bypassToggleButton.setBounds(25, JUCE_LIVE_CONSTANT(25), 25, 25);
+    bypassToggleButton.setBounds(25, 25, 25, 25);
 
     selectComboBox.setBounds(xPos - 150, 25, 300, 25);
     clickTextButton.setBounds(xPos - (width / 8), yPos + (sliderSide / 2) + (sliderSide / 10), width / 4, height / 6);

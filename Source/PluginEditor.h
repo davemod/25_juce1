@@ -10,6 +10,7 @@
 
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
+#include "RedBox.h"
 
 //==============================================================================
 /**
@@ -34,6 +35,7 @@ private:
     ComboBox selectComboBox;
     TextButton clickTextButton { "Start" } ;
     ToggleButton bypassToggleButton;
+    RedBox myRedBox;
 
     // TODO:
     // Erstellt ebenso eine juce::ComboBox, einen juce::TextButton, einen juce::ToggleButton.
