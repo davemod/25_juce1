@@ -1,7 +1,7 @@
 Builds/
 JuceLibraryCode/
 .DS_Store
-CMakeLists.txt
+#CMakeLists.txt
 Source/cmake-build-debug
 Source/cmake-build-release
 Source/CMakeLists.txt
@@ -9,3 +9,4 @@ Source/CMakeLists.txt
 /cmake-build-debug/
 .idea
 Source/.idea
+juce_local.cmake
