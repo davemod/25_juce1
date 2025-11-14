@@ -22,6 +22,7 @@ gainSlider()
     addAndMakeVisible (textButton);
     addAndMakeVisible (comboBox);
     addAndMakeVisible (bypassToggleButton);
+    addAndMakeVisible (redBox);
     
     textButton.setColour (TextButton::buttonColourId, Colours::purple);
     textButton.setColour (TextButton::textColourOffId, Colours::black);
@@ -73,6 +74,7 @@ void HelloWorldAudioProcessorEditor::resized()
     col1.flexWrap = FlexBox::Wrap::noWrap;
     col1.items.addArray({
         FlexItem(bypassToggleButton).withMinHeight(25),
+        FlexItem(redBox).withMinHeight(25).withMinWidth(25),
     });
     
     col2.justifyContent = FlexBox::JustifyContent::spaceBetween;

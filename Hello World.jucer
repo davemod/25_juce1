@@ -10,6 +10,8 @@
             file="Source/PluginProcessor.h"/>
       <FILE id="dj9yKq" name="PluginEditor.cpp" compile="1" resource="0"
             file="Source/PluginEditor.cpp"/>
+      <FILE id="TgmAJt" name="RedBox.cpp" compile="1" resource="0" file="Source/RedBox.cpp"/>
+      <FILE id="XAC7nb" name="RedBox.h" compile="0" resource="0" file="Source/RedBox.h"/>
       <FILE id="KOGuxf" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
     </GROUP>
   </MAINGROUP>

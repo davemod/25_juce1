@@ -10,6 +10,7 @@
 
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
+#include "RedBox.h"
 
 //==============================================================================
 /**
@@ -39,6 +40,8 @@ private:
     ComboBox comboBox;
     TextButton textButton { "Start" };
     ToggleButton bypassToggleButton;
+    
+    RedBox redBox;
     
     // Individualisiere einige Eigenschaften, Farben etc der einzelnen Components (Tutorium, wenn ihr einen Termin findet)
 
