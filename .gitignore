@@ -7,3 +7,5 @@ Source/cmake-build-release
 Source/CMakeLists.txt
 /cmake-build-release/
 /cmake-build-debug/
+.idea
+Source/.idea
