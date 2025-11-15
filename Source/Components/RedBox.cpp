@@ -2,7 +2,7 @@
   ==============================================================================
 
     RedBox.cpp
-    Created: 14 Nov 2025 9:49:46am
+    Created: 14 Nov 2025 12:28:12pm
     Author:  eddoard
 
   ==============================================================================
@@ -32,7 +32,15 @@ void RedBox::paint (juce::Graphics& g)
        drawing code..
     */
 
-    g.fillAll (Colours::red);   // clear the background
+    g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));   // clear the background
+
+    g.setColour (juce::Colours::grey);
+    g.drawRect (getLocalBounds(), 1);   // draw an outline around the component
+
+    g.setColour (juce::Colours::white);
+    g.setFont (juce::FontOptions (14.0f));
+    g.drawText ("RedBox", getLocalBounds(),
+                juce::Justification::centred, true);   // draw some placeholder text
 }
 
 void RedBox::resized()

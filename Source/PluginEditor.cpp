@@ -28,6 +28,9 @@ gainSlider()
     textButton.setColour (TextButton::textColourOffId, Colours::black);
     textButton.setColour (TextButton::textColourOnId, Colours::white);
     textButton.setClickingTogglesState(true);
+    
+    bypassToggleButton.setTitle("Bypass");
+    bypassToggleButton.setButtonText("Bypass");
 
     // Nothing selected - Text
     comboBox.setTextWhenNothingSelected("Select Preset");
@@ -45,6 +48,7 @@ gainSlider()
     gainSlider.setTextBoxStyle(Slider::TextEntryBoxPosition::NoTextBox, false, 100, 10);
     
     setSize (500, 400);
+    setResizeLimits(300, 200, INT_MAX, INT_MAX);
 }
 
 HelloWorldAudioProcessorEditor::~HelloWorldAudioProcessorEditor()
@@ -65,30 +69,54 @@ void HelloWorldAudioProcessorEditor::resized()
     // subcomponents in your editor..
     
     FlexBox fb;
-    FlexBox col1;
-    FlexBox col2;
     
-    col1.justifyContent = FlexBox::JustifyContent::spaceAround;
-    col1.alignContent = FlexBox::AlignContent::center;
-    col1.flexDirection = FlexBox::Direction::column;
-    col1.flexWrap = FlexBox::Wrap::noWrap;
-    col1.items.addArray({
-        FlexItem(bypassToggleButton).withMinHeight(25),
-        FlexItem(redBox).withMinHeight(25).withMinWidth(25),
+    FlexBox header;
+    FlexBox centerContent;
+    FlexBox footer;
+
+    header.justifyContent = FlexBox::JustifyContent::center;
+    header.alignContent = FlexBox::AlignContent::flexStart;
+    header.alignItems = FlexBox::AlignItems::stretch;
+    header.flexDirection = FlexBox::Direction::row;
+    header.items.addArray({
+        FlexItem(comboBox)
+            .withFlex(2)
+            .withHeight(25.0f)
+            .withWidth(200.0f)
+            .withMargin(10.0f),
+        
+        FlexItem(bypassToggleButton)
+            .withFlex(1)
+            .withMinHeight(25.0f)
+            .withMargin(10.0f),
     });
     
-    col2.justifyContent = FlexBox::JustifyContent::spaceBetween;
-    col2.alignContent = FlexBox::AlignContent::center;
-    col2.flexDirection = FlexBox::Direction::column;
-    col2.items.add(FlexItem(comboBox).withFlex(1).withHeight(25).withWidth(200));
-    col2.items.add(FlexItem(gainSlider).withFlex(2.5).withMinHeight(200));
-    col2.items.add(FlexItem(textButton).withFlex(1).withHeight(50).withWidth(200));
+    centerContent.justifyContent = FlexBox::JustifyContent::spaceAround;
+    centerContent.alignContent = FlexBox::AlignContent::center;
+    centerContent.flexDirection = FlexBox::Direction::row;
+    centerContent.flexWrap = FlexBox::Wrap::noWrap;
+    centerContent.items.addArray({
+        FlexItem(gainSlider).withMinHeight(100.0f).withFlex(2),
+    });
     
-    fb.flexDirection = FlexBox::Direction::row;
+    footer.justifyContent = FlexBox::JustifyContent::center;
+    footer.alignContent = FlexBox::AlignContent::center;
+    footer.flexDirection = FlexBox::Direction::row;
+    footer.alignItems = FlexBox::AlignItems::stretch;
+    footer.items.addArray({
+        FlexItem(textButton).withFlex(1).withHeight(50.0f).withWidth(200.0f)
+    });
+    
+    fb.flexDirection = FlexBox::Direction::column;
     fb.flexWrap = FlexBox::Wrap::noWrap;
-    fb.justifyContent = FlexBox::JustifyContent::spaceAround;
-    fb.items.add(FlexItem(col1).withFlex(1).withMinWidth(50));
-    fb.items.add(FlexItem(col2).withFlex(3).withMinWidth(200));
+    fb.justifyContent = FlexBox::JustifyContent::spaceBetween;
+    fb.alignContent = FlexBox::AlignContent::spaceBetween;
+    fb.alignItems = FlexBox::AlignItems::stretch;
+    fb.items.addArray({
+        FlexItem(header).withFlex(1).withMinWidth(50),
+        FlexItem(centerContent).withFlex(3).withMinWidth(200),
+        FlexItem(footer).withFlex(2).withMinWidth(200)
+    });
     
     fb.performLayout (getLocalBounds());
 }

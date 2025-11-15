@@ -1,7 +1,7 @@
 /*
   ==============================================================================
 
-    RedBox.cpp
+    ColouredBox.cpp
     Created: 14 Nov 2025 9:49:46am
     Author:  eddoard
 
@@ -9,21 +9,21 @@
 */
 
 #include <JuceHeader.h>
-#include "RedBox.h"
+#include "ColouredBox.h"
 
 //==============================================================================
-RedBox::RedBox()
+ColouredBox::ColouredBox()
 {
     // In your constructor, you should add any child components, and
     // initialise any special settings that your component needs.
 
 }
 
-RedBox::~RedBox()
+ColouredBox::~ColouredBox()
 {
 }
 
-void RedBox::paint (juce::Graphics& g)
+void ColouredBox::paint (juce::Graphics& g)
 {
     /* This demo code just fills the component's background and
        draws some placeholder text to get you started.
@@ -32,18 +32,10 @@ void RedBox::paint (juce::Graphics& g)
        drawing code..
     */
 
-    g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));   // clear the background
-
-    g.setColour (juce::Colours::grey);
-    g.drawRect (getLocalBounds(), 1);   // draw an outline around the component
-
-    g.setColour (juce::Colours::white);
-    g.setFont (juce::FontOptions (14.0f));
-    g.drawText ("RedBox", getLocalBounds(),
-                juce::Justification::centred, true);   // draw some placeholder text
+    g.fillAll (Colours::red);   // clear the background
 }
 
-void RedBox::resized()
+void ColouredBox::resized()
 {
     // This method is where you should set the bounds of any child
     // components that your component contains..
