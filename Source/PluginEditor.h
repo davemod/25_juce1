@@ -11,6 +11,8 @@
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
 
+#include "RedBox.h"
+
 //==============================================================================
 /**
 */
@@ -34,16 +36,14 @@ private:
     ComboBox selectComboBox;
     TextButton clickTextButton { "Start" } ;
     ToggleButton bypassToggleButton;
-
-    // TODO:
-    // Erstellt ebenso eine juce::ComboBox, einen juce::TextButton, einen juce::ToggleButton.
-    // Fügt sie dem UI hinzu, findet ein halbwegs ansprechendes Layout :)
-    // Individualisiere einige Eigenschaften, Farben etc der einzelnen Components (Tutorium, wenn ihr einen Termin findet)
-
-    // Advanced:
-    // Erstellen eigener Components, bspw. eine Klasse, die einfach nur den gesamten Bereich rot färbt!
-
-
+    
+    RedBox redBox;
+    
+    // TODO 4:
+    // class ChannelStripComponent, eine Klasse, die einen Slider, einen Solo und einen Mute Button darstellt.
+    // Anzeigen von mindestens zwei ChannelStripComponents im PluginEditor
+    
+    
     // Übersicht über mögliche juce Components findet ihr hier:
     // https://docs.juce.com/master/classjuce_1_1Component.html
 

@@ -4,6 +4,8 @@
               addUsingNamespaceToJuceHeader="1" jucerFormatVersion="1">
   <MAINGROUP id="Tfi6Gu" name="Hello World">
     <GROUP id="{32810379-625B-62D0-27D4-379CEA7FE413}" name="Source">
+      <FILE id="j4Dk2s" name="RedBox.cpp" compile="1" resource="0" file="Source/RedBox.cpp"/>
+      <FILE id="O0KPcz" name="RedBox.h" compile="0" resource="0" file="Source/RedBox.h"/>
       <FILE id="qNdtDo" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
       <FILE id="KLuuj2" name="PluginProcessor.h" compile="0" resource="0"

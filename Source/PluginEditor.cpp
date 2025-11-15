@@ -9,16 +9,18 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 
+
+#define MYMACRO DBG("My Macro Print")
+
 //==============================================================================
 HelloWorldAudioProcessorEditor::HelloWorldAudioProcessorEditor (HelloWorldAudioProcessor& p)
 :
 AudioProcessorEditor (&p),
 audioProcessor (p),
 gainSlider()
-{
+{    
     setResizable(true, true);
 
-    
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
     setSize (500, 400);
@@ -32,8 +34,6 @@ gainSlider()
     clickTextButton.setColour (TextButton::textColourOffId, Colours::black);
     clickTextButton.setColour (TextButton::textColourOnId, Colours::white);
     clickTextButton.setClickingTogglesState(true);
-
-
 
     addAndMakeVisible (selectComboBox);
 
@@ -58,6 +58,9 @@ gainSlider()
     //gainSlider.hideTextBox(true);
     gainSlider.setTextBoxStyle(Slider::TextEntryBoxPosition::NoTextBox, false, 100, 10);
 
+    // add redBox
+    addAndMakeVisible(redBox);
+    
     DBG ("PluginEditor ()");
 }
 
@@ -102,8 +105,15 @@ void HelloWorldAudioProcessorEditor::resized()
     gainSlider.setBounds(xPos - (sliderSide / 2), yPos - (sliderSide / 2), sliderSide, sliderSide);
     //gainSlider.setBounds(50, 50, 100, 100);
 
-    bypassToggleButton.setBounds(25, JUCE_LIVE_CONSTANT(25), 25, 25);
-
+//   JUCE_LIVE_CONSTANT example. Mehrere JUCE_LIVE_CONSTANT müssen in unterschiedliche Zeilen
+//   bypassToggleButton.setBounds(JUCE_LIVE_CONSTANT (25),
+//                                JUCE_LIVE_CONSTANT (25), 25, 25);
+   
+    bypassToggleButton.setBounds(25, 25, 25, 25);
     selectComboBox.setBounds(xPos - 150, 25, 300, 25);
     clickTextButton.setBounds(xPos - (width / 8), yPos + (sliderSide / 2) + (sliderSide / 10), width / 4, height / 6);
+    
+    // redbox
+    auto boxBounds = gainSlider.getBounds ().translated (- gainSlider.getWidth() - 5, 0);
+    redBox.setBounds (boxBounds);
 }
