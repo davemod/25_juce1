@@ -10,7 +10,8 @@
 
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
-#include "Components/RedBox.h"
+#include "RedBox.h"
+#include "ChannelStripComponent.h"
 
 //==============================================================================
 /**
@@ -35,7 +36,8 @@ private:
     TextButton textButton { "Start" };
     ToggleButton bypassToggleButton;
     
-    RedBox redBox;
+    ChannelStripComponent channelStrip1;
+    ChannelStripComponent channelStrip2;
     
     // Individualisiere einige Eigenschaften, Farben etc der einzelnen Components (Tutorium, wenn ihr einen Termin findet)
 

@@ -25,7 +25,8 @@ gainSlider()
     addAndMakeVisible (textButton);
     addAndMakeVisible (comboBox);
     addAndMakeVisible (bypassToggleButton);
-    addAndMakeVisible (redBox);
+    addAndMakeVisible (channelStrip1);
+    addAndMakeVisible (channelStrip2);
     
     textButton.setColour (TextButton::buttonColourId, Colours::purple);
     textButton.setColour (TextButton::textColourOffId, Colours::black);
@@ -70,56 +71,9 @@ void HelloWorldAudioProcessorEditor::resized()
 {
     // This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..
+    auto area = getLocalBounds();
+    auto channelStripWidth = area.getWidth()/5;
     
-    FlexBox fb;
-    
-    FlexBox header;
-    FlexBox centerContent;
-    FlexBox footer;
-
-    header.justifyContent = FlexBox::JustifyContent::center;
-    header.alignContent = FlexBox::AlignContent::flexStart;
-    header.alignItems = FlexBox::AlignItems::stretch;
-    header.flexDirection = FlexBox::Direction::row;
-    header.items.addArray({
-        FlexItem(comboBox)
-            .withFlex(2)
-            .withHeight(25.0f)
-            .withWidth(200.0f)
-            .withMargin(10.0f),
-        
-        FlexItem(bypassToggleButton)
-            .withFlex(1)
-            .withMinHeight(25.0f)
-            .withMargin(10.0f),
-    });
-    
-    centerContent.justifyContent = FlexBox::JustifyContent::spaceAround;
-    centerContent.alignContent = FlexBox::AlignContent::center;
-    centerContent.flexDirection = FlexBox::Direction::row;
-    centerContent.flexWrap = FlexBox::Wrap::noWrap;
-    centerContent.items.addArray({
-        FlexItem(gainSlider).withMinHeight(100.0f).withFlex(2),
-    });
-    
-    footer.justifyContent = FlexBox::JustifyContent::center;
-    footer.alignContent = FlexBox::AlignContent::center;
-    footer.flexDirection = FlexBox::Direction::row;
-    footer.alignItems = FlexBox::AlignItems::stretch;
-    footer.items.addArray({
-        FlexItem(textButton).withFlex(1).withHeight(50.0f).withWidth(200.0f)
-    });
-    
-    fb.flexDirection = FlexBox::Direction::column;
-    fb.flexWrap = FlexBox::Wrap::noWrap;
-    fb.justifyContent = FlexBox::JustifyContent::spaceBetween;
-    fb.alignContent = FlexBox::AlignContent::spaceBetween;
-    fb.alignItems = FlexBox::AlignItems::stretch;
-    fb.items.addArray({
-        FlexItem(header).withFlex(1).withMinWidth(50),
-        FlexItem(centerContent).withFlex(3).withMinWidth(200),
-        FlexItem(footer).withFlex(2).withMinWidth(200)
-    });
-    
-    fb.performLayout (getLocalBounds());
+    channelStrip1.setBounds (area.removeFromLeft (channelStripWidth));
+    channelStrip2.setBounds (area.removeFromLeft (channelStripWidth));
 }

@@ -12,6 +12,22 @@
 
 #include <JuceHeader.h>
 
+class ChannelStripButtonsComponent  : public juce::Component
+{
+public:
+    ChannelStripButtonsComponent();
+    ~ChannelStripButtonsComponent() override;
+
+    void paint (juce::Graphics&) override;
+    void resized() override;
+
+private:
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ChannelStripButtonsComponent)
+    
+    TextButton soloButton;
+    TextButton muteButton;
+};
+
 //==============================================================================
 /*
 */
@@ -27,7 +43,6 @@ public:
 private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ChannelStripComponent)
     
-    ToggleButton soloButton;
-    ToggleButton muteButton;
+    ChannelStripButtonsComponent buttons;
     Slider levelFader;
 };
