@@ -5,10 +5,12 @@
   <MAINGROUP id="Tfi6Gu" name="Hello World">
     <GROUP id="{32810379-625B-62D0-27D4-379CEA7FE413}" name="Source">
       <GROUP id="{86516280-3EFF-0EC9-6BC4-BC58DA8D84F9}" name="Components">
-        <FILE id="kMeGMx" name="ColouredBox.cpp" compile="1" resource="0" file="Source/Components/ColouredBox.cpp"/>
-        <FILE id="GKg5i9" name="ColouredBox.h" compile="0" resource="0" file="Source/Components/ColouredBox.h"/>
-        <FILE id="d1w1uO" name="RedBox.cpp" compile="1" resource="0" file="Source/Components/RedBox.cpp"/>
-        <FILE id="KqBreP" name="RedBox.h" compile="0" resource="0" file="Source/Components/RedBox.h"/>
+        <FILE id="vBaXxd" name="ChannelStripComponent.cpp" compile="1" resource="0"
+              file="Source/Components/ChannelStripComponent.cpp"/>
+        <FILE id="Lh1Q2j" name="ChannelStripComponent.h" compile="0" resource="0"
+              file="Source/Components/ChannelStripComponent.h"/>
+        <FILE id="j4Dk2s" name="RedBox.cpp" compile="1" resource="0" file="Source/RedBox.cpp"/>
+        <FILE id="O0KPcz" name="RedBox.h" compile="0" resource="0" file="Source/RedBox.h"/>
       </GROUP>
       <FILE id="qNdtDo" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>

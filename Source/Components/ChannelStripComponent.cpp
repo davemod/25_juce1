@@ -1,29 +1,29 @@
 /*
   ==============================================================================
 
-    ColouredBox.cpp
-    Created: 14 Nov 2025 9:49:46am
+    ChannelStrip.cpp
+    Created: 19 Nov 2025 9:38:05am
     Author:  eddoard
 
   ==============================================================================
 */
 
 #include <JuceHeader.h>
-#include "ColouredBox.h"
+#include "ChannelStripComponent.h"
 
 //==============================================================================
-ColouredBox::ColouredBox()
+ChannelStripComponent::ChannelStripComponent()
 {
     // In your constructor, you should add any child components, and
     // initialise any special settings that your component needs.
 
 }
 
-ColouredBox::~ColouredBox()
+ChannelStripComponent::~ChannelStripComponent()
 {
 }
 
-void ColouredBox::paint (juce::Graphics& g)
+void ChannelStripComponent::paint (juce::Graphics& g)
 {
     /* This demo code just fills the component's background and
        draws some placeholder text to get you started.
@@ -32,10 +32,18 @@ void ColouredBox::paint (juce::Graphics& g)
        drawing code..
     */
 
-    g.fillAll (Colours::red);   // clear the background
+    g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));   // clear the background
+
+    g.setColour (juce::Colours::grey);
+    g.drawRect (getLocalBounds(), 1);   // draw an outline around the component
+
+    g.setColour (juce::Colours::white);
+    g.setFont (juce::FontOptions (14.0f));
+    g.drawText ("ChannelStripComponent", getLocalBounds(),
+                juce::Justification::centred, true);   // draw some placeholder text
 }
 
-void ColouredBox::resized()
+void ChannelStripComponent::resized()
 {
     // This method is where you should set the bounds of any child
     // components that your component contains..

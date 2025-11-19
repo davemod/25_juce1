@@ -1,8 +1,8 @@
 /*
   ==============================================================================
 
-    ColouredBox.h
-    Created: 14 Nov 2025 9:49:46am
+    ChannelStrip.h
+    Created: 19 Nov 2025 9:38:05am
     Author:  eddoard
 
   ==============================================================================
@@ -15,15 +15,15 @@
 //==============================================================================
 /*
 */
-class ColouredBox : public juce::Component
+class ChannelStripComponent  : public juce::Component
 {
 public:
-    ColouredBox();
-    ~ColouredBox() override;
-    
+    ChannelStripComponent();
+    ~ChannelStripComponent() override;
+
     void paint (juce::Graphics&) override;
     void resized() override;
 
 private:
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ColouredBox)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ChannelStripComponent)
 };

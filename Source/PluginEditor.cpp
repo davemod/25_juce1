@@ -9,13 +9,16 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 
+
+#define MYMACRO DBG("My Macro Print")
+
 //==============================================================================
 HelloWorldAudioProcessorEditor::HelloWorldAudioProcessorEditor (HelloWorldAudioProcessor& p)
 :
 AudioProcessorEditor (&p),
 audioProcessor (p),
 gainSlider()
-{
+{    
     setResizable(true, true);
     
     addAndMakeVisible (gainSlider);

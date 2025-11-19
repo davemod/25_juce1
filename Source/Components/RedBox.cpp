@@ -2,50 +2,16 @@
   ==============================================================================
 
     RedBox.cpp
-    Created: 14 Nov 2025 12:28:12pm
-    Author:  eddoard
+    Created: 14 Nov 2025 10:00:37am
+    Author:  David Hill
 
   ==============================================================================
 */
 
-#include <JuceHeader.h>
 #include "RedBox.h"
 
-//==============================================================================
-RedBox::RedBox()
+// Definition der Funktion RedBox::paint. Deklariert wird sie in der RedBox.h. Wichtig: hier wird kein override benötigt.
+void RedBox::paint (Graphics& g)
 {
-    // In your constructor, you should add any child components, and
-    // initialise any special settings that your component needs.
-
-}
-
-RedBox::~RedBox()
-{
-}
-
-void RedBox::paint (juce::Graphics& g)
-{
-    /* This demo code just fills the component's background and
-       draws some placeholder text to get you started.
-
-       You should replace everything in this method with your own
-       drawing code..
-    */
-
-    g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));   // clear the background
-
-    g.setColour (juce::Colours::grey);
-    g.drawRect (getLocalBounds(), 1);   // draw an outline around the component
-
-    g.setColour (juce::Colours::white);
-    g.setFont (juce::FontOptions (14.0f));
-    g.drawText ("RedBox", getLocalBounds(),
-                juce::Justification::centred, true);   // draw some placeholder text
-}
-
-void RedBox::resized()
-{
-    // This method is where you should set the bounds of any child
-    // components that your component contains..
-
+    g.fillAll(Colours::red);
 }
