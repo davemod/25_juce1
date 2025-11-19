@@ -17,6 +17,15 @@ ChannelStripComponent::ChannelStripComponent()
     // In your constructor, you should add any child components, and
     // initialise any special settings that your component needs.
 
+    addAndMakeVisible(soloButton);
+    soloButton.setButtonText("s");
+    
+    addAndMakeVisible(muteButton);
+    muteButton.setButtonText("m");
+    
+    addAndMakeVisible(levelFader);
+    
+    setSize(50, 500);
 }
 
 ChannelStripComponent::~ChannelStripComponent()
