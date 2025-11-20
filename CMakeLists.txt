@@ -79,16 +79,18 @@ juce_generate_juce_header(HelloWorld)
 # Finally, we supply a list of source files that will be built into the target. This is a standard
 # CMake command.
 
-#target_sources(HelloWorld
-#        PRIVATE
-#        Source/PluginEditor.cpp
-#        Source/PluginProcessor.cpp
-#        Source/RedBox.cpp)
+target_sources(HelloWorld
+        PRIVATE
+        Source/PluginEditor.cpp
+        Source/PluginProcessor.cpp
+        Source/RedBox.cpp
+        Source/ChannelStripComponent.cpp
+        Source/ChannelStripComponent.h)
 
-file(GLOB_RECURSE PROJECT_SOURCES
-        "Source/*.cpp"
-        "Source/*.h"
-)
+#file(GLOB_RECURSE PROJECT_SOURCES
+#        "Source/*.cpp"
+#        "Source/*.h"
+#)
 target_sources(HelloWorld
         PRIVATE ${PROJECT_SOURCES})
 
