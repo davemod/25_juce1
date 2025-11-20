@@ -62,7 +62,8 @@ gainSlider()
 
 
     addAndMakeVisible(myRedBox);
-    addAndMakeVisible(ezChannelStrip);
+    addAndMakeVisible(ezChannelStrip1);
+    addAndMakeVisible(ezChannelStrip2);
 
     DBG ("PluginEditor ()");
 }
@@ -104,6 +105,8 @@ void HelloWorldAudioProcessorEditor::resized()
     int sliderSide = smallestSide / 3;
     DBG ("sliderSide: " << sliderSide);
 
+    /*
+    // OLD LAYOUT HERE!
     // Reactivate again once the other elements are figured out!
     gainSlider.setBounds(xPos - (sliderSide / 2), yPos - (sliderSide / 2), sliderSide, sliderSide);
     //gainSlider.setBounds(50, 50, 100, 100);
@@ -118,4 +121,7 @@ void HelloWorldAudioProcessorEditor::resized()
 
     selectComboBox.setBounds(xPos - 150, 25, 300, 25);
     clickTextButton.setBounds(xPos - (width / 8), yPos + (sliderSide / 2) + (sliderSide / 10), width / 4, height / 6);
+    */
+    ezChannelStrip1.setBounds(0, 0, 250, 400);
+    ezChannelStrip2.setBounds(250, 0, 250, 400);
 }

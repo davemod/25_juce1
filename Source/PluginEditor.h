@@ -37,7 +37,8 @@ private:
     TextButton clickTextButton { "Start" } ;
     ToggleButton bypassToggleButton;
     RedBox myRedBox;
-    ChannelStripComponent ezChannelStrip;
+    ChannelStripComponent ezChannelStrip1;
+    ChannelStripComponent ezChannelStrip2;
 
     // TODO:
     // Erstellt ebenso eine juce::ComboBox, einen juce::TextButton, einen juce::ToggleButton.
