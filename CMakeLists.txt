@@ -7,6 +7,8 @@ if(NOT DEFINED JUCE_DIR)
     set(JUCE_DIR "${CMAKE_SOURCE_DIR}/third_party/JUCE" CACHE PATH "Path to JUCE root")
 endif()
 
+# add file "juce_local.cmake" next to this one, containing:
+#set(JUCE_DIR "<PATH/TO/JUCE/FOLDER>" CACHE PATH "Local JUCE path")
 message(STATUS "Using JUCE_DIR = ${JUCE_DIR}")
 
 
