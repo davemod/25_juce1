@@ -9,6 +9,7 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 #include "RedBox.h"
+#include "ChannelStripComponent.h"
 
 //==============================================================================
 HelloWorldAudioProcessorEditor::HelloWorldAudioProcessorEditor (HelloWorldAudioProcessor& p)
@@ -61,6 +62,7 @@ gainSlider()
 
 
     addAndMakeVisible(myRedBox);
+    addAndMakeVisible(ezChannelStrip);
 
     DBG ("PluginEditor ()");
 }
@@ -108,6 +110,8 @@ void HelloWorldAudioProcessorEditor::resized()
 
     myRedBox.setBounds(xPos - (sliderSide / 2), yPos - (sliderSide / 2), sliderSide, sliderSide);
     //myRedBox.setBounds(50, 50, 200, 200);
+
+    ezChannelStrip.setBounds(xPos - (sliderSide / 3), yPos - (sliderSide / 3), sliderSide, sliderSide);
 
     //bypassToggleButton.setBounds(25, JUCE_LIVE_CONSTANT(25), 25, 25);
     bypassToggleButton.setBounds(25, 25, 25, 25);

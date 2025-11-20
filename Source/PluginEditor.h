@@ -11,6 +11,7 @@
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
 #include "RedBox.h"
+#include "ChannelStripComponent.h"
 
 //==============================================================================
 /**
@@ -36,6 +37,7 @@ private:
     TextButton clickTextButton { "Start" } ;
     ToggleButton bypassToggleButton;
     RedBox myRedBox;
+    ChannelStripComponent ezChannelStrip;
 
     // TODO:
     // Erstellt ebenso eine juce::ComboBox, einen juce::TextButton, einen juce::ToggleButton.
