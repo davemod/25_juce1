@@ -4,6 +4,17 @@
 
 #include "RedBox.h"
 
-void RedBox::paint (Graphics& g) {
-    g.fillAll(Colours::red);
+void ColouredBox::paint(Graphics& g)
+{
+    //g.fillAll(Colours::); ///Was muss hier rein???
+    Colour colour;
 }
+
+void ColouredBox::setBoxColour (Colour newColour)
+{
+    colour = newColour;
+    repaint (); //muss bei Veränderung neu gezeichnet werden!
+}
+
+
+
