@@ -59,7 +59,9 @@ gainSlider()
     gainSlider.setTextBoxStyle(Slider::TextEntryBoxPosition::NoTextBox, false, 100, 10);
 
     // add redBox
-    addAndMakeVisible(redBox);
+    addAndMakeVisible (redBox);
+    addAndMakeVisible (blueBox);
+    addAndMakeVisible (greenBox);
     
     DBG ("PluginEditor ()");
 }
@@ -114,6 +116,9 @@ void HelloWorldAudioProcessorEditor::resized()
     clickTextButton.setBounds(xPos - (width / 8), yPos + (sliderSide / 2) + (sliderSide / 10), width / 4, height / 6);
     
     // redbox
-    auto boxBounds = gainSlider.getBounds ().translated (- gainSlider.getWidth() - 5, 0);
+    auto boxBounds = gainSlider.getBounds ().withWidth (gainSlider.getWidth () / 2).withHeight (gainSlider.getHeight() / 2).translated (- gainSlider.getWidth() - 5, 0);
+    
     redBox.setBounds (boxBounds);
+    blueBox.setBounds (boxBounds.translated (boxBounds.getWidth (), 0));
+    greenBox.setBounds (boxBounds.translated (0, boxBounds.getHeight ()));
 }
