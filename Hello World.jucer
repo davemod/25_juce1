@@ -4,6 +4,10 @@
               addUsingNamespaceToJuceHeader="1" jucerFormatVersion="1">
   <MAINGROUP id="Tfi6Gu" name="Hello World">
     <GROUP id="{32810379-625B-62D0-27D4-379CEA7FE413}" name="Source">
+      <FILE id="cfXkoh" name="PresetMenuComponent.cpp" compile="1" resource="0"
+            file="Source/PresetMenuComponent.cpp"/>
+      <FILE id="jaxZSK" name="PresetMenuComponent.h" compile="0" resource="0"
+            file="Source/PresetMenuComponent.h"/>
       <FILE id="deH6Bp" name="ChannelStripComponent.cpp" compile="1" resource="0"
             file="Source/ChannelStripComponent.cpp"/>
       <FILE id="crT2Ow" name="ChannelStripComponent.h" compile="0" resource="0"

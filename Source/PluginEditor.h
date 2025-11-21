@@ -12,6 +12,7 @@
 #include "PluginProcessor.h"
 
 #include "ChannelStripComponent.h"
+#include "PresetMenuComponent.h"
 
 //==============================================================================
 /**
@@ -33,6 +34,7 @@ private:
 
     //juce::Slider gainSlider;
     ChannelStripComponent channelStrip1;
+    PresetMenuComponent presetMenu;
     
     // TODO 4:
     // class ChannelStripComponent, eine Klasse, die einen Slider, einen Solo und einen Mute Button darstellt.

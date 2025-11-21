@@ -22,6 +22,7 @@ audioProcessor (p)
     setSize (500, 400);
     
     addAndMakeVisible(channelStrip1);
+    addAndMakeVisible(presetMenu);
     
     DBG ("PluginEditor ()");
 }
@@ -47,9 +48,11 @@ void HelloWorldAudioProcessorEditor::resized()
     // This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..
 
-    auto bounds = getLocalBounds ();
+    auto bounds = getLocalBounds ().reduced(8);
     auto channelStripWidth = bounds.getWidth()/4;
     
+    presetMenu.setBounds(bounds.removeFromTop(30));
+    bounds.removeFromTop(8);
     channelStrip1.setBounds(bounds.removeFromLeft(channelStripWidth));
     
     
