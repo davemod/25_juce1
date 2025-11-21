@@ -28,4 +28,13 @@ private:
     
     Label currentPresetLabel;
     
+    String currentPresetPath;
+    std::unique_ptr<juce::FileChooser> fileChooser;
+    
+    void loadPreset();
+    void loadPresetFromFile(const juce::File& file);
+    
+    void savePreset();
+    void writePresetToFile(const juce::File& file);
+    
 };

@@ -17,6 +17,16 @@ PresetMenuComponent::PresetMenuComponent(){
     nextButton.setButtonText(">");
     previousButton.setButtonText("<");
     
+    loadButton.onClick = [this]
+    {
+        loadPreset();
+    };
+    
+    saveButton.onClick = [this]
+    {
+        savePreset();
+    };
+    
     currentPresetLabel.setText ("Prest #1", juce::dontSendNotification);
     currentPresetLabel.setColour (juce::Label::outlineColourId, juce::Colours::lightblue);
     
@@ -56,3 +66,53 @@ void PresetMenuComponent::resized(){
     
     currentPresetLabel.setBounds(bounds);
 };
+
+void PresetMenuComponent::loadPreset()
+{
+    fileChooser = std::make_unique<juce::FileChooser>(
+        "Choose a preset...",
+        juce::File{},
+        "*.preset"
+    );
+
+    auto flags = juce::FileBrowserComponent::openMode
+               | juce::FileBrowserComponent::canSelectFiles;
+
+    fileChooser->launchAsync(flags, [this](const juce::FileChooser& chooser)
+    {
+        auto file = chooser.getResult();
+        if (file.existsAsFile())
+            loadPresetFromFile(file);
+    });
+}
+
+void PresetMenuComponent::loadPresetFromFile(const juce::File &file)
+{
+    currentPresetPath = file.getFullPathName();
+}
+
+void PresetMenuComponent::savePreset()
+{
+    fileChooser = std::make_unique<juce::FileChooser>(
+        "Save preset as...",
+        juce::File{},
+        "*.preset"
+    );
+
+    auto flags = juce::FileBrowserComponent::saveMode
+               | FileBrowserComponent::canSelectFiles;
+
+    fileChooser->launchAsync(flags, [this](const juce::FileChooser& chooser)
+    {
+        auto file = chooser.getResult();
+        if (file.existsAsFile() || !file.exists())
+            writePresetToFile(file);
+    });
+}
+
+void PresetMenuComponent::writePresetToFile(const juce::File& file)
+{
+    currentPresetPath = file.getFullPathName();
+    
+    DBG("Preset written to: " + currentPresetPath);
+}
