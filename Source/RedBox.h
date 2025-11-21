@@ -33,10 +33,26 @@ private:
 // TODO 3 : Erstelle eine Klasse GreenBox und BlueBox die wiederum von ColouredBox ableiten und die entsprechende Farbe zeichnen.
 
 // Deklaration einer eigenen Klasse, die von juce::Component ableitet.
-class RedBox : public juce::Component
+class RedBox : public ColouredBox
 {
 public:
     // Überschreiben der Funktion paint. Sie bekommt eine Referenz zu einem Objekt der Klasse Graphics. In der RedBox.h deklarieren wir lediglich die Funktion. Für die Definition, s. RedBox.cpp
-    void paint (Graphics& g) override;
+    RedBox();
 };
+
+class GreenBox : public ColouredBox
+{
+public:
+    // Überschreiben der Funktion paint. Sie bekommt eine Referenz zu einem Objekt der Klasse Graphics. In der RedBox.h deklarieren wir lediglich die Funktion. Für die Definition, s. RedBox.cpp
+    GreenBox();
+};
+
+
+class BlueBox : public ColouredBox
+{
+public:
+    // Überschreiben der Funktion paint. Sie bekommt eine Referenz zu einem Objekt der Klasse Graphics. In der RedBox.h deklarieren wir lediglich die Funktion. Für die Definition, s. RedBox.cpp
+    BlueBox();
+};
+
 

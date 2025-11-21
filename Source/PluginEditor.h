@@ -38,6 +38,8 @@ private:
     ToggleButton bypassToggleButton;
     
     RedBox redBox;
+    GreenBox greenBox;
+    BlueBox blueBox;
     
     // TODO 4:
     // class ChannelStripComponent, eine Klasse, die einen Slider, einen Solo und einen Mute Button darstellt.
