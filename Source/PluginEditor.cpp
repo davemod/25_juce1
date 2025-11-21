@@ -16,52 +16,12 @@
 HelloWorldAudioProcessorEditor::HelloWorldAudioProcessorEditor (HelloWorldAudioProcessor& p)
 :
 AudioProcessorEditor (&p),
-audioProcessor (p),
-gainSlider()
+audioProcessor (p)
 {    
     setResizable(true, true);
-
-    // Make sure that before the constructor has finished, you've set the
-    // editor's size to whatever you need it to be.
     setSize (500, 400);
-
-    //gainSlider.setVisible (true);
-    //addChildComponent (gainSlider);
-
-    addAndMakeVisible (gainSlider);
-    addAndMakeVisible (clickTextButton);
-    clickTextButton.setColour (TextButton::buttonColourId, Colours::purple);
-    clickTextButton.setColour (TextButton::textColourOffId, Colours::black);
-    clickTextButton.setColour (TextButton::textColourOnId, Colours::white);
-    clickTextButton.setClickingTogglesState(true);
-
-    addAndMakeVisible (selectComboBox);
-
-    // Nothing selected - Text
-    selectComboBox.setTextWhenNothingSelected( "Select Preset" );
-
-
-    // Add items
-    selectComboBox.addItem ("Cool Gain Slider", 1);
-    selectComboBox.addItem ("Groovy Bypass Toggle", 2);
-    selectComboBox.addItem ("Funky Clicky Textbutton", 3);
-    selectComboBox.addItem ("Awesome ComboBox", 4);
-
-    // Optionally set a default selection:
-    selectComboBox.setSelectedId (0);
-
-    addAndMakeVisible (bypassToggleButton);
-
-    //clickTextButton::TextButton ()
-
-    gainSlider.setSliderStyle(Slider::SliderStyle::RotaryVerticalDrag);
-    //gainSlider.hideTextBox(true);
-    gainSlider.setTextBoxStyle(Slider::TextEntryBoxPosition::NoTextBox, false, 100, 10);
-
-    // add redBox
-    addAndMakeVisible(redBox);
-    addAndMakeVisible(greenBox);
-    addAndMakeVisible(blueBox);
+    
+    addAndMakeVisible(channelStrip1);
     
     DBG ("PluginEditor ()");
 }
@@ -88,38 +48,9 @@ void HelloWorldAudioProcessorEditor::resized()
     // subcomponents in your editor..
 
     auto bounds = getLocalBounds ();
-    auto centre = bounds.getCentre ();
-    DBG ("Centre: " << centre.getX () << ", " << centre.getY ());
-
-    int width = bounds.getWidth ();
-    int height = bounds.getHeight ();
-
-    int xPos = centre.getX ();
-    int yPos = centre.getY ();
-
-    int smallestSide = jmin (width, height);
-    DBG ("smallestSide: " << smallestSide);
-
-    int sliderSide = smallestSide / 3;
-    DBG ("sliderSide: " << sliderSide);
-
-    // Reactivate again once the other elements are figured out!
-    gainSlider.setBounds(xPos - (sliderSide / 2), yPos - (sliderSide / 2), sliderSide, sliderSide);
-    //gainSlider.setBounds(50, 50, 100, 100);
-
-//   JUCE_LIVE_CONSTANT example. Mehrere JUCE_LIVE_CONSTANT müssen in unterschiedliche Zeilen
-//   bypassToggleButton.setBounds(JUCE_LIVE_CONSTANT (25),
-//                                JUCE_LIVE_CONSTANT (25), 25, 25);
-   
-    bypassToggleButton.setBounds(25, 25, 25, 25);
-    selectComboBox.setBounds(xPos - 150, 25, 300, 25);
-    clickTextButton.setBounds(xPos - (width / 8), yPos + (sliderSide / 2) + (sliderSide / 10), width / 4, height / 6);
+    auto channelStripWidth = bounds.getWidth()/4;
     
-    // redbox
-    auto redBounds = gainSlider.getBounds ().translated (- gainSlider.getWidth() - 5, 0);
-    auto blueBounds = gainSlider.getBounds ().translated (- gainSlider.getWidth() - 100, 0);
-    auto greenBounds = gainSlider.getBounds ().translated (- gainSlider.getWidth() - 50, 0);
-    redBox.setBounds (redBounds);
-    blueBox.setBounds (blueBounds);
-    greenBox.setBounds (greenBounds);
+    channelStrip1.setBounds(bounds.removeFromLeft(channelStripWidth));
+    
+    
 }

@@ -11,7 +11,7 @@
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
 
-#include "RedBox.h"
+#include "ChannelStripComponent.h"
 
 //==============================================================================
 /**
@@ -32,14 +32,7 @@ private:
     HelloWorldAudioProcessor& audioProcessor;
 
     //juce::Slider gainSlider;
-    Slider gainSlider;
-    ComboBox selectComboBox;
-    TextButton clickTextButton { "Start" } ;
-    ToggleButton bypassToggleButton;
-    
-    RedBox redBox;
-    GreenBox greenBox;
-    BlueBox blueBox;
+    ChannelStripComponent channelStrip1;
     
     // TODO 4:
     // class ChannelStripComponent, eine Klasse, die einen Slider, einen Solo und einen Mute Button darstellt.
