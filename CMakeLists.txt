@@ -87,7 +87,9 @@ target_sources(HelloWorld
         Source/PluginProcessor.cpp
         Source/RedBox.cpp
         Source/ChannelStripComponent.cpp
-        Source/ChannelStripComponent.h)
+        Source/ChannelStripComponent.h
+        Source/PresetMenuComponent.cpp
+        Source/PresetMenuComponent.h)
 
 #file(GLOB_RECURSE PROJECT_SOURCES
 #        "Source/*.cpp"
