@@ -4,7 +4,8 @@
 
 #include "ChannelStripComponent.h"
 
-void ChannelStripComponent::paint(Graphics& g) {
+void ChannelStripComponent::paint(Graphics& g)
+{
 
     setSize(250,400);
 

@@ -40,6 +40,9 @@ private:
     ChannelStripComponent ezChannelStrip1;
     ChannelStripComponent ezChannelStrip2;
 
+    BlueBox myBlueBox;
+    GreenBox myGreenBox;
+
     // TODO:
     // Erstellt ebenso eine juce::ComboBox, einen juce::TextButton, einen juce::ToggleButton.
     // Fügt sie dem UI hinzu, findet ein halbwegs ansprechendes Layout :)
