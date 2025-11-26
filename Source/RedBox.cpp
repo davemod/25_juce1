@@ -10,8 +10,28 @@
 
 #include "RedBox.h"
 
-// Definition der Funktion RedBox::paint. Deklariert wird sie in der RedBox.h. Wichtig: hier wird kein override benötigt.
-void RedBox::paint (Graphics& g)
+void ColouredBox::paint (Graphics& g)
 {
-    g.fillAll(Colours::red);
+    g.fillAll(colour);
 }
+
+void ColouredBox::setBoxColour(Colour newColour)
+{
+    this->colour = newColour;
+    repaint();
+}
+
+// Definition der Funktion RedBox::paint. Deklariert wird sie in der RedBox.h. Wichtig: hier wird kein override benötigt.
+RedBox::RedBox ()
+{
+    setBoxColour(juce::Colours::red);
+}
+
+RedBox::~RedBox() {}
+
+GreenBox::GreenBox ()
+{
+    setBoxColour(juce::Colours::green);
+}
+
+GreenBox::~GreenBox() {}

@@ -18,7 +18,7 @@ HelloWorldAudioProcessorEditor::HelloWorldAudioProcessorEditor (HelloWorldAudioP
 AudioProcessorEditor (&p),
 audioProcessor (p),
 gainSlider()
-{    
+{
     setResizable(true, true);
     
     addAndMakeVisible (gainSlider);
@@ -27,6 +27,10 @@ gainSlider()
     addAndMakeVisible (bypassToggleButton);
     addAndMakeVisible (channelStrip1);
     addAndMakeVisible (channelStrip2);
+    addAndMakeVisible (presetMenu);
+    
+    addAndMakeVisible(redBox);
+    addAndMakeVisible(greenBox);
     
     textButton.setColour (TextButton::buttonColourId, Colours::purple);
     textButton.setColour (TextButton::textColourOffId, Colours::black);
@@ -74,6 +78,11 @@ void HelloWorldAudioProcessorEditor::resized()
     auto area = getLocalBounds();
     auto channelStripWidth = area.getWidth()/5;
     
+    presetMenu.setBounds(area.removeFromTop(30));
+    
     channelStrip1.setBounds (area.removeFromLeft (channelStripWidth));
     channelStrip2.setBounds (area.removeFromLeft (channelStripWidth));
+    
+    redBox.setBounds(area.removeFromLeft (channelStripWidth));
+    greenBox.setBounds(area.removeFromLeft (channelStripWidth));
 }

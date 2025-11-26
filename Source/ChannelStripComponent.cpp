@@ -48,8 +48,13 @@ void ChannelStripButtonsComponent::paint (juce::Graphics& g)
 void ChannelStripButtonsComponent::resized()
 {
     auto area = getLocalBounds();
-    auto buttonWidth = area.getWidth()/2;
-    
+    auto margin = 5.0;
+    area.removeFromTop(margin);
+    area.removeFromLeft(margin);
+    area.removeFromRight(margin);
+    area.removeFromBottom(margin);
+
+    auto buttonWidth = (area.getWidth() - margin) / 2;
     muteButton.setBounds(area.removeFromLeft(buttonWidth));
     soloButton.setBounds(area.removeFromRight(buttonWidth));
 }
@@ -95,8 +100,9 @@ void ChannelStripComponent::paint (juce::Graphics& g)
 void ChannelStripComponent::resized()
 {
     auto area = getLocalBounds();
-    auto buttonSize = 20;
+    auto buttonSize = 40;
     
     buttons.setBounds(area.removeFromTop(buttonSize));
+    area.removeFromBottom(10);
     levelFader.setBounds(area.removeFromBottom(area.getHeight() - buttonSize));
 }
