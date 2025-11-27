@@ -8,14 +8,13 @@
 
 class ChannelStripComponent  : public juce::Component {
 public:
-    //ChannelStripComponent (HelloWorldAudioProcessor&); // CTOR / Constructor
-    //~ChannelStripComponent() override;
+    ChannelStripComponent (); // CTOR / Constructor
+    ~ChannelStripComponent() = default;
 
-    // Little testfunction
-    //void paint (Graphics& g) override;
-    void paint (juce::Graphics&) override;
+    void resized() = default;
+
 private:
-    Slider mainSlider;
+    juce::Slider mainSlider;
     TextButton muteButton { "M" } ;
     TextButton soloButton { "S" };
     //ToggleButton bypassToggleButton;

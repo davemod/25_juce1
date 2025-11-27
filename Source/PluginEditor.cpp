@@ -10,6 +10,7 @@
 #include "PluginEditor.h"
 #include "RedBox.h"
 #include "ChannelStripComponent.h"
+#include "PresetMenuComponent.h"
 
 //==============================================================================
 HelloWorldAudioProcessorEditor::HelloWorldAudioProcessorEditor (HelloWorldAudioProcessor& p)
@@ -61,12 +62,12 @@ gainSlider()
     gainSlider.setTextBoxStyle(Slider::TextEntryBoxPosition::NoTextBox, false, 100, 10);
 
 
-    addAndMakeVisible(myRedBox);
-    addAndMakeVisible(myBlueBox);
-    addAndMakeVisible(myGreenBox);
+    //addAndMakeVisible(myRedBox);
+    //addAndMakeVisible(myBlueBox);
+    //addAndMakeVisible(myGreenBox);
     //addAndMakeVisible(ezChannelStrip1);
     //addAndMakeVisible(ezChannelStrip2);
-
+    addAndMakeVisible(myPresetMenu);
 
     DBG ("PluginEditor ()");
 }
@@ -94,7 +95,7 @@ void HelloWorldAudioProcessorEditor::resized()
 
     auto bounds = getLocalBounds ();
     auto centre = bounds.getCentre ();
-    DBG ("Centre: " << centre.getX () << ", " << centre.getY ());
+    //DBG ("Centre: " << centre.getX () << ", " << centre.getY ());
 
     int width = bounds.getWidth ();
     int height = bounds.getHeight ();
@@ -103,10 +104,10 @@ void HelloWorldAudioProcessorEditor::resized()
     int yPos = centre.getY ();
 
     int smallestSide = jmin (width, height);
-    DBG ("smallestSide: " << smallestSide);
+    //DBG ("smallestSide: " << smallestSide);
 
     int sliderSide = smallestSide / 3;
-    DBG ("sliderSide: " << sliderSide);
+    //DBG ("sliderSide: " << sliderSide);
 
     /*
     // OLD LAYOUT HERE!
@@ -126,10 +127,16 @@ void HelloWorldAudioProcessorEditor::resized()
     clickTextButton.setBounds(xPos - (width / 8), yPos + (sliderSide / 2) + (sliderSide / 10), width / 4, height / 6);
     */
 
+    /*
+    // FIX THIS!!!!
     myRedBox.setBounds(50, 50, 200, 200);
     myBlueBox.setBounds(200, 50, 200, 200);
     myGreenBox.setBounds(200, 50, 200, 200);
+    */
 
     //ezChannelStrip1.setBounds(0, 0, 250, 400);
     //ezChannelStrip2.setBounds(250, 0, 250, 400);
+
+    myPresetMenu.setBounds(0, 0, width, height / 5);
+
 }

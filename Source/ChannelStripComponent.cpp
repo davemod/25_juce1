@@ -31,6 +31,4 @@ void ChannelStripComponent::paint(Graphics& g)
     mainSlider.setSliderStyle(Slider::SliderStyle::LinearBarVertical);
     mainSlider.setBounds(100, 10, 50, 380);
 
-
-
 }

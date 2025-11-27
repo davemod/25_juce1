@@ -12,6 +12,7 @@
 #include "PluginProcessor.h"
 #include "RedBox.h"
 #include "ChannelStripComponent.h"
+#include "PresetMenuComponent.h"
 
 //==============================================================================
 /**
@@ -39,6 +40,7 @@ private:
     RedBox myRedBox;
     ChannelStripComponent ezChannelStrip1;
     ChannelStripComponent ezChannelStrip2;
+    PresetMenuComponent myPresetMenu;
 
     BlueBox myBlueBox;
     GreenBox myGreenBox;
