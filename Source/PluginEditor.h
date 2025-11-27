@@ -40,6 +40,12 @@ private:
     RedBox redBox;
     BlueBox blueBox;
     GreenBox greenBox;
+    BlackBox blackBox;
+    OrangeBox orangeBox;
+    PinkBox pinkBox;
+    PurpleBox purpleBox;
+    WhiteBox whiteBox;
+    
     
     // TODO 4:
     // class ChannelStripComponent, eine Klasse, die einen Slider, einen Solo und einen Mute Button darstellt.

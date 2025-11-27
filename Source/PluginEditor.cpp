@@ -62,6 +62,12 @@ gainSlider()
     addAndMakeVisible (redBox);
     addAndMakeVisible (blueBox);
     addAndMakeVisible (greenBox);
+    addAndMakeVisible (blackBox);
+    addAndMakeVisible (orangeBox);
+    addAndMakeVisible (pinkBox);
+    addAndMakeVisible(purpleBox);
+    addAndMakeVisible(pinkBox);
+    
     
     DBG ("PluginEditor ()");
 }
@@ -121,4 +127,9 @@ void HelloWorldAudioProcessorEditor::resized()
     redBox.setBounds (boxBounds);
     blueBox.setBounds (boxBounds.translated (boxBounds.getWidth (), 0));
     greenBox.setBounds (boxBounds.translated (0, boxBounds.getHeight ()));
+    orangeBox.setBounds(boxBounds.translated(0, boxBounds.getHeight() * 2));
+    whiteBox.setBounds(boxBounds.translated(0, boxBounds.getHeight() * 3));
+    pinkBox.setBounds(boxBounds.translated(boxBounds.getWidth(), boxBounds.getHeight()));
+    blackBox.setBounds(boxBounds.translated(boxBounds.getWidth(), boxBounds.getHeight() * 2));
+    purpleBox.setBounds(boxBounds.translated(boxBounds.getWidth(), boxBounds.getHeight() * 3));
 }

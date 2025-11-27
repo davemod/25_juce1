@@ -50,3 +50,37 @@ public:
 };
 
 // TODO 1 Fünf weitere boxen mit verschiedene Farben die von ColouredBox ableiten
+
+class OrangeBox : public ColouredBox
+{
+public:
+    OrangeBox ();
+    
+};
+
+class PurpleBox : public ColouredBox
+{
+public:
+    PurpleBox ();
+    
+};
+
+class BlackBox : public ColouredBox
+{
+public:
+    BlackBox ();
+    
+};
+class WhiteBox : public ColouredBox
+{
+public:
+    WhiteBox ();
+    
+};
+class PinkBox : public ColouredBox
+{
+public:
+    PinkBox ();
+    
+};
+
