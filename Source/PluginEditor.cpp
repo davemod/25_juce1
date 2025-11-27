@@ -8,7 +8,7 @@
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
-
+#include "PresetMenuComponent.h"
 
 #define MYMACRO DBG("My Macro Print")
 
@@ -46,14 +46,15 @@ gainSlider()
     selectComboBox.addItem ("Groovy Bypass Toggle", 2);
     selectComboBox.addItem ("Funky Clicky Textbutton", 3);
     selectComboBox.addItem ("Awesome ComboBox", 4);
-
+    //
+    
     // Optionally set a default selection:
     selectComboBox.setSelectedId (0);
 
     addAndMakeVisible (bypassToggleButton);
 
     //clickTextButton::TextButton ()
-
+    
     gainSlider.setSliderStyle(Slider::SliderStyle::RotaryVerticalDrag);
     //gainSlider.hideTextBox(true);
     gainSlider.setTextBoxStyle(Slider::TextEntryBoxPosition::NoTextBox, false, 100, 10);
@@ -67,7 +68,7 @@ gainSlider()
     addAndMakeVisible (pinkBox);
     addAndMakeVisible(purpleBox);
     addAndMakeVisible(pinkBox);
-    
+    addAndMakeVisible(presetMenu);
     
     DBG ("PluginEditor ()");
 }
@@ -109,6 +110,8 @@ void HelloWorldAudioProcessorEditor::resized()
     int sliderSide = smallestSide / 3;
     DBG ("sliderSide: " << sliderSide);
 
+    presetMenu.setBounds(0, 0, width,20);
+    
     // Reactivate again once the other elements are figured out!
     gainSlider.setBounds(xPos - (sliderSide / 2), yPos - (sliderSide / 2), sliderSide, sliderSide);
     //gainSlider.setBounds(50, 50, 100, 100);
@@ -132,4 +135,5 @@ void HelloWorldAudioProcessorEditor::resized()
     pinkBox.setBounds(boxBounds.translated(boxBounds.getWidth(), boxBounds.getHeight()));
     blackBox.setBounds(boxBounds.translated(boxBounds.getWidth(), boxBounds.getHeight() * 2));
     purpleBox.setBounds(boxBounds.translated(boxBounds.getWidth(), boxBounds.getHeight() * 3));
+    
 }

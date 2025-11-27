@@ -10,7 +10,7 @@
 
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
-
+#include "PresetMenuComponent.h"
 #include "RedBox.h"
 
 //==============================================================================
@@ -36,7 +36,6 @@ private:
     ComboBox selectComboBox;
     TextButton clickTextButton { "Start" } ;
     ToggleButton bypassToggleButton;
-    
     RedBox redBox;
     BlueBox blueBox;
     GreenBox greenBox;
@@ -45,6 +44,7 @@ private:
     PinkBox pinkBox;
     PurpleBox purpleBox;
     WhiteBox whiteBox;
+    PresetMenuComponent presetMenu;
     
     
     // TODO 4:

@@ -20,7 +20,7 @@
 
 // TODO 4 - advanced
 // Schreibe und lese tatsächliche Dateien
-//hallo 
+//hallo
 class PresetMenuComponent : public Component
 {
 public:
@@ -34,10 +34,10 @@ public:
 private:
     
     // 1. WAS willst du haben? -> TextButton; 2. was soll der button für einen NAMEN haben? -> bspw. loadButton
-    TextButton loadButton;
-    TextButton saveButton;
-    TextButton nextButton;
-    TextButton previousButton;
-    
+    TextButton loadButton {"Load"} ;
+    TextButton saveButton {"Save"} ;
+    TextButton nextButton {"Next"} ;
+    TextButton previousButton {"Previous"};
+    TextButton clickTextButton { "" } ;
     Label currentPresetLabel;
 };

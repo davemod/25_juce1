@@ -14,6 +14,13 @@ PresetMenuComponent::PresetMenuComponent ()
 {
     // addAndMakeVisible der ganze Buttons
     DBG ("Preset Menu Component Created");
+    addAndMakeVisible(loadButton);
+    addAndMakeVisible(saveButton);
+    addAndMakeVisible(nextButton);
+    addAndMakeVisible(previousButton);
+    addAndMakeVisible(currentPresetLabel);
+    
+
 }
 
 PresetMenuComponent::~PresetMenuComponent ()
@@ -29,5 +36,7 @@ void PresetMenuComponent::resized ()
 
 void PresetMenuComponent::paint (Graphics& g)
 {
-    
+    g.fillAll(Colours::blue);
+    g.setColour(Colours::darkred);
+
 }
