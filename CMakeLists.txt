@@ -7,10 +7,11 @@ if(NOT DEFINED JUCE_DIR)
     set(JUCE_DIR "${CMAKE_SOURCE_DIR}/third_party/JUCE" CACHE PATH "Path to JUCE root")
 endif()
 
-# add file "juce_local.cmake" next to this one, containing:
+# add file "juce_local.cmake" next to thitarget_s one, containing:
 #set(JUCE_DIR "<PATH/TO/JUCE/FOLDER>" CACHE PATH "Local JUCE path")
 message(STATUS "Using JUCE_DIR = ${JUCE_DIR}")
 
+set(PROJECT_NAME 25_juce1)
 
 # Example Audio Plugin CMakeLists.txt
 
@@ -51,7 +52,7 @@ add_subdirectory("/home/hannes/Applications/JUCE" JUCE)                    # If 
 # the formats specified by the FORMATS arguments. This function accepts many optional arguments.
 # Check the readme at `docs/CMake API.md` in the JUCE repo for the full list.
 
-juce_add_plugin(HelloWorld
+juce_add_plugin(${PROJECT_NAME}
     # VERSION ...                               # Set this if the plugin version is different to the project version
     # ICON_BIG ...                              # ICON_* arguments specify a path to an image file to use as an icon for the Standalone
     # ICON_SMALL ...
@@ -74,14 +75,14 @@ juce_add_plugin(HelloWorld
 # include all your JUCE module headers; if you're happy to include module headers directly, you
 # probably don't need to call this.
 
-juce_generate_juce_header(HelloWorld)
+juce_generate_juce_header(${PROJECT_NAME})
 
 # `target_sources` adds source files to a target. We pass the target that needs the sources as the
 # first argument, then a visibility parameter for the sources which should normally be PRIVATE.
 # Finally, we supply a list of source files that will be built into the target. This is a standard
 # CMake command.
 
-target_sources(HelloWorld
+target_sources(${PROJECT_NAME}
         PRIVATE
         Source/PluginEditor.cpp
         Source/PluginProcessor.cpp
@@ -95,7 +96,7 @@ target_sources(HelloWorld
 #        "Source/*.cpp"
 #        "Source/*.h"
 #)
-target_sources(HelloWorld
+target_sources(${PROJECT_NAME}
         PRIVATE ${PROJECT_SOURCES})
 
 # `target_compile_definitions` adds some preprocessor definitions to our target. In a Projucer
@@ -105,7 +106,7 @@ target_sources(HelloWorld
 # definitions will be visible both to your code, and also the JUCE module code, so for new
 # definitions, pick unique names that are unlikely to collide! This is a standard CMake command.
 
-target_compile_definitions(HelloWorld
+target_compile_definitions(${PROJECT_NAME}
     PUBLIC
         # JUCE_WEB_BROWSER and JUCE_USE_CURL would be on by default, but you might not need them.
         JUCE_WEB_BROWSER=0  # If you remove this, add `NEEDS_WEB_BROWSER TRUE` to the `juce_add_plugin` call
@@ -127,7 +128,7 @@ target_compile_definitions(HelloWorld
 # linked automatically. If we'd generated a binary data target above, we would need to link to it
 # here too. This is a standard CMake command.
 
-target_link_libraries(HelloWorld
+target_link_libraries(${PROJECT_NAME}
     PRIVATE
         # AudioPluginData           # If we'd created a binary data target, we'd link to it here
         juce::juce_audio_utils
