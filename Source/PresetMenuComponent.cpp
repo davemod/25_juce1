@@ -11,12 +11,12 @@ PresetMenuComponent::PresetMenuComponent()
     addAndMakeVisible(nextButton);
     addAndMakeVisible(previousButton);
 
-    DBG ("Preset Menu Component Created");
+    //DBG ("Preset Menu Component Created");
 }
 
 PresetMenuComponent::~PresetMenuComponent ()
 {
-    DBG ("Preset Menu Component Destroyed");
+    //DBG ("Preset Menu Component Destroyed");
 }
 
 void PresetMenuComponent::resized() {

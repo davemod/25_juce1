@@ -134,7 +134,8 @@ void HelloWorldAudioProcessorEditor::resized()
     auto presetMenuArea = bounds.removeFromTop(bounds.getHeight() / 10);
 
     myPresetMenu.setBounds(presetMenuArea);
-    ezChannelStrip1.setBounds(0, presetMenuArea.getHeight(), bounds.getWidth() / 2, bounds.getHeight());
-    ezChannelStrip2.setBounds(bounds.getWidth() / 2, presetMenuArea.getHeight(), bounds.getWidth() / 2, bounds.getHeight());
+
+    ezChannelStrip1.setBounds(bounds.removeFromLeft(bounds.getWidth() / 2));
+    ezChannelStrip2.setBounds(bounds);
 
 }
