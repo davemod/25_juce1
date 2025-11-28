@@ -6,16 +6,20 @@
 
 #include <JuceHeader.h>
 
-class ChannelStripComponent  : public juce::Component {
+class ChannelStripComponent  : public Component
+{
 public:
-    ChannelStripComponent (); // CTOR / Constructor
+    ChannelStripComponent ();
     ~ChannelStripComponent() = default;
-
-    void resized() = default;
+    void resized() override;
+    //void openLoadFileChooser();
 
 private:
-    juce::Slider mainSlider;
+    Slider mainSlider;
     TextButton muteButton { "M" } ;
     TextButton soloButton { "S" };
-    //ToggleButton bypassToggleButton;
+    //TextButton loadButton { "load" };
+    //std::unique_ptr<juce::FileChooser> fileChooser;
+
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ChannelStripComponent)
 };

@@ -11,7 +11,7 @@ endif()
 #set(JUCE_DIR "<PATH/TO/JUCE/FOLDER>" CACHE PATH "Local JUCE path")
 message(STATUS "Using JUCE_DIR = ${JUCE_DIR}")
 
-set(PROJECT_NAME 25_juce1)
+set(PROJECT_NAME HelloWorld)
 
 # Example Audio Plugin CMakeLists.txt
 

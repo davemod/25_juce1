@@ -22,12 +22,12 @@ HelloWorldAudioProcessor::HelloWorldAudioProcessor()
                        )
 #endif
 {
-    DBG ("PluginProcessor ()");
+    //DBG ("PluginProcessor ()");
 }
 
 HelloWorldAudioProcessor::~HelloWorldAudioProcessor()
 {
-    DBG ("~PluginProcessor ()"); // will be called when an instance of HelloWorlAudioProcessor is destroyed
+    //DBG ("~PluginProcessor ()"); // will be called when an instance of HelloWorlAudioProcessor is destroyed
 }
 
 //==============================================================================

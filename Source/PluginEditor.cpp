@@ -65,16 +65,16 @@ gainSlider()
     //addAndMakeVisible(myRedBox);
     //addAndMakeVisible(myBlueBox);
     //addAndMakeVisible(myGreenBox);
-    //addAndMakeVisible(ezChannelStrip1);
-    //addAndMakeVisible(ezChannelStrip2);
-    addAndMakeVisible(myPresetMenu);
+    addAndMakeVisible(ezChannelStrip1);
+    addAndMakeVisible(ezChannelStrip2);
+    //addAndMakeVisible(myPresetMenu);
 
-    DBG ("PluginEditor ()");
+    //DBG ("PluginEditor ()");
 }
 
 HelloWorldAudioProcessorEditor::~HelloWorldAudioProcessorEditor()
 {
-    DBG ("~PluginEditor ()");
+    //DBG ("~PluginEditor ()");
 }
 
 //==============================================================================
@@ -134,8 +134,8 @@ void HelloWorldAudioProcessorEditor::resized()
     myGreenBox.setBounds(200, 50, 200, 200);
     */
 
-    //ezChannelStrip1.setBounds(0, 0, 250, 400);
-    //ezChannelStrip2.setBounds(250, 0, 250, 400);
+    ezChannelStrip1.setBounds(0, 0, bounds.getWidth() / 2, bounds.getHeight());
+    ezChannelStrip2.setBounds(bounds.getWidth() / 2, 0, bounds.getWidth() / 2, bounds.getHeight());
 
     myPresetMenu.setBounds(0, 0, width, height / 5);
 
