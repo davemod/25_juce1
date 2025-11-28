@@ -29,20 +29,17 @@ gainSlider()
     //gainSlider.setVisible (true);
     //addChildComponent (gainSlider);
 
-    addAndMakeVisible (gainSlider);
-    addAndMakeVisible (clickTextButton);
+    //addAndMakeVisible (gainSlider);
+    //addAndMakeVisible (clickTextButton);
     clickTextButton.setColour (TextButton::buttonColourId, Colours::purple);
     clickTextButton.setColour (TextButton::textColourOffId, Colours::black);
     clickTextButton.setColour (TextButton::textColourOnId, Colours::white);
     clickTextButton.setClickingTogglesState(true);
 
-
-
-    addAndMakeVisible (selectComboBox);
+    //addAndMakeVisible (selectComboBox);
 
     // Nothing selected - Text
     selectComboBox.setTextWhenNothingSelected( "Select Preset" );
-
 
     // Add items
     selectComboBox.addItem ("Cool Gain Slider", 1);
@@ -53,7 +50,7 @@ gainSlider()
     // Optionally set a default selection:
     selectComboBox.setSelectedId (0);
 
-    addAndMakeVisible (bypassToggleButton);
+    //addAndMakeVisible (bypassToggleButton);
 
     //clickTextButton::TextButton ()
 
@@ -67,7 +64,7 @@ gainSlider()
     //addAndMakeVisible(myGreenBox);
     addAndMakeVisible(ezChannelStrip1);
     addAndMakeVisible(ezChannelStrip2);
-    //addAndMakeVisible(myPresetMenu);
+    addAndMakeVisible(myPresetMenu);
 
     //DBG ("PluginEditor ()");
 }
@@ -134,9 +131,10 @@ void HelloWorldAudioProcessorEditor::resized()
     myGreenBox.setBounds(200, 50, 200, 200);
     */
 
-    ezChannelStrip1.setBounds(0, 0, bounds.getWidth() / 2, bounds.getHeight());
-    ezChannelStrip2.setBounds(bounds.getWidth() / 2, 0, bounds.getWidth() / 2, bounds.getHeight());
+    auto presetMenuArea = bounds.removeFromTop(bounds.getHeight() / 10);
 
-    myPresetMenu.setBounds(0, 0, width, height / 5);
+    myPresetMenu.setBounds(presetMenuArea);
+    ezChannelStrip1.setBounds(0, presetMenuArea.getHeight(), bounds.getWidth() / 2, bounds.getHeight());
+    ezChannelStrip2.setBounds(bounds.getWidth() / 2, presetMenuArea.getHeight(), bounds.getWidth() / 2, bounds.getHeight());
 
 }

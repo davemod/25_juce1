@@ -4,7 +4,7 @@
 
 #include "PresetMenuComponent.h"
 
-PresetMenuComponent::PresetMenuComponent ()
+PresetMenuComponent::PresetMenuComponent()
 {
     addAndMakeVisible(loadButton);
     addAndMakeVisible(saveButton);
@@ -22,8 +22,8 @@ PresetMenuComponent::~PresetMenuComponent ()
 void PresetMenuComponent::resized() {
 
     auto bounds = getLocalBounds();
-    int height = bounds.getY ();
-    int width = bounds.getX ();
+    int width = bounds.getWidth ();
+    int height = bounds.getHeight ();
 
     loadButton.setBounds(0, 0, width / 8, height);
     previousButton.setBounds((width / 8) + 1, 0, width / 8, height);

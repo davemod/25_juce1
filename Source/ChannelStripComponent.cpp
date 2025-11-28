@@ -36,7 +36,7 @@ void ChannelStripComponent::resized()
 
     //int buttonWidth = area.getWidth() / 4;
     // reserve space at the bottom for the buttons
-    auto buttonsArea = area.removeFromRight(area.getWidth() / 4); //area gets smaller here!!! This actually changes this rectangle.
+    auto buttonsArea = area.removeFromRight(area.getWidth() / 4);
 
     // split the buttons area in two for mute and solo
     auto buttonWidth = buttonsArea.getWidth() / 2;

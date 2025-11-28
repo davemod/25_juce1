@@ -38,9 +38,9 @@ private:
     TextButton clickTextButton { "Start" } ;
     ToggleButton bypassToggleButton;
     RedBox myRedBox;
+    PresetMenuComponent myPresetMenu;
     ChannelStripComponent ezChannelStrip1;
     ChannelStripComponent ezChannelStrip2;
-    PresetMenuComponent myPresetMenu;
 
     BlueBox myBlueBox;
     GreenBox myGreenBox;
