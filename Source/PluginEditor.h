@@ -10,6 +10,7 @@
 
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
+#include "PresetMenuComponent.h"
 
 #include "RedBox.h"
 
@@ -31,6 +32,8 @@ private:
     // access the processor object that created it.
     HelloWorldAudioProcessor& audioProcessor;
 
+    PresetMenuComponent presetMenu;
+    
     //juce::Slider gainSlider;
     Slider gainSlider;
     ComboBox selectComboBox;

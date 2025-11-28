@@ -12,13 +12,10 @@
 
 #include <JuceHeader.h>
 
-// TODO 2
-// Stell die PresetMenuComponent fertig, sodass sie alle Buttons und das Label richtig anzeigt und positioniert. Füge sie PluginEditor hinzu und positioniere sie am oberen Rand.
+// TODO 1
+// Implementiere openLoadFileChooser und openSaveFileChooser
 
-// TODO 3 - advanced
-// Beim klicken auf loadButton / saveButton soll sich ein juce::FileChooser öffnen.
-
-// TODO 4 - advanced
+// TODO 2 (advanced)
 // Schreibe und lese tatsächliche Dateien
 
 class PresetMenuComponent : public Component
@@ -34,10 +31,32 @@ public:
 private:
     
     // 1. WAS willst du haben? -> TextButton; 2. was soll der button für einen NAMEN haben? -> bspw. loadButton
-    TextButton loadButton;
-    TextButton saveButton;
-    TextButton nextButton;
-    TextButton previousButton;
+    TextButton loadButton{ "L" };
+    TextButton saveButton{ "S" };
+    TextButton nextButton{ ">" };
+    TextButton previousButton{ "<" };
     
-    Label currentPresetLabel;
+    Label currentPresetLabel{ "PresetLabel", "PRESET" };
+    
+    std::unique_ptr<FileChooser> fileChooser;
+    void openLoadFileChooser ();
+    void openSaveFileChooser ();
+    
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PresetMenuComponent)
 };
+
+
+
+/** LAMBDA FUNKTION
+ 1. capture list, 2. parameters, 3. function body
+ [this] (int x, int y) { }
+ 
+ // lambda example
+ auto func = []() {
+     DBG ("LAMBDA CALLED");
+ };
+ 
+ // lambda ausführen
+ func ();
+
+ */

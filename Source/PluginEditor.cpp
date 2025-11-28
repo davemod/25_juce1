@@ -37,6 +37,8 @@ gainSlider()
 
     addAndMakeVisible (selectComboBox);
 
+    addAndMakeVisible(presetMenu);
+    
     // Nothing selected - Text
     selectComboBox.setTextWhenNothingSelected( "Select Preset" );
 
@@ -88,6 +90,9 @@ void HelloWorldAudioProcessorEditor::resized()
     // subcomponents in your editor..
 
     auto bounds = getLocalBounds ();
+    
+    presetMenu.setBounds (bounds.removeFromTop (60).reduced(3));
+    
     auto centre = bounds.getCentre ();
     DBG ("Centre: " << centre.getX () << ", " << centre.getY ());
 
@@ -111,7 +116,7 @@ void HelloWorldAudioProcessorEditor::resized()
 //   bypassToggleButton.setBounds(JUCE_LIVE_CONSTANT (25),
 //                                JUCE_LIVE_CONSTANT (25), 25, 25);
    
-    bypassToggleButton.setBounds(25, 25, 25, 25);
+    // bypassToggleButton.setBounds(25, 25, 25, 25);
     selectComboBox.setBounds(xPos - 150, 25, 300, 25);
     clickTextButton.setBounds(xPos - (width / 8), yPos + (sliderSide / 2) + (sliderSide / 10), width / 4, height / 6);
     
