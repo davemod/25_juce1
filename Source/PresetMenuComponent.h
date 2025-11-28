@@ -34,10 +34,10 @@ public:
 private:
     
     // 1. WAS willst du haben? -> TextButton; 2. was soll der button für einen NAMEN haben? -> bspw. loadButton
-    TextButton loadButton {"Load"} ;
-    TextButton saveButton {"Save"} ;
-    TextButton nextButton {"Next"} ;
-    TextButton previousButton {"Previous"};
+    TextButton loadButton {"L"} ;
+    TextButton saveButton {"S"} ;
+    TextButton nextButton {"N"} ;
+    TextButton previousButton {"P"};
     TextButton clickTextButton { "" } ;
     Label currentPresetLabel;
 };

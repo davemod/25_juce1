@@ -20,7 +20,6 @@ PresetMenuComponent::PresetMenuComponent ()
     addAndMakeVisible(previousButton);
     addAndMakeVisible(currentPresetLabel);
     
-
 }
 
 PresetMenuComponent::~PresetMenuComponent ()
@@ -31,6 +30,14 @@ PresetMenuComponent::~PresetMenuComponent ()
 // 1. was gibt die funktion zurück? 2. zu welcher klasse gehört die funktion? 3. wie heißt die funktion? 4. was für argumente hat die funktion?
 void PresetMenuComponent::resized ()
 {
+    auto area = getLocalBounds();
+    //area.removeFromLeft = area.getHeight();
+    loadButton.setBounds(area.removeFromLeft(area.getHeight()).reduced(1));
+    previousButton.setBounds(area.removeFromLeft(area.getHeight()).reduced(1));
+    saveButton.setBounds(area.removeFromRight(area.getHeight()).reduced(1));
+    nextButton.setBounds(area.removeFromRight(area.getHeight()).reduced(1));
+    
+    
     
 }
 
