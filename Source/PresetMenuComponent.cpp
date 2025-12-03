@@ -33,6 +33,9 @@ PresetMenuComponent::PresetMenuComponent()
     
     addAndMakeVisible(previousButton);
     previousButton.setButtonText("<");
+    
+    auto dir = File::getSpecialLocation(File::userDocumentsDirectory);
+    presetFileChooser = std::make_unique<FileChooser> ("Load Preset...", File(), "*.json");
 }
 
 PresetMenuComponent::~PresetMenuComponent()
@@ -41,17 +44,27 @@ PresetMenuComponent::~PresetMenuComponent()
 
 void PresetMenuComponent::openLoadFileChooser()
 {
-    auto dir = File::getSpecialLocation(File::userDocumentsDirectory);
-    DBG(dir.getFullPathName());
-    auto presetFileChooser = std::make_unique<FileChooser> ("Load Preset...", File(), "*.json");
-    
     auto folderChooserFlags = FileBrowserComponent::openMode;
      
     presetFileChooser->launchAsync (folderChooserFlags, [this] (const FileChooser& chooser)
     {
         File presetFile (chooser.getResult());
  
-//        loadPresetFile (presetFile);
+        loadPresetFile (presetFile);
+        
+        // TODO: load preset file
+    });
+}
+
+void PresetMenuComponent::openSaveFileChooser()
+{
+    auto folderChooserFlags = FileBrowserComponent::saveMode;
+     
+    presetFileChooser->launchAsync (folderChooserFlags, [this] (const FileChooser& chooser)
+    {
+        File presetFile (chooser.getResult());
+ 
+        // TODO: save preset file
     });
 }
 

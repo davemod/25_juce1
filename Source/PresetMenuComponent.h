@@ -34,7 +34,12 @@ private:
     TextButton nextButton;
     TextButton previousButton;
     
+    std::unique_ptr<FileChooser> presetFileChooser;
+    
     void openLoadFileChooser();
+    void loadPresetFile (File&);
+    void openSaveFileChooser();
+    void savePresetFile (File&);
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PresetMenuComponent)
 };

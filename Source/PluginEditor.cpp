@@ -27,10 +27,9 @@ gainSlider()
     addAndMakeVisible (bypassToggleButton);
     addAndMakeVisible (channelStrip1);
     addAndMakeVisible (channelStrip2);
+    addAndMakeVisible (channelStrip3);
+    addAndMakeVisible (channelStrip4);
     addAndMakeVisible (presetMenu);
-    
-    addAndMakeVisible(redBox);
-    addAndMakeVisible(greenBox);
     
     textButton.setColour (TextButton::buttonColourId, Colours::purple);
     textButton.setColour (TextButton::textColourOffId, Colours::black);
@@ -76,13 +75,12 @@ void HelloWorldAudioProcessorEditor::resized()
     // This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..
     auto area = getLocalBounds();
-    auto channelStripWidth = area.getWidth()/5;
+    auto channelStripWidth = area.getWidth()/4;
     
     presetMenu.setBounds(area.removeFromTop(30));
     
     channelStrip1.setBounds (area.removeFromLeft (channelStripWidth));
     channelStrip2.setBounds (area.removeFromLeft (channelStripWidth));
-    
-    redBox.setBounds(area.removeFromLeft (channelStripWidth));
-    greenBox.setBounds(area.removeFromLeft (channelStripWidth));
+    channelStrip3.setBounds (area.removeFromLeft (channelStripWidth));
+    channelStrip4.setBounds (area.removeFromLeft (channelStripWidth));
 }

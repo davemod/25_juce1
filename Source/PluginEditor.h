@@ -39,11 +39,10 @@ private:
     
     ChannelStripComponent channelStrip1;
     ChannelStripComponent channelStrip2;
-
-    PresetMenuComponent presetMenu;
+    ChannelStripComponent channelStrip3;
+    ChannelStripComponent channelStrip4;
     
-    RedBox redBox;
-    GreenBox greenBox;
+    PresetMenuComponent presetMenu;
     
     // Individualisiere einige Eigenschaften, Farben etc der einzelnen Components (Tutorium, wenn ihr einen Termin findet)
 
