@@ -41,9 +41,9 @@ PresetMenuComponent::~PresetMenuComponent()
 
 void PresetMenuComponent::openLoadFileChooser()
 {
-    auto presetFileChooser = std::make_unique<FileChooser> ("Load Preset...",
-                                                   File::getCurrentWorkingDirectory(),
-                                                   "*.json");
+    auto dir = File::getSpecialLocation(File::userDocumentsDirectory);
+    DBG(dir.getFullPathName());
+    auto presetFileChooser = std::make_unique<FileChooser> ("Load Preset...", File(), "*.json");
     
     auto folderChooserFlags = FileBrowserComponent::openMode;
      
