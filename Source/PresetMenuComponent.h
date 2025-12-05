@@ -39,8 +39,17 @@ private:
     Label currentPresetLabel{ "PresetLabel", "PRESET" };
     
     std::unique_ptr<FileChooser> fileChooser;
+    
     void openLoadFileChooser ();
     void openSaveFileChooser ();
+    
+    // 
+    File getInitialDirectory ();
+    
+    // Beispiel Funktion, die einen unique_ptr<TestStruct> erstellt.
+    // Wenn der unique_ptr out of scope geht, löscht er das Objekt,
+    // auf das er zeigt.
+    void uniquePtrExample ();
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PresetMenuComponent)
 };

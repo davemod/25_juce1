@@ -15,18 +15,18 @@ PresetMenuComponent::PresetMenuComponent ()
     // addAndMakeVisible der ganze Buttons
     DBG ("Preset Menu Component Created");
     
-    // erstellen einer buttonClicked Methode
-    auto loadButtonClicked = [this](){
+    // speichern der buttonClickFunktion in der onClick Methode eines buttons
+    loadButton.onClick = [this]()
+    {
         DBG ("LOAD CLICKED");
         openLoadFileChooser();
     };
-
-    // speichern der buttonClickFunktion in der onClick Methode eines buttons
-    loadButton.onClick = loadButtonClicked;
+    
     saveButton.onClick = [this]()
     {
         DBG ("SAVE CLICKED");
         openSaveFileChooser();
+        uniquePtrExample ();
     };
     
     addAndMakeVisible(loadButton);
@@ -77,12 +77,109 @@ void PresetMenuComponent::paint (Graphics& g)
 
 void PresetMenuComponent::openLoadFileChooser()
 {
-    // TODO
+    // initialer pfad, den unser filechooser zeigen soll, wenn er geöffnet wird
+    auto initialDirectory = getInitialDirectory();
+    fileChooser = std::make_unique<FileChooser> ("Select Preset", initialDirectory);
+    
+    // die flags aus FileBrowserComponent zeigen dem filechooser, was er können soll.
+    // dazu müssen wir verstehen, wie integers und bit operatoren funktionieren.
+    
+    // BIT OPERATORS
+    // FileChooserComponent::openMode        00000001
+    // FileChooserComponent::canSelectFiles  00000100
+    //
+    // openMode | canSelectFiles             00000101
+        
+    int flags = FileBrowserComponent::openMode | FileBrowserComponent::canSelectFiles;
+    
+    // wenn eine datei gewählt wurde, möchte unser filechooser eine LAMBDA funktion aufrufen können. schauen
+    // wir FileChooser::launchAsync an, sehen wir dass die Funktion so aussehen soll: <void(const FileChooser&)>
+    auto functionToCallWhenFileSelected = [&](const FileChooser& chooser)
+    {
+        auto file = chooser.getResult();
+        
+        if (file.existsAsFile())
+        {
+            DBG ("File chosen: " << file.getFullPathName());
+        }
+    };
+    
+    // starten unseres fileChoosers mithilfe der flags (openMode | canSelectFiles) und der LAMBDA
+    fileChooser->launchAsync(flags, functionToCallWhenFileSelected);
 }
 
 void PresetMenuComponent::openSaveFileChooser()
 {
-    // TODO
+    auto initalDirectory = getInitialDirectory();
+    fileChooser = std::make_unique<FileChooser> ("Save Preset", initalDirectory);
+    
+    int flags = FileBrowserComponent::saveMode | FileBrowserComponent::warnAboutOverwriting;
+    
+    auto functionToCallWhenFileWritten = [&](const FileChooser& chooser)
+    {
+        auto file = chooser.getResult();
+        
+        if (file.getFullPathName().isNotEmpty())
+        {
+            DBG ("File specified by user where we should write our preset: " << file.getFullPathName());
+        }
+        else
+        {
+            DBG ("User canceled saving preset");
+        }
+    };
+    
+    fileChooser->launchAsync(flags, functionToCallWhenFileWritten);
 }
 
+
+File PresetMenuComponent::getInitialDirectory()
+{
+    // Geeignete Directory für unsere Presets
+    File initialDirectory = File::getSpecialLocation(File::SpecialLocationType::userDocumentsDirectory);
+    
+    DBG (initialDirectory.getFullPathName());
+    // ~/Documents
+    
+    initialDirectory = initialDirectory.getChildFile (ProjectInfo::companyName);
+    DBG (initialDirectory.getFullPathName());
+    // ~/Documents/CompanyName
+    
+    initialDirectory = initialDirectory.getChildFile(ProjectInfo::projectName);
+    DBG (initialDirectory.getFullPathName());
+    // ~/Documents/CompanyName/ProjectName
+    
+    initialDirectory = initialDirectory.getChildFile ("Presets");
+    DBG (initialDirectory.getFullPathName());
+    // ~/Documents/CompanyName/ProjectName/Presets
+    
+    if (! initialDirectory.exists())
+        initialDirectory.createDirectory();
+
+    return initialDirectory;
+}
+
+
+void PresetMenuComponent::uniquePtrExample()
+{
+    struct TestStruct
+    {
+        TestStruct ()
+        {
+            DBG ("TestStruct");
+        }
+        
+        ~TestStruct ()
+        {
+            DBG ("~TestStruct");
+        }
+        
+        JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(TestStruct)
+    };
+    
+    auto testStruct = new TestStruct ();
+    
+    std::unique_ptr<TestStruct> uniqueTestStructPtr;
+    uniqueTestStructPtr.reset (testStruct);
+}
 
