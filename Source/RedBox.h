@@ -33,6 +33,7 @@ class RedBox : public ColouredBox
 {
 public:
     RedBox ();
+    ~RedBox() override;
 };
 
 // Deklaration einer eigenen Klasse, die von juce::Component ableitet.
@@ -40,6 +41,7 @@ class GreenBox : public ColouredBox
 {
 public:
     GreenBox ();
+    ~GreenBox() override;
 };
 
 // Deklaration einer eigenen Klasse, die von juce::Component ableitet.
@@ -47,6 +49,5 @@ class BlueBox : public ColouredBox
 {
 public:
     BlueBox ();
+    ~BlueBox() override;
 };
-
-// TODO 1 Fünf weitere boxen mit verschiedene Farben die von ColouredBox ableiten

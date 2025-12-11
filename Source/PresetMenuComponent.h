@@ -2,8 +2,8 @@
   ==============================================================================
 
     PresetMenuComponent.h
-    Created: 21 Nov 2025 9:42:48am
-    Author:  David Hill
+    Created: 21 Nov 2025 9:41:00am
+    Author:  eddoard
 
   ==============================================================================
 */
@@ -12,60 +12,34 @@
 
 #include <JuceHeader.h>
 
-// TODO 1
-// Implementiere openLoadFileChooser und openSaveFileChooser
-
-// TODO 2 (advanced)
-// Schreibe und lese tatsächliche Dateien
-
-class PresetMenuComponent : public Component
+//==============================================================================
+/*
+*/
+class PresetMenuComponent  : public juce::Component
 {
 public:
-    PresetMenuComponent ();
-    ~PresetMenuComponent () override;
-    
-    // 1 was gibt die funktion zurück? 2 wie heißt die funktion? 3 welche argumente bekommt die funktion übergeben? 4 Überschreibt die Funktion eine Funktion aus Component?
-    void resized () override;
+    PresetMenuComponent();
+    ~PresetMenuComponent() override;
+
     void paint (juce::Graphics&) override;
-    
+    void resized() override;
+
 private:
+    String currentPreset;
     
-    // 1. WAS willst du haben? -> TextButton; 2. was soll der button für einen NAMEN haben? -> bspw. loadButton
-    TextButton loadButton{ "L" };
-    TextButton saveButton{ "S" };
-    TextButton nextButton{ ">" };
-    TextButton previousButton{ "<" };
+    ComboBox presetChooser;
+    Label currentPresetLabel;
+    TextButton loadButton;
+    TextButton saveButton;
+    TextButton nextButton;
+    TextButton previousButton;
     
-    Label currentPresetLabel{ "PresetLabel", "PRESET" };
+    std::unique_ptr<FileChooser> presetFileChooser;
     
-    std::unique_ptr<FileChooser> fileChooser;
+    void openLoadFileChooser();
+    void loadPresetFile (File&);
+    void openSaveFileChooser();
+    void savePresetFile (File&);
     
-    void openLoadFileChooser ();
-    void openSaveFileChooser ();
-    
-    // 
-    File getInitialDirectory ();
-    
-    // Beispiel Funktion, die einen unique_ptr<TestStruct> erstellt.
-    // Wenn der unique_ptr out of scope geht, löscht er das Objekt,
-    // auf das er zeigt.
-    void uniquePtrExample ();
-    
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PresetMenuComponent)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PresetMenuComponent)
 };
-
-
-
-/** LAMBDA FUNKTION
- 1. capture list, 2. parameters, 3. function body
- [this] (int x, int y) { }
- 
- // lambda example
- auto func = []() {
-     DBG ("LAMBDA CALLED");
- };
- 
- // lambda ausführen
- func ();
-
- */

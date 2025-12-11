@@ -10,9 +10,9 @@
 
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
-#include "PresetMenuComponent.h"
-
 #include "RedBox.h"
+#include "ChannelStripComponent.h"
+#include "PresetMenuComponent.h"
 
 //==============================================================================
 /**
@@ -32,22 +32,30 @@ private:
     // access the processor object that created it.
     HelloWorldAudioProcessor& audioProcessor;
 
+    Slider gainSlider;
+    ComboBox comboBox;
+    TextButton textButton { "Start" };
+    ToggleButton bypassToggleButton;
+
+    // RedBox redBox;
+    // BlueBox blueBox;
+    // GreenBox greenBox;
+    
+    ChannelStripComponent channelStrip1;
+    ChannelStripComponent channelStrip2;
+    ChannelStripComponent channelStrip3;
+    ChannelStripComponent channelStrip4;
+    
     PresetMenuComponent presetMenu;
     
-    //juce::Slider gainSlider;
-    Slider gainSlider;
-    ComboBox selectComboBox;
-    TextButton clickTextButton { "Start" } ;
-    ToggleButton bypassToggleButton;
-    
-    RedBox redBox;
-    BlueBox blueBox;
-    GreenBox greenBox;
-    
+    // Individualisiere einige Eigenschaften, Farben etc der einzelnen Components (Tutorium, wenn ihr einen Termin findet)
+
+    // Advanced:
+    // Erstellen eigener Components, bspw. eine Klasse, die einfach nur den gesamten Bereich rot färbt!
+
     // TODO 4:
     // class ChannelStripComponent, eine Klasse, die einen Slider, einen Solo und einen Mute Button darstellt.
     // Anzeigen von mindestens zwei ChannelStripComponents im PluginEditor
-    
     
     // Übersicht über mögliche juce Components findet ihr hier:
     // https://docs.juce.com/master/classjuce_1_1Component.html

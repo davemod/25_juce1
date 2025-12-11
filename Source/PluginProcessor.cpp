@@ -214,9 +214,6 @@ juce::AudioProcessorEditor* HelloWorldAudioProcessor::createCrashsAndLeaks()
     // nur zugriff auf erste Instanz (instance1 liegt auf dem stack) und dritte Instanz (liegt auf dem heap)
     // die zweite instanz, liegt irgendwo, aber es zeigt nichts mehr drauf
     
-    // kopieren eines pointers, zeigt auf die selbe instanz
-    HelloWorldAudioProcessorEditor * editorPtr2 = editorPtr;
-    
     // erstellen eines dritten pointers, der auf instance1 zeit. instance1 ist ein Editor, der auf dem stack instanziiert wurde und nur bis zum ende dieses scopes lebt.
     HelloWorldAudioProcessorEditor * editorPtr3 = &instance1;
     
