@@ -1,3 +1,6 @@
 [submodule "Submodule/auto_init_juce"]
 	path = Submodule/auto_init_juce
 	url = https://github.com/cynj-at/auto_init_juce.git
+[submodule "Submodules/terminal-git-helpers"]
+	path = Submodules/terminal-git-helpers
+	url = https://github.com/cynj-at/terminal-git-helpers.git
