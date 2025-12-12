@@ -10,6 +10,10 @@
 
 #include <JuceHeader.h>
 
+// TODO 1: include LinearPhaseFourBandEQ.h and create instance
+// TODO 4: create four variables to store the gain of each band
+// TODO 5: create a setter and getter method, to set each of these values
+//
 //==============================================================================
 /**
 */

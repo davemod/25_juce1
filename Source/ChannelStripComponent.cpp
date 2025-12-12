@@ -72,6 +72,13 @@ ChannelStripComponent::ChannelStripComponent()
     levelFader.setTextBoxStyle(Slider::TextEntryBoxPosition::TextBoxBelow, false, 50, 20);
     addAndMakeVisible(levelFader);
     
+//  TODO 9
+//    levelFader.onValueChange = [this]() {
+//        if (onLevelChanged)
+//            onLevelChanged (levelFader.getValue ());
+//    };
+    
+    
     setSize(50, 500);
 }
 

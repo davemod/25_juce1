@@ -6,6 +6,10 @@
   ==============================================================================
 */
 
+// TODO 2: prepare linear phase filter
+// TODO 3: call processBlock from linear phase filter
+// TODO 6: call setBandGains and set the band gains using your getter methods
+
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 

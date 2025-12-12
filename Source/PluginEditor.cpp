@@ -31,6 +31,10 @@ gainSlider()
     addAndMakeVisible (channelStrip4);
     addAndMakeVisible (presetMenu);
     
+    // TODO 10:
+    // set levels in plugin processor, when channelStripX.onLevelChanged was called
+    // Example: channelStrip1.onLevelChanged = [this] (float levelInDecibels) { audioProcessor.setBandAGain ( convert edcibels to gain ); }
+    
     textButton.setColour (TextButton::buttonColourId, Colours::purple);
     textButton.setColour (TextButton::textColourOffId, Colours::black);
     textButton.setColour (TextButton::textColourOnId, Colours::white);
@@ -62,7 +66,7 @@ gainSlider()
     // addAndMakeVisible (greenBox);
     
     setSize (500, 400);
-    setResizeLimits(300, 200, INT_MAX, INT_MAX);
+    setResizeLimits(300, 200, 900, 600);
 }
 
 HelloWorldAudioProcessorEditor::~HelloWorldAudioProcessorEditor()

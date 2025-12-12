@@ -40,6 +40,11 @@ public:
     void paint (juce::Graphics&) override;
     void resized() override;
 
+    // TODO 7, create an std::function<void(float level)> onLevelChanged;
+    // TODO 8, set onValueChanged from your PluginEditor constructor
+    // Bsp: channeStrip1.onValueChanged = [&] (float sliderValue) { /* set the corresponding band gain on audio processor */ }
+    
+    
 private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ChannelStripComponent)
     
