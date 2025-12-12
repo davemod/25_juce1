@@ -12,7 +12,7 @@ public:
     ChannelStripComponent ();
     ~ChannelStripComponent() = default;
     void resized() override;
-    //void openLoadFileChooser();
+    void paint (juce::Graphics&) override;
 
 private:
     Slider mainSlider;

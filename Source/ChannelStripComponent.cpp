@@ -42,12 +42,20 @@ void ChannelStripComponent::resized()
     auto buttonWidth = buttonsArea.getWidth() / 2;
     //muteButton.setBounds(buttonsArea.removeFromLeft(buttonWidth).reduced(2));  // small margin
     //soloButton.setBounds(buttonsArea.reduced(2));
-    muteButton.setBounds(buttonsArea.getX() + (buttonsArea.getWidth() / 2) - (buttonWidth / 2), buttonsArea.getY(), buttonWidth, buttonWidth);
-    soloButton.setBounds(buttonsArea.getX() + (buttonsArea.getWidth() / 2) - (buttonWidth / 2), buttonsArea.getY()+ buttonWidth + (buttonsArea.getHeight() / 9), buttonWidth, buttonWidth);
+    //muteButton.setBounds(buttonsArea.getX() + (buttonsArea.getWidth() / 2) - (buttonWidth / 2), buttonsArea.getY(), buttonWidth, buttonWidth);
+    muteButton.setBounds(buttonsArea.getX(), buttonsArea.getY(), buttonWidth, buttonWidth);
+    //soloButton.setBounds(buttonsArea.getX() + (buttonsArea.getWidth() / 2) - (buttonWidth / 2), buttonsArea.getY()+ buttonWidth + (buttonsArea.getHeight() / 9), buttonWidth, buttonWidth);
+    soloButton.setBounds(buttonsArea.getX(), buttonsArea.getY()+ buttonWidth + (buttonsArea.getHeight() / 9), buttonWidth, buttonWidth);
+
 
     int sliderWidth = area.getWidth() / 2;
     // rest is slider
     mainSlider.setBounds(area.getWidth() / 2 - sliderWidth / 2, area.getY(), sliderWidth, area.getHeight());
     //loadButton.setBounds(area.removeFromLeft(buttonWidth * 2));
 
+}
+
+void ChannelStripComponent::paint (Graphics& g)
+{
+    g.fillAll (juce::Colours::indigo);
 }
