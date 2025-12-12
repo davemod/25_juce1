@@ -140,9 +140,9 @@ void PresetMenuComponent::openSaveFileChooser()
 void PresetMenuComponent::nextPreset() {
     DBG("Next Preset clicked");
     int currentID = presetDropdown.getSelectedId();
-    DBG(currentID);
+    //DBG(currentID);
     int availableIDs = presetDropdown.getNumItems();
-    DBG(availableIDs);
+    //DBG(availableIDs);
     if (currentID < availableIDs) {
         int nextID = currentID + 1;
         presetDropdown.setSelectedId(nextID);
@@ -152,9 +152,9 @@ void PresetMenuComponent::nextPreset() {
 void PresetMenuComponent::previousPreset() {
     DBG("Previous Preset clicked");
     int currentID = presetDropdown.getSelectedId();
-    DBG(currentID);
+    //DBG(currentID);
     int availableIDs = presetDropdown.getNumItems();
-    DBG(availableIDs);
+    //DBG(availableIDs);
     if (currentID > 1) {
         int nextID = currentID - 1;
         presetDropdown.setSelectedId(nextID);
