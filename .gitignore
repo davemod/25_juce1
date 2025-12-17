@@ -6,3 +6,9 @@ JuceLibraryCode/
 /cmake-build-release/
 /Source/.idea/
 .idea/
+
+build/
+build.sh
+
+Submodules/auto_init_juce/
+Submodules/terminal-git-helpers/

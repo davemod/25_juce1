@@ -192,4 +192,5 @@ private:
 
     juce::AudioBuffer<float> originalBuffer;
     juce::AudioBuffer<float> lp1Buffer, lp2Buffer, lp3Buffer;
+
 };

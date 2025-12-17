@@ -9,6 +9,7 @@
 #pragma once
 
 #include <JuceHeader.h>
+#include "LinearPhaseFourBandEQ.h"
 
 // TODO 1: include LinearPhaseFourBandEQ.h and create instance
 // TODO 4: create four variables to store the gain of each band
@@ -57,12 +58,32 @@ public:
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
 
+
+    // TODO 5
+    //Setter
+    void setLowGain (float g);
+    void setLowMidGain (float g);
+    void setHighMidGain (float g);
+    void setHighGain (float g);
+    //Getter
+    float getLowGain() const;
+    float getLowMidGain() const;
+    float getHighMidGain() const;
+    float getHighGain() const;
+
 private:
     // Deklaration einer Funktion
     // 1. Rückgabetyp (juce::AudioProcessorEditor*)
     // 2. Funktionsname (createCrashingEditor)
     // 3. Innerhalb der Klammern Argumente
     juce::AudioProcessorEditor* createCrashsAndLeaks ();
+    // TODO 1
+    LinearPhaseFourBandEQ lpfbEQ;
+    // TODO 4
+    float lowGain     = 1.0f;
+    float lowMidGain  = 1.0f;
+    float highMidGain = 1.0f;
+    float highGain    = 1.0f;
     
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (HelloWorldAudioProcessor)

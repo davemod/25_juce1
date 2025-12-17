@@ -5,17 +5,17 @@
 #
 
 # optionally load local machine settings (add juce_local.cmake to .gitignore)
-include(juce_local.cmake OPTIONAL)
+# include(juce_local.cmake OPTIONAL)
 
 # allow -DJUCE_DIR=... on command line or juce_local.cmake to set it
-if(NOT DEFINED JUCE_DIR)
-    # default fallback: try a project submodule / third_party dir
-    set(JUCE_DIR "${CMAKE_SOURCE_DIR}/third_party/JUCE" CACHE PATH "Path to JUCE root")
-endif()
+# if(NOT DEFINED JUCE_DIR)
+#     # default fallback: try a project submodule / third_party dir
+#     set(JUCE_DIR "${CMAKE_SOURCE_DIR}/Submodules/juce" CACHE PATH "Path to JUCE root")
+# endif()
 
 # add file "juce_local.cmake" next to thitarget_s one, containing:
 #set(JUCE_DIR "<PATH/TO/JUCE/FOLDER>" CACHE PATH "Local JUCE path")
-message(STATUS "Using JUCE_DIR = ${JUCE_DIR}")
+# message(STATUS "Using JUCE_DIR = ${JUCE_DIR}")
 
 set(PROJECT_NAME HelloWorld)
 
@@ -44,7 +44,7 @@ project(HELLO_WORLD VERSION 0.0.2)
 
 # find_package(JUCE CONFIG REQUIRED)        # If you've installed JUCE to your system
 # or
-add_subdirectory(${JUCE_DIR} JUCE)                    # If you've put JUCE in a subdirectory called JUCE
+add_subdirectory(Submodules/juce)                    # If you've put JUCE in a subdirectory called JUCE
 
 # If you are building a VST2 or AAX plugin, CMake needs to be told where to find these SDKs on your
 # system. This setup should be done before calling `juce_add_plugin`.
@@ -139,11 +139,29 @@ target_compile_definitions(${PROJECT_NAME}
 # linked automatically. If we'd generated a binary data target above, we would need to link to it
 # here too. This is a standard CMake command.
 
-target_link_libraries(${PROJECT_NAME}
-        PRIVATE
-        # AudioPluginData           # If we'd created a binary data target, we'd link to it here
-        juce::juce_audio_utils
-        PUBLIC
-        juce::juce_recommended_config_flags
-        juce::juce_recommended_lto_flags
-        juce::juce_recommended_warning_flags)
+target_link_libraries(${PROJECT_NAME} PRIVATE
+    #juce::juce_analytics
+    juce::juce_animation
+    juce::juce_audio_basics
+    # juce::juce_audio_devices
+    # juce::juce_audio_formats
+    # juce::juce_audio_plugin_client
+    juce::juce_audio_processors
+    juce::juce_audio_utils
+    #juce::juce_box2d
+    juce::juce_core
+    #juce::juce_cryptography
+    juce::juce_data_structures
+    juce::juce_dsp
+    juce::juce_events
+    juce::juce_graphics
+    juce::juce_gui_basics
+    juce::juce_gui_extra
+    #juce::juce_javascript
+    #juce::juce_midi_ci
+    #juce::juce_opengl
+    #juce::juce_osc
+    #juce::juce_product_unlocking
+    #juce::juce_video
+#     BinaryData
+)

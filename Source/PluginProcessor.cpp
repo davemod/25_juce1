@@ -101,12 +101,19 @@ void HelloWorldAudioProcessor::prepareToPlay (double sampleRate, int samplesPerB
 {
     // Use this method as the place to do any pre-playback
     // initialisation that you need..
+    // TODO 2
+    const auto numChannels = getTotalNumOutputChannels();
+    lpfbEQ.prepare(sampleRate, samplesPerBlock, numChannels);
+
+    lpfbEQ.setBandGains(0.5f, 1.0f, 1.0f, 0.5f);
+
 }
 
 void HelloWorldAudioProcessor::releaseResources()
 {
     // When playback stops, you can use this as an opportunity to free up any
     // spare memory, etc.
+    lpfbEQ.reset();
 }
 
 #ifndef JucePlugin_PreferredChannelConfigurations
@@ -138,32 +145,19 @@ bool HelloWorldAudioProcessor::isBusesLayoutSupported (const BusesLayout& layout
 void HelloWorldAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
     juce::ScopedNoDenormals noDenormals;
-    auto totalNumInputChannels  = getTotalNumInputChannels();
-    auto totalNumOutputChannels = getTotalNumOutputChannels();
+    // auto totalNumInputChannels  = getTotalNumInputChannels();
+    // auto totalNumOutputChannels = getTotalNumOutputChannels();
 
+    // TODO 6
+    lpfbEQ.setBandGains (
+        lowGain,
+        lowMidGain,
+        highMidGain,
+        highGain
+    );
+    // TODO 3
+    lpfbEQ.processBlock(buffer);
     
-    // DBG ("Buffer Size: " << buffer.getNumSamples ());
-    
-    // In case we have more outputs than inputs, this code clears any output
-    // channels that didn't contain input data, (because these aren't
-    // guaranteed to be empty - they may contain garbage).
-    // This is here to avoid people getting screaming feedback
-    // when they first compile a plugin, but obviously you don't need to keep
-    // this code if your algorithm always overwrites all the output channels.
-    for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
-        buffer.clear (i, 0, buffer.getNumSamples());
-
-    // This is the place where you'd normally do the guts of your plugin's
-    // audio processing...
-    // Make sure to reset the state if your inner loop is processing
-    // the samples and the outer loop is handling the channels.
-    // Alternatively, you can process the samples with the channels
-    // interleaved by keeping the same state.
-    for (int channel = 0; channel < totalNumInputChannels; ++channel)
-    {
-        auto* channelData = buffer.getWritePointer (channel);
-        // ..do something to the data...
-    }
 }
 
 //==============================================================================
@@ -226,4 +220,44 @@ juce::AudioProcessorEditor* HelloWorldAudioProcessor::createCrashsAndLeaks()
 } // SCOPE ENDE
 
 
+void HelloWorldAudioProcessor::setLowGain (float g)
+{
+    lowGain = g;
+}
 
+void HelloWorldAudioProcessor::setLowMidGain (float g)
+{
+    lowMidGain = g;
+}
+
+void HelloWorldAudioProcessor::setHighMidGain (float g)
+{
+    highMidGain = g;
+}
+
+void HelloWorldAudioProcessor::setHighGain (float g)
+{
+    highGain = g;
+}
+
+// -------- GETTER --------
+
+float HelloWorldAudioProcessor::getLowGain() const
+{
+    return lowGain;
+}
+
+float HelloWorldAudioProcessor::getLowMidGain() const
+{
+    return lowMidGain;
+}
+
+float HelloWorldAudioProcessor::getHighMidGain() const
+{
+    return highMidGain;
+}
+
+float HelloWorldAudioProcessor::getHighGain() const
+{
+    return highGain;
+}

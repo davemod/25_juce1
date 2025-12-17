@@ -41,6 +41,7 @@ public:
     void resized() override;
 
     // TODO 7, create an std::function<void(float level)> onLevelChanged;
+    std::function<void(float level)> onLevelChanged;
     // TODO 8, set onValueChanged from your PluginEditor constructor
     // Bsp: channeStrip1.onValueChanged = [&] (float sliderValue) { /* set the corresponding band gain on audio processor */ }
     

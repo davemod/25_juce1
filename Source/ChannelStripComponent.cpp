@@ -73,10 +73,12 @@ ChannelStripComponent::ChannelStripComponent()
     addAndMakeVisible(levelFader);
     
 //  TODO 9
-//    levelFader.onValueChange = [this]() {
-//        if (onLevelChanged)
-//            onLevelChanged (levelFader.getValue ());
-//    };
+    levelFader.onValueChange = [this]()
+    {
+        if (onLevelChanged)
+            onLevelChanged ((float) levelFader.getValue());
+    };
+
     
     
     setSize(50, 500);

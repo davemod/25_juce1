@@ -31,9 +31,38 @@ gainSlider()
     addAndMakeVisible (channelStrip4);
     addAndMakeVisible (presetMenu);
     
-    // TODO 10:
+    // TODO 8 & 10:
     // set levels in plugin processor, when channelStripX.onLevelChanged was called
     // Example: channelStrip1.onLevelChanged = [this] (float levelInDecibels) { audioProcessor.setBandAGain ( convert edcibels to gain ); }
+
+    channelStrip1.onLevelChanged = [this] (float dB)
+    {
+        audioProcessor.setLowGain (
+            juce::Decibels::decibelsToGain (dB)
+        );
+    };
+
+    channelStrip2.onLevelChanged = [this] (float dB)
+    {
+        audioProcessor.setLowMidGain (
+            juce::Decibels::decibelsToGain (dB)
+        );
+    };
+
+    channelStrip3.onLevelChanged = [this] (float dB)
+    {
+        audioProcessor.setHighMidGain (
+            juce::Decibels::decibelsToGain (dB)
+        );
+    };
+
+    channelStrip4.onLevelChanged = [this] (float dB)
+    {
+        audioProcessor.setHighGain (
+            juce::Decibels::decibelsToGain (dB)
+        );
+    };
+
     
     textButton.setColour (TextButton::buttonColourId, Colours::purple);
     textButton.setColour (TextButton::textColourOffId, Colours::black);

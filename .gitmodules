@@ -1,0 +1,3 @@
+[submodule "Submodules/juce"]
+	path = Submodules/juce
+	url = https://github.com/cynj-at/juce.git

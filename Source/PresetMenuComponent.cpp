@@ -57,7 +57,6 @@ void PresetMenuComponent::openLoadFileChooser()
  
         // loadPresetFile (presetFile);
         
-        // TODO: load preset file
     });
 }
 
@@ -72,7 +71,6 @@ void PresetMenuComponent::openSaveFileChooser()
     {
         File presetFile (chooser.getResult());
  
-        // TODO: save preset file
     });
 }
 

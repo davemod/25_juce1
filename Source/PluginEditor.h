@@ -53,7 +53,6 @@ private:
     // Advanced:
     // Erstellen eigener Components, bspw. eine Klasse, die einfach nur den gesamten Bereich rot färbt!
 
-    // TODO 4:
     // class ChannelStripComponent, eine Klasse, die einen Slider, einen Solo und einen Mute Button darstellt.
     // Anzeigen von mindestens zwei ChannelStripComponents im PluginEditor
     
