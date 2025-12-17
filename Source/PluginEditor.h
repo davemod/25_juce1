@@ -41,7 +41,7 @@ private:
     // BlueBox blueBox;
     // GreenBox greenBox;
     
-    ChannelStripComponent channelStrip1;
+    ChannelStripComponent channelStrip1; // Das hier sind Member-Variablen!
     ChannelStripComponent channelStrip2;
     ChannelStripComponent channelStrip3;
     ChannelStripComponent channelStrip4;

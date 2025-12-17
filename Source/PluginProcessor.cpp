@@ -6,8 +6,8 @@
   ==============================================================================
 */
 
-// TODO 2: prepare linear phase filter
-// TODO 3: call processBlock from linear phase filter
+// DONE 2: prepare linear phase filter
+// DONE 3: call processBlock from linear phase filter
 // TODO 6: call setBandGains and set the band gains using your getter methods
 
 #include "PluginProcessor.h"
@@ -101,6 +101,9 @@ void HelloWorldAudioProcessor::prepareToPlay (double sampleRate, int samplesPerB
 {
     // Use this method as the place to do any pre-playback
     // initialisation that you need..
+    const auto numChannels = getTotalNumOutputChannels();
+    linearPhaseFourBandEQ.prepare(sampleRate, samplesPerBlock, numChannels);
+
 }
 
 void HelloWorldAudioProcessor::releaseResources()
@@ -141,29 +144,32 @@ void HelloWorldAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
     auto totalNumInputChannels  = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
 
+    linearPhaseFourBandEQ.processBlock(buffer);
+
+/**
+     DBG ("Buffer Size: " << buffer.getNumSamples ());
     
-    // DBG ("Buffer Size: " << buffer.getNumSamples ());
-    
-    // In case we have more outputs than inputs, this code clears any output
-    // channels that didn't contain input data, (because these aren't
-    // guaranteed to be empty - they may contain garbage).
-    // This is here to avoid people getting screaming feedback
-    // when they first compile a plugin, but obviously you don't need to keep
-    // this code if your algorithm always overwrites all the output channels.
+     In case we have more outputs than inputs, this code clears any output
+     channels that didn't contain input data, (because these aren't
+     guaranteed to be empty - they may contain garbage).
+     This is here to avoid people getting screaming feedback
+     when they first compile a plugin, but obviously you don't need to keep
+     this code if your algorithm always overwrites all the output channels.
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
 
-    // This is the place where you'd normally do the guts of your plugin's
-    // audio processing...
-    // Make sure to reset the state if your inner loop is processing
-    // the samples and the outer loop is handling the channels.
-    // Alternatively, you can process the samples with the channels
-    // interleaved by keeping the same state.
+     This is the place where you'd normally do the guts of your plugin's
+     audio processing...
+     Make sure to reset the state if your inner loop is processing
+     the samples and the outer loop is handling the channels.
+     Alternatively, you can process the samples with the channels
+     interleaved by keeping the same state.
     for (int channel = 0; channel < totalNumInputChannels; ++channel)
     {
         auto* channelData = buffer.getWritePointer (channel);
-        // ..do something to the data...
+         ..do something to the data...
     }
+*/
 }
 
 //==============================================================================
@@ -226,4 +232,43 @@ juce::AudioProcessorEditor* HelloWorldAudioProcessor::createCrashsAndLeaks()
 } // SCOPE ENDE
 
 
+// THE SETTERS!
+void HelloWorldAudioProcessor::setLowGain(float g)
+{
+    lowGain = g;
+}
 
+void HelloWorldAudioProcessor::setLowMidGain(float g)
+{
+    lowMidGain = g;
+}
+
+void HelloWorldAudioProcessor::setHighMidGain(float g)
+{
+    highMidGain = g;
+}
+
+void HelloWorldAudioProcessor::setHighGain(float g) {
+    highGain = g;
+}
+
+// GETTER
+float HelloWorldAudioProcessor::getLowGain() const
+{
+    return lowGain;
+}
+
+float HelloWorldAudioProcessor::getLowMidGain() const
+{
+    return lowMidGain;
+}
+
+float HelloWorldAudioProcessor::getHighMidGain() const
+{
+    return highMidGain;
+}
+
+float HelloWorldAudioProcessor::getHighGain() const
+{
+    return highGain;
+}
