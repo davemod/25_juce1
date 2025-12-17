@@ -6,3 +6,4 @@ JuceLibraryCode/
 /cmake-build-release/
 /Source/.idea/
 .idea/
+/juce_local.cmake
