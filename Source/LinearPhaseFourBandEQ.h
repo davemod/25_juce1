@@ -53,12 +53,14 @@ public:
     }
 
     // per-band linear gains (not dB)
-    void setBandGains (float lowGain, float lowMidGain, float highMidGain, float highGain)
+    void setBandGain (int band, float gain)
     {
-        bandGains[0] = lowGain;
-        bandGains[1] = lowMidGain;
-        bandGains[2] = highMidGain;
-        bandGains[3] = highGain;
+        if (band >= 0 && band <= sizeof(bandGains)) {
+            bandGains[band] = gain;
+            DBG("Gain of Band " << band << " was set to " << gain);
+        } else {
+            DBG("Band outside of bounds");
+        }
     }
 
     void setFirOrder (size_t newOrder)

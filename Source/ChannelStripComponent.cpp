@@ -67,9 +67,13 @@ ChannelStripComponent::ChannelStripComponent()
     levelFader.setRange(-69.0, 6);
     levelFader.setTextValueSuffix(" dB");
     levelFader.setValue(0.0);
+    levelFader.setDoubleClickReturnValue(true, 0.0);
     levelFader.setSliderStyle(Slider::SliderStyle::LinearVertical);
     levelFader.setColour(Slider::textBoxTextColourId, Colours::black);
     levelFader.setTextBoxStyle(Slider::TextEntryBoxPosition::TextBoxBelow, false, 50, 20);
+    levelFader.onValueChange = [this] {
+        onFaderValueChange(levelFader.getValue());
+    };
     addAndMakeVisible(levelFader);
     
     setSize(50, 500);

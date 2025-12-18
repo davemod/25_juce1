@@ -193,33 +193,7 @@ juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
     return new HelloWorldAudioProcessor();
 }
 
-// Definition einer Funktion
-// 1. Rückgabetype (juce::AudioProcessorEditor*)
-// 2. Wo ist die Funktion deklariert? (in der Klasse HelloWorldAudioProcessor)
-// 3. Jetzt erst der Funktionsname
-juce::AudioProcessorEditor* HelloWorldAudioProcessor::createCrashsAndLeaks()
-{
-    // Instanz von HelloWorldAudioProcessorEditor auf dem STACK
-    HelloWorldAudioProcessorEditor instance1 (*this);
-
-    // Erstellen einer Variable, die ein pointer ist, der pointer könnte auf eine Instanz zeigen
-    HelloWorldAudioProcessorEditor * editorPtr = nullptr; // tut er aber noch nicht
-    
-    // erstellen einer neuen instanz auf dem Heap, editorPtr zeigt jetzt auf diese neue instanz
-    editorPtr = new HelloWorldAudioProcessorEditor (*this);
-
-    // erstellen NOCH EINE neue instanz und lassen den selben pointer auf die neue instanz zeigen. ziemlich doof.
-    editorPtr = new HelloWorldAudioProcessorEditor (*this);
-    
-    // nur zugriff auf erste Instanz (instance1 liegt auf dem stack) und dritte Instanz (liegt auf dem heap)
-    // die zweite instanz, liegt irgendwo, aber es zeigt nichts mehr drauf
-    
-    // erstellen eines dritten pointers, der auf instance1 zeit. instance1 ist ein Editor, der auf dem stack instanziiert wurde und nur bis zum ende dieses scopes lebt.
-    HelloWorldAudioProcessorEditor * editorPtr3 = &instance1;
-    
-    // return eines pointers zu einem Objekt DAS GLEICH GELÖSCHT WIRD OJE
-    return editorPtr3;
-} // SCOPE ENDE
-
-
+void HelloWorldAudioProcessor::setEqGain(int band, float value) {
+    eq.setBandGain(band, value);
+}
 

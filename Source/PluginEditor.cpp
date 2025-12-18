@@ -16,14 +16,10 @@
 HelloWorldAudioProcessorEditor::HelloWorldAudioProcessorEditor (HelloWorldAudioProcessor& p)
 :
 AudioProcessorEditor (&p),
-audioProcessor (p),
-gainSlider()
+audioProcessor (p)
 {
     setResizable(true, true);
     
-    addAndMakeVisible (gainSlider);
-    addAndMakeVisible (textButton);
-    addAndMakeVisible (comboBox);
     addAndMakeVisible (bypassToggleButton);
     addAndMakeVisible (channelStrip1);
     addAndMakeVisible (channelStrip2);
@@ -31,38 +27,27 @@ gainSlider()
     addAndMakeVisible (channelStrip4);
     addAndMakeVisible (presetMenu);
     
-    textButton.setColour (TextButton::buttonColourId, Colours::purple);
-    textButton.setColour (TextButton::textColourOffId, Colours::black);
-    textButton.setColour (TextButton::textColourOnId, Colours::white);
-    textButton.setClickingTogglesState(true);
+    channelStrip1.onFaderValueChange = [this](float value) {
+        audioProcessor.setEqGain(0, value);
+    };
+    
+    channelStrip2.onFaderValueChange = [this](float value) {
+        audioProcessor.setEqGain(1, value);
+    };
+    
+    channelStrip3.onFaderValueChange = [this](float value) {
+        audioProcessor.setEqGain(2, value);
+    };
+    
+    channelStrip4.onFaderValueChange = [this](float value) {
+        audioProcessor.setEqGain(3, value);
+    };
     
     bypassToggleButton.setTitle("Bypass");
     bypassToggleButton.setButtonText("Bypass");
-
-    addAndMakeVisible(presetMenu);
-    
-    // Nothing selected - Text
-    comboBox.setTextWhenNothingSelected("Select Preset");
-
-    // Add items
-    comboBox.addItem ("Cool Gain Slider", 1);
-    comboBox.addItem ("Groovy Bypass Toggle", 2);
-    comboBox.addItem ("Funky Clicky Textbutton", 3);
-    comboBox.addItem ("Awesome ComboBox", 4);
-
-    // Optionally set a default selection:
-    comboBox.setSelectedId (0);
-
-    gainSlider.setSliderStyle (Slider::SliderStyle::RotaryHorizontalVerticalDrag);
-    gainSlider.setTextBoxStyle(Slider::TextEntryBoxPosition::NoTextBox, false, 100, 10);
-
-    // add redBox
-    // addAndMakeVisible (redBox);
-    // addAndMakeVisible (blueBox);
-    // addAndMakeVisible (greenBox);
     
     setSize (500, 400);
-    setResizeLimits(300, 200, INT_MAX, INT_MAX);
+    setResizeLimits(300, 200, 900, 600);
 }
 
 HelloWorldAudioProcessorEditor::~HelloWorldAudioProcessorEditor()

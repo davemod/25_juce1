@@ -36,10 +36,6 @@ private:
     ComboBox comboBox;
     TextButton textButton { "Start" };
     ToggleButton bypassToggleButton;
-
-    // RedBox redBox;
-    // BlueBox blueBox;
-    // GreenBox greenBox;
     
     ChannelStripComponent channelStrip1;
     ChannelStripComponent channelStrip2;
@@ -47,18 +43,6 @@ private:
     ChannelStripComponent channelStrip4;
     
     PresetMenuComponent presetMenu;
-    
-    // Individualisiere einige Eigenschaften, Farben etc der einzelnen Components (Tutorium, wenn ihr einen Termin findet)
-
-    // Advanced:
-    // Erstellen eigener Components, bspw. eine Klasse, die einfach nur den gesamten Bereich rot färbt!
-
-    // TODO 4:
-    // class ChannelStripComponent, eine Klasse, die einen Slider, einen Solo und einen Mute Button darstellt.
-    // Anzeigen von mindestens zwei ChannelStripComponents im PluginEditor
-    
-    // Übersicht über mögliche juce Components findet ihr hier:
-    // https://docs.juce.com/master/classjuce_1_1Component.html
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (HelloWorldAudioProcessorEditor)
 };

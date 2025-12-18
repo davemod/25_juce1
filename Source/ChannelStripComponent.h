@@ -39,6 +39,8 @@ public:
 
     void paint (juce::Graphics&) override;
     void resized() override;
+    
+    std::function<void(float value)> onFaderValueChange;
 
 private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ChannelStripComponent)

@@ -9,6 +9,7 @@
 #pragma once
 
 #include <JuceHeader.h>
+#include "LinearPhaseFourBandEQ.h"
 
 //==============================================================================
 /**
@@ -52,13 +53,11 @@ public:
     //==============================================================================
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
+    
+    void setEqGain(int band, float value);
 
 private:
-    // Deklaration einer Funktion
-    // 1. Rückgabetyp (juce::AudioProcessorEditor*)
-    // 2. Funktionsname (createCrashingEditor)
-    // 3. Innerhalb der Klammern Argumente
-    juce::AudioProcessorEditor* createCrashsAndLeaks ();
+    LinearPhaseFourBandEQ eq;
     
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (HelloWorldAudioProcessor)
