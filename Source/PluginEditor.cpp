@@ -67,6 +67,47 @@ gainSlider()
     
     setSize (500, 400);
     setResizeLimits(300, 200, 900, 600);
+
+    channelStrip1.onLevelChanged = [&] (float sliderValue)
+    {
+        audioProcessor.setLowGain(sliderValue);
+    };
+
+    channelStrip2.onLevelChanged = [&] (float sliderValue)
+    {
+        audioProcessor.setLowMidGain(sliderValue);
+    };
+
+    channelStrip3.onLevelChanged = [&] (float sliderValue)
+    {
+        audioProcessor.setHighMidGain(sliderValue);
+    };
+
+    channelStrip4.onLevelChanged = [&] (float sliderValue)
+    {
+        audioProcessor.setHighGain(sliderValue);
+    };
+
+    channelStrip1.onLevelChanged = [this] (float levelInDecibels)
+    {
+        audioProcessor.setLowGain ( juce::Decibels::decibelsToGain(levelInDecibels) );
+    };
+
+    channelStrip2.onLevelChanged = [this] (float levelInDecibels)
+    {
+        audioProcessor.setLowMidGain ( juce::Decibels::decibelsToGain(levelInDecibels) );
+    };
+
+    channelStrip3.onLevelChanged = [this] (float levelInDecibels)
+    {
+        audioProcessor.setHighMidGain ( juce::Decibels::decibelsToGain(levelInDecibels) );
+    };
+
+    channelStrip4.onLevelChanged = [this] (float levelInDecibels)
+    {
+        audioProcessor.setLowGain ( juce::Decibels::decibelsToGain(levelInDecibels) );
+    };
+
 }
 
 HelloWorldAudioProcessorEditor::~HelloWorldAudioProcessorEditor()
