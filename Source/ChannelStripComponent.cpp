@@ -73,10 +73,11 @@ ChannelStripComponent::ChannelStripComponent()
     addAndMakeVisible(levelFader);
     
 //  TODO 9
-//    levelFader.onValueChange = [this]() {
-//        if (onLevelChanged)
-//            onLevelChanged (levelFader.getValue ());
-//    };
+    levelFader.onValueChange = [this]()
+    {
+        if (onLevelChanged) // warum überprüfe ich hier ob onLevelChanged
+            onLevelChanged (levelFader.getValue ());
+    };
     
     
     setSize(50, 500);

@@ -31,6 +31,16 @@ gainSlider()
     addAndMakeVisible (channelStrip4);
     addAndMakeVisible (presetMenu);
     
+    channelStrip1.onLevelChanged = [this](float levelInDecibels) { audioProcessor.setLowGain (juce::Decibels::decibelsToGain (levelInDecibels)); };
+    channelStrip2.onLevelChanged = [this](float levelInDecibels) { audioProcessor.setLowMidGain (juce::Decibels::decibelsToGain (levelInDecibels)); };
+    channelStrip3.onLevelChanged = [this](float levelInDecibels) { audioProcessor.setHighMidGain (juce::Decibels::decibelsToGain (levelInDecibels)); };
+    channelStrip4.onLevelChanged = [this](float levelInDecibels) { audioProcessor.setHighGain (juce::Decibels::decibelsToGain (levelInDecibels)); };
+    
+    channelStrip1.init (juce::Decibels::gainToDecibels (audioProcessor.getLowGain ()));
+    channelStrip2.init (juce::Decibels::gainToDecibels (audioProcessor.getLowMidGain ()));
+    channelStrip3.init (juce::Decibels::gainToDecibels (audioProcessor.getHighMidGain ()));
+    channelStrip4.init (juce::Decibels::gainToDecibels (audioProcessor.getHighGain ()));
+    
     // TODO 10:
     // set levels in plugin processor, when channelStripX.onLevelChanged was called
     // Example: channelStrip1.onLevelChanged = [this] (float levelInDecibels) { audioProcessor.setBandAGain ( convert edcibels to gain ); }
