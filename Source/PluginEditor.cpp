@@ -28,19 +28,23 @@ audioProcessor (p)
     addAndMakeVisible (presetMenu);
     
     channelStrip1.onFaderValueChange = [this](float value) {
-        audioProcessor.setEqGain(0, value);
+        auto gain = juce::Decibels::decibelsToGain(value);
+        audioProcessor.setEqGain(0, gain);
     };
     
     channelStrip2.onFaderValueChange = [this](float value) {
-        audioProcessor.setEqGain(1, value);
+        auto gain = juce::Decibels::decibelsToGain(value);
+        audioProcessor.setEqGain(1, gain);
     };
     
     channelStrip3.onFaderValueChange = [this](float value) {
-        audioProcessor.setEqGain(2, value);
+        auto gain = juce::Decibels::decibelsToGain(value);
+        audioProcessor.setEqGain(2, gain);
     };
     
     channelStrip4.onFaderValueChange = [this](float value) {
-        audioProcessor.setEqGain(3, value);
+        auto gain = juce::Decibels::decibelsToGain(value);
+        audioProcessor.setEqGain(3, gain);
     };
     
     bypassToggleButton.setTitle("Bypass");
