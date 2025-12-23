@@ -21,6 +21,10 @@ public:
     void paint (juce::Graphics&) override;
     void resized() override;
 
+    std::function<void(bool isOn)> onMuteChanged;
+    
+    bool getIsMuteActive();
+    
 private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ChannelStripButtonsComponent)
     
@@ -41,7 +45,13 @@ public:
     void resized() override;
     
     std::function<void(float value)> onFaderValueChange;
-
+    std::function<void(bool isOn)> onMuteChanged;
+    
+    void setFaderValue(float value);
+    
+    bool isSoloActive();
+    bool isMuteActive();
+    
 private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ChannelStripComponent)
     

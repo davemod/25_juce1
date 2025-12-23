@@ -27,6 +27,29 @@ audioProcessor (p)
     addAndMakeVisible (channelStrip4);
     addAndMakeVisible (presetMenu);
     
+    Array<float> eqGains = audioProcessor.getEqGains();
+    int arraySize = eqGains.size();
+    
+    if (arraySize > 0) {
+        DBG("Setting fader 1 to " << eqGains[0]);
+        channelStrip1.setFaderValue(eqGains[0]);
+    }
+    
+    if (arraySize > 1) {
+        DBG("Setting fader 2 to " << eqGains[1]);
+        channelStrip2.setFaderValue(eqGains[1]);
+    }
+    
+    if (arraySize > 2) {
+        DBG("Setting fader 3 to " << eqGains[2]);
+        channelStrip3.setFaderValue(eqGains[2]);
+    }
+    
+    if (arraySize > 3) {
+        DBG("Setting fader 4 to " << eqGains[3]);
+        channelStrip4.setFaderValue(eqGains[3]);
+    }
+    
     channelStrip1.onFaderValueChange = [this](float value) {
         auto gain = juce::Decibels::decibelsToGain(value);
         audioProcessor.setEqGain(0, gain);

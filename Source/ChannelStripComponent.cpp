@@ -21,6 +21,9 @@ ChannelStripButtonsComponent::ChannelStripButtonsComponent()
     muteButton.setButtonText("m");
     muteButton.setClickingTogglesState(true);
     muteButton.setColour(TextButton::buttonOnColourId, Colours::darkorange);
+    muteButton.onStateChange = [this] () {
+        onMuteChanged(muteButton.getToggleState());
+    };
     addAndMakeVisible(muteButton);
 }
 
@@ -62,6 +65,9 @@ void ChannelStripButtonsComponent::resized()
 //==============================================================================
 ChannelStripComponent::ChannelStripComponent()
 {
+    buttons.onMuteChanged = [this] (bool isOn) {
+        onMuteChanged(isOn);
+    };
     addAndMakeVisible(buttons);
     
     levelFader.setRange(-69.0, 6);
@@ -81,6 +87,10 @@ ChannelStripComponent::ChannelStripComponent()
 
 ChannelStripComponent::~ChannelStripComponent()
 {
+}
+
+void ChannelStripComponent::setFaderValue(float value) {
+    levelFader.setValue(value);
 }
 
 void ChannelStripComponent::paint (juce::Graphics& g)

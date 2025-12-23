@@ -185,3 +185,14 @@ void HelloWorldAudioProcessor::setEqGain(int band, float value) {
     eq.setBandGain(band, value);
 }
 
+Array<float> HelloWorldAudioProcessor::getEqGains() {
+    return eq.getBandGains();
+}
+
+void HelloWorldAudioProcessor::muteBand(int band) {
+    eq.setBandGain(band, 0.0f);
+}
+
+void HelloWorldAudioProcessor::unmuteBand(int band) {
+    eq.setBandGain(band, 0.0f);
+}

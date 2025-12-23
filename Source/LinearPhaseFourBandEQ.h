@@ -57,10 +57,19 @@ public:
     {
         if (band >= 0 && band <= sizeof(bandGains)) {
             bandGains[band] = gain;
-            DBG("Gain of Band " << band << " was set to " << gain);
         } else {
-            DBG("Band outside of bounds");
+            DBG("Band number outside of bounds");
         }
+    }
+    
+    juce::Array<float> getBandGains() {
+        Array<float> gains;
+        gains.resize(4);
+        gains.set(0, bandGains[0]);
+        gains.set(1, bandGains[1]);
+        gains.set(2, bandGains[2]);
+        gains.set(3, bandGains[3]);
+        return gains;
     }
 
     void setFirOrder (size_t newOrder)

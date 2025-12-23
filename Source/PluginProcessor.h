@@ -55,6 +55,10 @@ public:
     void setStateInformation (const void* data, int sizeInBytes) override;
     
     void setEqGain(int band, float value);
+    juce::Array<float> getEqGains();
+    
+    void muteBand(int band);
+    void unmuteBand(int band);
 
 private:
     LinearPhaseFourBandEQ eq;
