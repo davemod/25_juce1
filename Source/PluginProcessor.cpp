@@ -147,7 +147,8 @@ void HelloWorldAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
     // this code if your algorithm always overwrites all the output channels.
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
-        eq.processBlock(buffer); 
+    
+//    eq.processBlock(buffer);
 }
 
 //==============================================================================
