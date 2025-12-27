@@ -55,14 +55,19 @@ public:
     void setStateInformation (const void* data, int sizeInBytes) override;
     
     void setEqGain(int band, float value);
-    juce::Array<float> getEqGains();
+    EQState getEqState();
     
     void muteBand(int band);
     void unmuteBand(int band);
-
+    
+    void soloBand(int band);
+    void unsoloBand(int band);
+    
 private:
     LinearPhaseFourBandEQ eq;
+    EQState eqState;
     
+    void applyEQState();
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (HelloWorldAudioProcessor)
 };

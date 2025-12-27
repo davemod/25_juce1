@@ -62,6 +62,13 @@ public:
         }
     }
     
+    void setBandGains (Array<float> gains)
+    {
+        for (int i = 0; i < gains.size(); i++) {
+            setBandGain(i, gains[i]);
+        }
+    }
+    
     juce::Array<float> getBandGains() {
         Array<float> gains;
         gains.resize(4);
@@ -203,4 +210,37 @@ private:
 
     juce::AudioBuffer<float> originalBuffer;
     juce::AudioBuffer<float> lp1Buffer, lp2Buffer, lp3Buffer;
+};
+
+// TODO: Use this inside Processor
+struct EQState {
+    EQState() = default;
+    
+    float band1Gain = 1.0f;
+    bool band1Solo = false;
+    bool band1Mute = false;
+    
+    float band2Gain = 1.0f;
+    bool band2Solo = false;
+    bool band2Mute = false;
+    
+    float band3Gain = 1.0f;
+    bool band3Solo = false;
+    bool band3Mute = false;
+    
+    float band4Gain = 1.0f;
+    bool band4Solo = false;
+    bool band4Mute = false;
+    
+    float getGainForBand(int band) {
+        switch (band) {
+            case 0: return band1Gain;
+            case 1: return band2Gain;
+            case 2: return band3Gain;
+            case 3: return band4Gain;
+            default:
+                DBG("getGainForBand: No such band: " << band);
+                return -99.0;
+        }
+    };
 };

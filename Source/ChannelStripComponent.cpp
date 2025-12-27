@@ -11,68 +11,30 @@
 #include <JuceHeader.h>
 #include "ChannelStripComponent.h"
 
-ChannelStripButtonsComponent::ChannelStripButtonsComponent()
+//==============================================================================
+ChannelStripComponent::ChannelStripComponent()
 {
     soloButton.setButtonText("s");
     soloButton.setClickingTogglesState(true);
     soloButton.setColour(TextButton::buttonOnColourId, Colours::blue);
+    soloButton.onStateChange = [this] () {
+        // TODO: prevent from firing on hover
+        if (onSoloChanged) {
+            onSoloChanged(soloButton.getToggleState());
+        }
+    };
     addAndMakeVisible(soloButton);
     
     muteButton.setButtonText("m");
     muteButton.setClickingTogglesState(true);
     muteButton.setColour(TextButton::buttonOnColourId, Colours::darkorange);
     muteButton.onStateChange = [this] () {
+        // TODO: prevent from firing on hover
         if (onMuteChanged) {
             onMuteChanged(muteButton.getToggleState());
         }
     };
     addAndMakeVisible(muteButton);
-}
-
-ChannelStripButtonsComponent::~ChannelStripButtonsComponent()
-{}
-
-void ChannelStripButtonsComponent::paint (juce::Graphics& g)
-{
-    /* This demo code just fills the component's background and
-       draws some placeholder text to get you started.
-
-       You should replace everything in this method with your own
-       drawing code..
-    */
-
-    g.fillAll (Colours::beige);
-
-    g.setColour (juce::Colours::grey);
-    g.drawRect (getLocalBounds(), 1);   // draw an outline around the component
-
-    g.setColour (juce::Colours::black);
-    g.setFont (juce::FontOptions (14.0f));
-}
-
-void ChannelStripButtonsComponent::resized()
-{
-    auto area = getLocalBounds();
-    auto margin = 5.0;
-    area.removeFromTop(margin);
-    area.removeFromLeft(margin);
-    area.removeFromRight(margin);
-    area.removeFromBottom(margin);
-
-    auto buttonWidth = (area.getWidth() - margin) / 2;
-    muteButton.setBounds(area.removeFromLeft(buttonWidth));
-    soloButton.setBounds(area.removeFromRight(buttonWidth));
-}
-
-//==============================================================================
-ChannelStripComponent::ChannelStripComponent()
-{
-    buttons.onMuteChanged = [this] (bool isOn) {
-        if (onMuteChanged) {
-            onMuteChanged(isOn);
-        }
-    };
-    addAndMakeVisible(buttons);
     
     levelFader.setRange(-69.0, 6);
     levelFader.setTextValueSuffix(" dB");
@@ -99,6 +61,14 @@ void ChannelStripComponent::setFaderValue(float value) {
     levelFader.setValue(value);
 }
 
+void ChannelStripComponent::setMuteButtonState(bool isOn) {
+    muteButton.setToggleState(isOn, NotificationType::dontSendNotification);
+}
+
+void ChannelStripComponent::setSoloButtonState(bool isOn) {
+    soloButton.setToggleState(isOn, NotificationType::dontSendNotification);
+}
+
 void ChannelStripComponent::paint (juce::Graphics& g)
 {
     /* This demo code just fills the component's background and
@@ -120,9 +90,12 @@ void ChannelStripComponent::paint (juce::Graphics& g)
 void ChannelStripComponent::resized()
 {
     auto area = getLocalBounds();
-    auto buttonSize = 40;
+    auto buttonHeight = 40;
+    auto buttonsArea = area.removeFromTop(buttonHeight);
+    auto buttonsWidth = buttonsArea.getWidth() / 2;
     
-    buttons.setBounds(area.removeFromTop(buttonSize));
+    soloButton.setBounds(buttonsArea.removeFromLeft(buttonsWidth));
+    muteButton.setBounds(buttonsArea.removeFromRight(buttonsWidth));
     area.removeFromBottom(10);
-    levelFader.setBounds(area.removeFromBottom(area.getHeight() - buttonSize));
+    levelFader.setBounds(area.removeFromBottom(area.getHeight() - buttonHeight));
 }

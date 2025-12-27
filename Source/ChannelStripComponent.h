@@ -12,26 +12,6 @@
 
 #include <JuceHeader.h>
 
-class ChannelStripButtonsComponent  : public juce::Component
-{
-public:
-    ChannelStripButtonsComponent();
-    ~ChannelStripButtonsComponent() override;
-
-    void paint (juce::Graphics&) override;
-    void resized() override;
-
-    std::function<void(bool isOn)> onMuteChanged;
-    
-    bool getIsMuteActive();
-    
-private:
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ChannelStripButtonsComponent)
-    
-    TextButton soloButton;
-    TextButton muteButton;
-};
-
 //==============================================================================
 /*
 */
@@ -46,8 +26,11 @@ public:
     
     std::function<void(float value)> onFaderValueChange;
     std::function<void(bool isOn)> onMuteChanged;
+    std::function<void(bool isOn)> onSoloChanged;
     
     void setFaderValue(float value);
+    void setMuteButtonState(bool isOn);
+    void setSoloButtonState(bool isOn);
     
     bool isSoloActive();
     bool isMuteActive();
@@ -55,6 +38,7 @@ public:
 private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ChannelStripComponent)
     
-    ChannelStripButtonsComponent buttons;
     Slider levelFader;
+    TextButton soloButton;
+    TextButton muteButton;
 };
