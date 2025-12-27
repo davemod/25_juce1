@@ -183,6 +183,10 @@ juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
     return new HelloWorldAudioProcessor();
 }
 
+EQState HelloWorldAudioProcessor::getEqState() {
+    return eqState;
+}
+
 void HelloWorldAudioProcessor::setEqGain(int band, float value) {
     switch (band) {
         case 0:
@@ -202,11 +206,7 @@ void HelloWorldAudioProcessor::setEqGain(int band, float value) {
             break;
     }
     
-    eq.setBandGain(band, value);
-}
-
-EQState HelloWorldAudioProcessor::getEqState() {
-    return eqState;
+    applyEQState();
 }
 
 void HelloWorldAudioProcessor::muteBand(int band) {
@@ -227,7 +227,8 @@ void HelloWorldAudioProcessor::muteBand(int band) {
             DBG("muteBand: No such Eq band: " << band);
             break;
     }
-    eq.setBandGain(band, 0.0f);
+    
+    applyEQState();
 }
 
 void HelloWorldAudioProcessor::unmuteBand(int band) {

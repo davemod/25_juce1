@@ -54,12 +54,14 @@ audioProcessor (p)
     };
     
     channelStrip1.onMuteChanged = [this](bool isOn) {
-        if (isOn) { audioProcessor.muteBand(0); }
+        if (isOn == audioProcessor.getEqState().band1Mute) { return; }
+        else if (isOn) { audioProcessor.muteBand(0); }
         else { audioProcessor.unmuteBand(0); }
     };
     
     channelStrip1.onSoloChanged = [this](bool isOn) {
-        if (isOn) { audioProcessor.soloBand(0); }
+        if (isOn == audioProcessor.getEqState().band1Solo) { return; }
+        else if (isOn) { audioProcessor.soloBand(0); }
         else { audioProcessor.unsoloBand(0); }
     };
     
@@ -69,12 +71,14 @@ audioProcessor (p)
     };
     
     channelStrip2.onMuteChanged = [this](bool isOn) {
-        if (isOn) { audioProcessor.muteBand(1); }
+        if (isOn == audioProcessor.getEqState().band2Mute) { return; }
+        else if (isOn) { audioProcessor.muteBand(1); }
         else { audioProcessor.unmuteBand(1); }
     };
     
     channelStrip2.onSoloChanged = [this](bool isOn) {
-        if (isOn) { audioProcessor.soloBand(1); }
+        if (isOn == audioProcessor.getEqState().band2Solo) { return; }
+        else if (isOn) { audioProcessor.soloBand(1); }
         else { audioProcessor.unsoloBand(1); }
     };
     
@@ -84,12 +88,14 @@ audioProcessor (p)
     };
     
     channelStrip3.onMuteChanged = [this](bool isOn) {
-        if (isOn) { audioProcessor.muteBand(2); }
+        if (isOn == audioProcessor.getEqState().band3Mute) { return; }
+        else if (isOn) { audioProcessor.muteBand(2); }
         else { audioProcessor.unmuteBand(2); }
     };
     
     channelStrip3.onSoloChanged = [this](bool isOn) {
-        if (isOn) { audioProcessor.soloBand(2); }
+        if (isOn == audioProcessor.getEqState().band3Solo) { return; }
+        else if (isOn) { audioProcessor.soloBand(2); }
         else { audioProcessor.unsoloBand(2); }
     };
     
@@ -99,12 +105,14 @@ audioProcessor (p)
     };
     
     channelStrip4.onMuteChanged = [this](bool isOn) {
-        if (isOn) { audioProcessor.muteBand(3); }
+        if (isOn == audioProcessor.getEqState().band4Mute) { return; }
+        else if (isOn) { audioProcessor.muteBand(3); }
         else { audioProcessor.unmuteBand(3); }
     };
     
     channelStrip4.onSoloChanged = [this](bool isOn) {
-        if (isOn) { audioProcessor.soloBand(3); }
+        if (isOn == audioProcessor.getEqState().band4Solo) { return; }
+        else if (isOn) { audioProcessor.soloBand(3); }
         else { audioProcessor.unsoloBand(3); }
     };
     
