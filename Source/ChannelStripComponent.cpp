@@ -18,7 +18,6 @@ ChannelStripComponent::ChannelStripComponent()
     soloButton.setClickingTogglesState(true);
     soloButton.setColour(TextButton::buttonOnColourId, Colours::blue);
     soloButton.onStateChange = [this] () {
-        // TODO: prevent from firing on hover
         if (onSoloChanged) {
             onSoloChanged(soloButton.getToggleState());
         }
@@ -29,7 +28,6 @@ ChannelStripComponent::ChannelStripComponent()
     muteButton.setClickingTogglesState(true);
     muteButton.setColour(TextButton::buttonOnColourId, Colours::darkorange);
     muteButton.onStateChange = [this] () {
-        // TODO: prevent from firing on hover
         if (onMuteChanged) {
             onMuteChanged(muteButton.getToggleState());
         }
