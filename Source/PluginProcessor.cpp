@@ -105,7 +105,7 @@ void HelloWorldAudioProcessor::prepareToPlay (double sampleRate, int samplesPerB
     const auto numChannels = getTotalNumOutputChannels();
     lpfbEQ.prepare(sampleRate, samplesPerBlock, numChannels);
 
-    lpfbEQ.setBandGains(0.5f, 1.0f, 1.0f, 0.5f);
+    lpfbEQ.setBandGains(1.0f, 1.0f, 1.0f, 1.0f);
 
 }
 
@@ -148,8 +148,29 @@ void HelloWorldAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
     // auto totalNumInputChannels  = getTotalNumInputChannels();
     // auto totalNumOutputChannels = getTotalNumOutputChannels();
 
+    // Step 8 -> Check if Band is solo
+
+    const bool anySolo =
+    low.solo.load() ||
+    lowMid.solo.load() ||
+    highMid.solo.load() ||
+    high.solo.load();
+
+
+    
+    // Step 9 -> check if and which is muted and set to 0 if it is
+    float lowGainDSP = (anySolo && !low.solo.load()) || low.mute.load() ? 0.0f : lowGain.load();
+
+    float lowMidGainDSP = (anySolo && !lowMid.solo.load()) || lowMid.mute.load() ? 0.0f : lowMidGain.load();
+
+    float highMidGainDSP = (anySolo && !highMid.solo.load()) || highMid.mute.load() ? 0.0f : highMidGain.load();
+
+    float highGainDSP = (anySolo && !high.solo.load()) || high.mute.load() ? 0.0f : highGain.load();
+
+
     // TODO 6
-    lpfbEQ.setBandGains (lowGain, lowMidGain, highMidGain, highGain);
+    // Step 10 -> Pass the new values
+    lpfbEQ.setBandGains (lowGainDSP, lowMidGainDSP, highMidGainDSP, highGainDSP);
     // TODO 3
     lpfbEQ.processBlock(buffer);
     
@@ -213,46 +234,3 @@ juce::AudioProcessorEditor* HelloWorldAudioProcessor::createCrashsAndLeaks()
     // return eines pointers zu einem Objekt DAS GLEICH GELÖSCHT WIRD OJE
     return editorPtr3;
 } // SCOPE ENDE
-
-// TODO 5
-void HelloWorldAudioProcessor::setLowGain (float g)
-{
-    lowGain = g;
-}
-
-void HelloWorldAudioProcessor::setLowMidGain (float g)
-{
-    lowMidGain = g;
-}
-
-void HelloWorldAudioProcessor::setHighMidGain (float g)
-{
-    highMidGain = g;
-}
-
-void HelloWorldAudioProcessor::setHighGain (float g)
-{
-    highGain = g;
-}
-
-// -------- GETTER --------
-
-float HelloWorldAudioProcessor::getLowGain() const
-{
-    return lowGain;
-}
-
-float HelloWorldAudioProcessor::getLowMidGain() const
-{
-    return lowMidGain;
-}
-
-float HelloWorldAudioProcessor::getHighMidGain() const
-{
-    return highMidGain;
-}
-
-float HelloWorldAudioProcessor::getHighGain() const
-{
-    return highGain;
-}

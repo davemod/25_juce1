@@ -35,6 +35,45 @@ gainSlider()
     // set levels in plugin processor, when channelStripX.onLevelChanged was called
     // Example: channelStrip1.onLevelChanged = [this] (float levelInDecibels) { audioProcessor.setBandAGain ( convert edcibels to gain ); }
 
+    // Step 6 -> mute callbacks
+    channelStrip1.onMuteChanged = [this](bool isMuted)
+    {
+        audioProcessor.setLowMute (isMuted);
+    };
+    channelStrip2.onMuteChanged = [this](bool isMuted)
+    {
+        audioProcessor.setLowMidMute (isMuted);
+    };
+    channelStrip3.onMuteChanged = [this](bool isMuted)
+    {
+        audioProcessor.setHighMidMute (isMuted);
+    };
+    channelStrip4.onMuteChanged = [this](bool isMuted)
+    {
+        audioProcessor.setHighMute (isMuted);
+    };
+
+    // Step 7 -> Solo Callbacks
+    channelStrip1.onSoloChanged = [this](bool s)
+    {
+        audioProcessor.setLowSolo (s);
+    };
+
+    channelStrip2.onSoloChanged = [this](bool s)
+    {
+        audioProcessor.setLowMidSolo (s);
+    };
+
+    channelStrip3.onSoloChanged = [this](bool s)
+    {
+        audioProcessor.setHighMidSolo (s);
+    };
+
+    channelStrip4.onSoloChanged = [this](bool s)
+    {
+        audioProcessor.setHighSolo (s);
+    };
+
     channelStrip1.onLevelChanged = [this] (float dB)
     {
         audioProcessor.setLowGain (

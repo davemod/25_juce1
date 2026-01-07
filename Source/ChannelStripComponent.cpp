@@ -1,117 +1,70 @@
-/*
-  ==============================================================================
-
-    ChannelStrip.cpp
-    Created: 19 Nov 2025 9:38:05am
-    Author:  eddoard
-
-  ==============================================================================
-*/
-
 #include <JuceHeader.h>
 #include "ChannelStripComponent.h"
-
-ChannelStripButtonsComponent::ChannelStripButtonsComponent()
+ChannelStripComponent::ChannelStripComponent()
 {
+    // Configure solo button
     soloButton.setButtonText("s");
     soloButton.setClickingTogglesState(true);
     soloButton.setColour(TextButton::buttonOnColourId, Colours::blue);
+    // Step 2 -> Callback definieren
+    soloButton.onClick = [this] { 
+        if (onSoloChanged)
+        {
+            onSoloChanged(soloButton.getToggleState());
+        }
+    };
     addAndMakeVisible(soloButton);
     
+    // Configure mute button
     muteButton.setButtonText("m");
     muteButton.setClickingTogglesState(true);
     muteButton.setColour(TextButton::buttonOnColourId, Colours::darkorange);
+    muteButton.onClick = [this] { 
+        if (onMuteChanged)
+        {
+            onMuteChanged(muteButton.getToggleState());
+        }
+    };
     addAndMakeVisible(muteButton);
-}
-
-ChannelStripButtonsComponent::~ChannelStripButtonsComponent()
-{}
-
-void ChannelStripButtonsComponent::paint (juce::Graphics& g)
-{
-    /* This demo code just fills the component's background and
-       draws some placeholder text to get you started.
-
-       You should replace everything in this method with your own
-       drawing code..
-    */
-
-    g.fillAll (Colours::beige);
-
-    g.setColour (juce::Colours::grey);
-    g.drawRect (getLocalBounds(), 1);   // draw an outline around the component
-
-    g.setColour (juce::Colours::black);
-    g.setFont (juce::FontOptions (14.0f));
-}
-
-void ChannelStripButtonsComponent::resized()
-{
-    auto area = getLocalBounds();
-    auto margin = 5.0;
-    area.removeFromTop(margin);
-    area.removeFromLeft(margin);
-    area.removeFromRight(margin);
-    area.removeFromBottom(margin);
-
-    auto buttonWidth = (area.getWidth() - margin) / 2;
-    muteButton.setBounds(area.removeFromLeft(buttonWidth));
-    soloButton.setBounds(area.removeFromRight(buttonWidth));
-}
-
-//==============================================================================
-ChannelStripComponent::ChannelStripComponent()
-{
-    addAndMakeVisible(buttons);
-    
+    // Configure level fader
     levelFader.setRange(-69.0, 6);
     levelFader.setTextValueSuffix(" dB");
     levelFader.setValue(0.0);
     levelFader.setSliderStyle(Slider::SliderStyle::LinearVertical);
     levelFader.setColour(Slider::textBoxTextColourId, Colours::black);
     levelFader.setTextBoxStyle(Slider::TextEntryBoxPosition::TextBoxBelow, false, 50, 20);
-    addAndMakeVisible(levelFader);
-    
-//  TODO 9
-    levelFader.onValueChange = [this]()
+    levelFader.onValueChange = [this]() 
     {
         if (onLevelChanged)
-            onLevelChanged ((float) levelFader.getValue());
+            onLevelChanged((float) levelFader.getValue());
     };
-
-    
-    
+    addAndMakeVisible(levelFader);
     setSize(50, 500);
 }
-
 ChannelStripComponent::~ChannelStripComponent()
 {
 }
-
-void ChannelStripComponent::paint (juce::Graphics& g)
+void ChannelStripComponent::paint(juce::Graphics& g)
 {
-    /* This demo code just fills the component's background and
-       draws some placeholder text to get you started.
-
-       You should replace everything in this method with your own
-       drawing code..
-    */
-
-    g.fillAll (Colours::beige);   // clear the background
-
-    g.setColour (juce::Colours::grey);
-    g.drawRect (getLocalBounds(), 1);   // draw an outline around the component
-
-    g.setColour (juce::Colours::black);
-    g.setFont (juce::FontOptions (14.0f));
+    g.fillAll(Colours::darkgrey);
+    g.setColour(juce::Colours::beige);
+    g.drawRect(getLocalBounds(), 1);
+    g.setColour(juce::Colours::black);
+    g.setFont(juce::FontOptions(14.0f));
 }
-
 void ChannelStripComponent::resized()
 {
     auto area = getLocalBounds();
     auto buttonSize = 40;
+    // Set bounds for the buttons
+    auto margin = 5.0;
+    area.removeFromTop(margin);
+    area.removeFromBottom(margin);
     
-    buttons.setBounds(area.removeFromTop(buttonSize));
-    area.removeFromBottom(10);
-    levelFader.setBounds(area.removeFromBottom(area.getHeight() - buttonSize));
+    auto buttonWidth = (area.getWidth() - (margin * 2)) / 2;
+    soloButton.setBounds(area.removeFromTop(buttonSize).removeFromLeft(buttonWidth));
+    muteButton.setBounds(area.removeFromTop(buttonSize).removeFromRight(buttonWidth));
+    
+    // Set bounds for the level fader
+    levelFader.setBounds(area.removeFromBottom(area.getHeight()));
 }

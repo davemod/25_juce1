@@ -19,6 +19,15 @@
 //==============================================================================
 /**
 */
+
+// Step 3 - Variablen in Form eines Structs zum Speichern der Stände anlegen (Muss kein struct sein, ergibt aber Sinn, wenn man mehrere Variablen speichern möchte und es für mehrere ChannelStrips nutzen möchte)
+struct BandState
+{
+    // std::atomic<float> gain { 1.0f }; // optional, da schon separat implementiert (siehe TODO 4 unten)
+    std::atomic<bool> mute { false };
+    std::atomic<bool> solo { false };
+};
+
 class HelloWorldAudioProcessor  : public juce::AudioProcessor
 {
 public:
@@ -62,15 +71,32 @@ public:
 
     // TODO 5
     //Setter
-    void setLowGain (float g);
-    void setLowMidGain (float g);
-    void setHighMidGain (float g);
-    void setHighGain (float g);
+    void setLowGain (float g)     { lowGain.store (g); }
+    void setLowMidGain (float g)  { lowMidGain.store (g); }
+    void setHighMidGain (float g) { highMidGain.store (g); }
+    void setHighGain (float g)    { highGain.store (g); }
+
     //Getter
-    float getLowGain() const;
-    float getLowMidGain() const;
-    float getHighMidGain() const;
-    float getHighGain() const;
+    float getLowGain() const     { return lowGain.load(); }
+    float getLowMidGain() const  { return lowMidGain.load(); }
+    float getHighMidGain() const { return highMidGain.load(); }
+    float getHighGain() const    { return highGain.load(); }
+
+
+    // Step 5 - setter Methoden für die States anlegen
+
+    void setLowMute     (bool m) { low.mute.store(m);};
+    void setLowMidMute  (bool m) { lowMid.mute.store(m);};
+    void setHighMidMute (bool m) { highMid.mute.store(m);};
+    void setHighMute    (bool m) { high.mute.store(m);};
+
+    // SOLO SETTER
+    void setLowSolo     (bool s) { low.solo.store (s); }
+    void setLowMidSolo  (bool s) { lowMid.solo.store (s); }
+    void setHighMidSolo (bool s) { highMid.solo.store (s); }
+    void setHighSolo    (bool s) { high.solo.store (s); }
+
+
 
 private:
     // Deklaration einer Funktion
@@ -81,10 +107,15 @@ private:
     // TODO 1
     LinearPhaseFourBandEQ lpfbEQ;
     // TODO 4
-    float lowGain     = 1.0f;
-    float lowMidGain  = 1.0f;
-    float highMidGain = 1.0f;
-    float highGain    = 1.0f;
+    // Step 3.1 change values to atomics because of thread safety
+    std::atomic<float> lowGain     = 1.0f;
+    std::atomic<float> lowMidGain  = 1.0f;
+    std::atomic<float> highMidGain = 1.0f;
+    std::atomic<float> highGain    = 1.0f;
+
+    // Step 4 - Bandstates als Membervariable hinzufügen
+    BandState low, lowMid, highMid, high;
+
     
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (HelloWorldAudioProcessor)
