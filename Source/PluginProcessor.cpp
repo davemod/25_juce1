@@ -149,12 +149,7 @@ void HelloWorldAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
     // auto totalNumOutputChannels = getTotalNumOutputChannels();
 
     // TODO 6
-    lpfbEQ.setBandGains (
-        lowGain,
-        lowMidGain,
-        highMidGain,
-        highGain
-    );
+    lpfbEQ.setBandGains (lowGain, lowMidGain, highMidGain, highGain);
     // TODO 3
     lpfbEQ.processBlock(buffer);
     
@@ -219,7 +214,7 @@ juce::AudioProcessorEditor* HelloWorldAudioProcessor::createCrashsAndLeaks()
     return editorPtr3;
 } // SCOPE ENDE
 
-
+// TODO 5
 void HelloWorldAudioProcessor::setLowGain (float g)
 {
     lowGain = g;

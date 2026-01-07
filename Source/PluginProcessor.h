@@ -9,6 +9,7 @@
 #pragma once
 
 #include <JuceHeader.h>
+//TODO 1
 #include "LinearPhaseFourBandEQ.h"
 
 // TODO 1: include LinearPhaseFourBandEQ.h and create instance
