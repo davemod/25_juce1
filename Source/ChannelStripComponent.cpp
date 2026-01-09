@@ -17,7 +17,7 @@ ChannelStripComponent::ChannelStripComponent()
     soloButton.setButtonText("s");
     soloButton.setClickingTogglesState(true);
     soloButton.setColour(TextButton::buttonOnColourId, Colours::blue);
-    soloButton.onStateChange = [this] () {
+    soloButton.onClick = [this] () {
         if (onSoloChanged) {
             onSoloChanged(soloButton.getToggleState());
         }
@@ -27,7 +27,7 @@ ChannelStripComponent::ChannelStripComponent()
     muteButton.setButtonText("m");
     muteButton.setClickingTogglesState(true);
     muteButton.setColour(TextButton::buttonOnColourId, Colours::darkorange);
-    muteButton.onStateChange = [this] () {
+    muteButton.onClick = [this] () {
         if (onMuteChanged) {
             onMuteChanged(muteButton.getToggleState());
         }
