@@ -17,8 +17,10 @@ ChannelStripComponent::ChannelStripComponent()
     soloButton.setButtonText("s");
     soloButton.setClickingTogglesState(true);
     soloButton.setColour(TextButton::buttonOnColourId, Colours::blue);
-    soloButton.onClick = [this] () {
-        if (onSoloChanged) {
+    soloButton.onClick = [this] ()
+    {
+        if (onSoloChanged)
+        {
             onSoloChanged(soloButton.getToggleState());
         }
     };
@@ -27,8 +29,10 @@ ChannelStripComponent::ChannelStripComponent()
     muteButton.setButtonText("m");
     muteButton.setClickingTogglesState(true);
     muteButton.setColour(TextButton::buttonOnColourId, Colours::darkorange);
-    muteButton.onClick = [this] () {
-        if (onMuteChanged) {
+    muteButton.onClick = [this] ()
+    {
+        if (onMuteChanged)
+        {
             onMuteChanged(muteButton.getToggleState());
         }
     };
@@ -41,8 +45,10 @@ ChannelStripComponent::ChannelStripComponent()
     levelFader.setSliderStyle(Slider::SliderStyle::LinearVertical);
     levelFader.setColour(Slider::textBoxTextColourId, Colours::black);
     levelFader.setTextBoxStyle(Slider::TextEntryBoxPosition::TextBoxBelow, false, 50, 20);
-    levelFader.onValueChange = [this] {
-        if(onFaderValueChange) {
+    levelFader.onValueChange = [this]
+    {
+        if(onFaderValueChange)
+        {
             onFaderValueChange(levelFader.getValue());
         }
     };
@@ -55,15 +61,18 @@ ChannelStripComponent::~ChannelStripComponent()
 {
 }
 
-void ChannelStripComponent::setFaderValue(float value) {
+void ChannelStripComponent::setFaderValue(float value)
+{
     levelFader.setValue(value);
 }
 
-void ChannelStripComponent::setMuteButtonState(bool isOn) {
+void ChannelStripComponent::setMuteButtonState(bool isOn)
+{
     muteButton.setToggleState(isOn, NotificationType::dontSendNotification);
 }
 
-void ChannelStripComponent::setSoloButtonState(bool isOn) {
+void ChannelStripComponent::setSoloButtonState(bool isOn)
+{
     soloButton.setToggleState(isOn, NotificationType::dontSendNotification);
 }
 

@@ -216,31 +216,7 @@ private:
 struct EQState {
     EQState() = default;
     
-    float band1Gain = 1.0f;
-    bool band1Solo = false;
-    bool band1Mute = false;
-    
-    float band2Gain = 1.0f;
-    bool band2Solo = false;
-    bool band2Mute = false;
-    
-    float band3Gain = 1.0f;
-    bool band3Solo = false;
-    bool band3Mute = false;
-    
-    float band4Gain = 1.0f;
-    bool band4Solo = false;
-    bool band4Mute = false;
-    
-    float getGainForBand(int band) {
-        switch (band) {
-            case 0: return band1Gain;
-            case 1: return band2Gain;
-            case 2: return band3Gain;
-            case 3: return band4Gain;
-            default:
-                DBG("getGainForBand: No such band: " << band);
-                return -99.0;
-        }
-    };
+    float bandGains[4] = { 1.0f };
+    float bandMutes[4] = { false };
+    float bandSolos[4] = { false };
 };
