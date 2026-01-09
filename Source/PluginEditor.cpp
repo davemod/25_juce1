@@ -13,10 +13,10 @@
 #define MYMACRO DBG("My Macro Print")
 
 //==============================================================================
-HelloWorldAudioProcessorEditor::HelloWorldAudioProcessorEditor (HelloWorldAudioProcessor& p)
+HelloWorldAudioProcessorEditor::HelloWorldAudioProcessorEditor (HelloWorldAudioProcessor& p) //Referenz zum Prozessor wird übergeben!
 :
 AudioProcessorEditor (&p),
-audioProcessor (p),
+audioProcessor (p), // Hier ist die Referenz zum audioProcessor
 gainSlider()
 {
     setResizable(true, true);
@@ -31,7 +31,7 @@ gainSlider()
     addAndMakeVisible (channelStrip4);
     addAndMakeVisible (presetMenu);
     
-    // TODO 10:
+    // DONE 10:
     // set levels in plugin processor, when channelStripX.onLevelChanged was called
     // Example: channelStrip1.onLevelChanged = [this] (float levelInDecibels) { audioProcessor.setBandAGain ( convert edcibels to gain ); }
     
@@ -68,26 +68,8 @@ gainSlider()
     setSize (500, 400);
     setResizeLimits(300, 200, 900, 600);
 
-    channelStrip1.onLevelChanged = [&] (float sliderValue)
-    {
-        audioProcessor.setLowGain(sliderValue);
-    };
 
-    channelStrip2.onLevelChanged = [&] (float sliderValue)
-    {
-        audioProcessor.setLowMidGain(sliderValue);
-    };
-
-    channelStrip3.onLevelChanged = [&] (float sliderValue)
-    {
-        audioProcessor.setHighMidGain(sliderValue);
-    };
-
-    channelStrip4.onLevelChanged = [&] (float sliderValue)
-    {
-        audioProcessor.setHighGain(sliderValue);
-    };
-
+    // Vier Lambdas hier!
     channelStrip1.onLevelChanged = [this] (float levelInDecibels)
     {
         audioProcessor.setLowGain ( juce::Decibels::decibelsToGain(levelInDecibels) );
@@ -105,8 +87,18 @@ gainSlider()
 
     channelStrip4.onLevelChanged = [this] (float levelInDecibels)
     {
-        audioProcessor.setLowGain ( juce::Decibels::decibelsToGain(levelInDecibels) );
+        audioProcessor.setHighGain ( juce::Decibels::decibelsToGain(levelInDecibels) );
     };
+
+    channelStrip1.onMuteChanged = [this](bool isMuted) {
+
+    }
+
+    channelStrip1.init (juce::Decibels::gainToDecibels (audioProcessor.getLowGain ()));
+    channelStrip2.init (juce::Decibels::gainToDecibels (audioProcessor.getLowMidGain ()));
+    channelStrip3.init (juce::Decibels::gainToDecibels (audioProcessor.getHighMidGain ()));
+    channelStrip4.init (juce::Decibels::gainToDecibels (audioProcessor.getHighGain ()));
+
 
 }
 

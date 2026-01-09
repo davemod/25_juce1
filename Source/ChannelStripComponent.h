@@ -12,25 +12,6 @@
 
 #include <JuceHeader.h>
 
-class ChannelStripButtonsComponent  : public juce::Component
-{
-public:
-    ChannelStripButtonsComponent();
-    ~ChannelStripButtonsComponent() override;
-
-    void paint (juce::Graphics&) override;
-    void resized() override;
-
-private:
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ChannelStripButtonsComponent)
-    
-    TextButton soloButton;
-    TextButton muteButton;
-};
-
-//==============================================================================
-/*
-*/
 class ChannelStripComponent  : public juce::Component
 {
 public:
@@ -41,13 +22,18 @@ public:
     void resized() override;
 
     // DONE 7, create an std::function<void(float level)> onLevelChanged;
-    // DONE 8, set onValueChanged from your PluginEditor constructor
+    // DONE 8, set onLevelChanged from your PluginEditor constructor
 
-    std::function<void(float level)> onLevelChanged;
-    
+    std::function<void(float level)> onLevelChanged; // Hier die Function
+    void init (float level) {levelFader.setValue (level, dontSendNotification);}
+
+    std::function<void (bool)> onMuteChanged;
+    std::function<void (bool)> onSoloChanged;
+
 private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ChannelStripComponent)
-    
-    ChannelStripButtonsComponent buttons;
+
     Slider levelFader;
+    TextButton muteButton;
+    TextButton soloButton;
 };

@@ -61,6 +61,7 @@ public:
         bandGains[3] = highGain;
     }
 
+
     void setFirOrder (size_t newOrder)
     {
         firOrder = newOrder | 1u; // force odd order => nice symmetric center tap

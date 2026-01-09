@@ -64,11 +64,21 @@ public:
     void setHighMidGain (float g);
     void setHighGain (float g);
 
+    void setLowMute (bool m);
+    void setLowMidMute (bool m);
+    void setHighMidMute (bool m);
+    void setHighMute (bool m);
+
     //Getter
     float getLowGain() const; // Die Variable vom letzten get kann nicht verändert werden. RETURN VALUE ist const, NICHT der Low Gain an sich.
     float getLowMidGain() const;
     float getHighMidGain() const;
     float getHighGain() const;
+
+    bool getLowMute() const;
+    bool getLowMidMute() const;
+    bool getHighMidMute() const;
+    bool getHighMute() const;
 
 private:
     // Deklaration einer Funktion
@@ -83,6 +93,11 @@ private:
     float lowMidGain = 1.0f;
     float highMidGain = 1.0f;
     float highGain = 1.0f;
+
+    bool muteLowGain = false ;
+    bool muteLowMidGain = false ;
+    bool muteHighMidGain = false ;
+    bool muteHighGain = false ;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (HelloWorldAudioProcessor)

@@ -17,6 +17,15 @@
 //==============================================================================
 /**
 */
+
+struct BandState
+{
+
+    std::atomic<bool> mute {false};
+    std::atomic<bool> solo {false};
+
+};
+
 class HelloWorldAudioProcessorEditor  : public juce::AudioProcessorEditor
 {
 public:

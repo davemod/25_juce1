@@ -13,15 +13,7 @@
 
 ChannelStripButtonsComponent::ChannelStripButtonsComponent()
 {
-    soloButton.setButtonText("s");
-    soloButton.setClickingTogglesState(true);
-    soloButton.setColour(TextButton::buttonOnColourId, Colours::blue);
-    addAndMakeVisible(soloButton);
-    
-    muteButton.setButtonText("m");
-    muteButton.setClickingTogglesState(true);
-    muteButton.setColour(TextButton::buttonOnColourId, Colours::darkorange);
-    addAndMakeVisible(muteButton);
+
 }
 
 ChannelStripButtonsComponent::~ChannelStripButtonsComponent()
@@ -36,7 +28,7 @@ void ChannelStripButtonsComponent::paint (juce::Graphics& g)
        drawing code..
     */
 
-    g.fillAll (Colours::beige);
+    g.fillAll (Colours::sienna);
 
     g.setColour (juce::Colours::grey);
     g.drawRect (getLocalBounds(), 1);   // draw an outline around the component
@@ -62,7 +54,16 @@ void ChannelStripButtonsComponent::resized()
 //==============================================================================
 ChannelStripComponent::ChannelStripComponent()
 {
-    addAndMakeVisible(buttons);
+    soloButton.setButtonText("s");
+    soloButton.setClickingTogglesState(true);
+    soloButton.setColour(TextButton::buttonOnColourId, Colours::blue);
+    addAndMakeVisible(soloButton);
+
+    muteButton.setButtonText("m");
+    muteButton.setClickingTogglesState(true);
+    muteButton.setColour(TextButton::buttonOnColourId, Colours::darkorange);
+    addAndMakeVisible(muteButton);
+    //addAndMakeVisible(buttons);
     
     levelFader.setRange(-69.0, 6);
     levelFader.setTextValueSuffix(" dB");
@@ -72,12 +73,24 @@ ChannelStripComponent::ChannelStripComponent()
     levelFader.setTextBoxStyle(Slider::TextEntryBoxPosition::TextBoxBelow, false, 50, 20);
     addAndMakeVisible(levelFader);
     
-//  TODO 9
-    levelFader.onValueChange = [this]() {
-        if (onLevelChanged)
+//  DONE 9
+    levelFader.onValueChange = [this]()
+    {
+        if (onLevelChanged) // Wenn wir onLevelChanged nicht nutzen, dann würde ein Crash passieren beim Nutzen!
             onLevelChanged (levelFader.getValue ());
     };
 
+    muteButton.onClick = [this](){
+        if (onMuteChanged) {
+            onMuteChanged(muteButton.getToggleState());
+        }
+    };
+
+    soloButton.onClick = [this](){
+        if (onSoloChanged) {
+            onSoloChanged(soloButton.getToggleState());
+        }
+    };
 
     
     setSize(50, 500);
