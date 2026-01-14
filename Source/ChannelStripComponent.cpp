@@ -56,7 +56,7 @@ ChannelStripComponent::~ChannelStripComponent()
 }
 
 void ChannelStripComponent::setFaderValue(float value) {
-    levelFader.setValue(value);
+    levelFader.setValue(value, NotificationType::dontSendNotification);
 }
 
 void ChannelStripComponent::setMuteButtonState(bool isOn) {

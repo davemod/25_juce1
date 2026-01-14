@@ -27,6 +27,27 @@ public:
     void paint (juce::Graphics&) override;
     void resized() override;
 
+    void bindChannelStrip (ChannelStripComponent& strip, int band)
+    {
+        strip.onFaderValueChange = [this, band](float dB)
+        {
+            audioProcessor.setBandGain (
+                band,
+                juce::Decibels::decibelsToGain (dB)
+            );
+        };
+
+        strip.onMuteChanged = [this, band](bool isOn)
+        {
+            audioProcessor.setBandMute (band, isOn);
+        };
+
+        strip.onSoloChanged = [this, band](bool isOn)
+        {
+            audioProcessor.setBandSolo (band, isOn);
+        };
+    }
+
 private:
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.

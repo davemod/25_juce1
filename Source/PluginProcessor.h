@@ -53,21 +53,17 @@ public:
     //==============================================================================
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
-    
-    void setEqGain(int band, float value);
-    EQState getEqState();
-    
-    void muteBand(int band);
-    void unmuteBand(int band);
-    
-    void soloBand(int band);
-    void unsoloBand(int band);
+
+    const EQState& getEqState() const noexcept { return eqState; }
+
+    void setBandGain (int band, float gain);
+    void setBandMute (int band, bool mute);
+    void setBandSolo (int band, bool solo);
     
 private:
     LinearPhaseFourBandEQ eq;
     EQState eqState;
     
-    void applyEQState();
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (HelloWorldAudioProcessor)
 };

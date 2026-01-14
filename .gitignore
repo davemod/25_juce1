@@ -2,3 +2,8 @@ Builds/
 JuceLibraryCode/
 .DS_Store
 .vscode/
+260109 – TODO.md
+Submodules/
+build/
+CMakeLists.txt
+build.sh
