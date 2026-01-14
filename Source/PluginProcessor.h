@@ -54,9 +54,12 @@ public:
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
     
-    void setEqGain(int band, float value);
-    EQState getEqState();
+    const EQState& getEqState() const noexcept
+    {
+        return eqState;
+    }
     
+    void setEqGain(int band, float value);
     void setMuteBand(int band, bool isMuted);
     void setSoloBand(int band, bool isSolo);
     

@@ -37,10 +37,7 @@ private:
     TextButton textButton { "Start" };
     ToggleButton bypassToggleButton;
     
-    ChannelStripComponent channelStrip1;
-    ChannelStripComponent channelStrip2;
-    ChannelStripComponent channelStrip3;
-    ChannelStripComponent channelStrip4;
+    ChannelStripComponent channelStrips[4] = { ChannelStripComponent(), ChannelStripComponent(), ChannelStripComponent(), ChannelStripComponent() };
     
     PresetMenuComponent presetMenu;
 

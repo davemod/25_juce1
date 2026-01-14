@@ -216,7 +216,9 @@ private:
 struct EQState {
     EQState() = default;
     
-    float bandGains[4] = { 1.0f };
-    float bandMutes[4] = { false };
-    float bandSolos[4] = { false };
+    static constexpr int numBands = 4;
+    
+    float bandGains[numBands] = { 1.0f };
+    float bandMutes[numBands] = { false };
+    float bandSolos[numBands] = { false };
 };

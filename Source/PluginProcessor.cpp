@@ -184,11 +184,6 @@ juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
     return new HelloWorldAudioProcessor();
 }
 
-EQState HelloWorldAudioProcessor::getEqState()
-{
-    return eqState;
-}
-
 void HelloWorldAudioProcessor::setEqGain(int band, float gain)
 {
     eqState.bandGains[band] = gain;
