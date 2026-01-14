@@ -37,7 +37,7 @@ private:
     TextButton textButton { "Start" };
     ToggleButton bypassToggleButton;
     
-    ChannelStripComponent channelStrips[4] = { ChannelStripComponent(), ChannelStripComponent(), ChannelStripComponent(), ChannelStripComponent() };
+    juce::OwnedArray<ChannelStripComponent> channelStrips;
     
     PresetMenuComponent presetMenu;
 

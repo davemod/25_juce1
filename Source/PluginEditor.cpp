@@ -20,42 +20,40 @@ audioProcessor (p)
 {
     setResizable(true, true);
     
-    addAndMakeVisible (bypassToggleButton);
-    addAndMakeVisible (channelStrips[0]);
-    addAndMakeVisible (channelStrips[1]);
-    addAndMakeVisible (channelStrips[2]);
-    addAndMakeVisible (channelStrips[3]);
-    addAndMakeVisible (presetMenu);
-    
-    // APPLY STATE TO UI
     EQState state = audioProcessor.getEqState();
     
-    for (int i = 0; i < sizeof(channelStrips); i++)
+    for (int i = 0; i < audioProcessor.getEqState().numBands; i++)
     {
+        auto channelStrip = channelStrips.add(new ChannelStripComponent());
+        addAndMakeVisible (channelStrip);
+        
         // Initialize UI state
-        channelStrips[i].setFaderValue(state.bandGains[i]);
-        channelStrips[i].setMuteButtonState(state.bandMutes[i]);
-        channelStrips[i].setSoloButtonState(state.bandSolos[i]);
+        channelStrip -> setFaderValue(state.bandGains[i]);
+        channelStrip -> setMuteButtonState(state.bandMutes[i]);
+        channelStrip -> setSoloButtonState(state.bandSolos[i]);
         
         // UI Callbacks
-        channelStrips[i].onFaderValueChange = [=](float value)
+        channelStrip -> onFaderValueChange = [=](float value)
         {
             auto gain = juce::Decibels::decibelsToGain(value);
             audioProcessor.setEqGain(i, gain);
         };
         
-        channelStrips[i].onMuteChanged = [=](bool isOn)
+        channelStrip -> onMuteChanged = [=](bool isOn)
         {
             if (isOn == audioProcessor.getEqState().bandMutes[i]) { return; }
             audioProcessor.setMuteBand(i, isOn);
         };
         
-        channelStrips[i].onSoloChanged = [=](bool isOn)
+        channelStrip -> onSoloChanged = [=](bool isOn)
         {
             if (isOn == audioProcessor.getEqState().bandSolos[i]) { return; }
             audioProcessor.setSoloBand(i, isOn);
         };
     }
+    
+    addAndMakeVisible (bypassToggleButton);
+    addAndMakeVisible (presetMenu);
     
     bypassToggleButton.setTitle("Bypass");
     bypassToggleButton.setButtonText("Bypass");
@@ -85,8 +83,8 @@ void HelloWorldAudioProcessorEditor::resized()
     
     presetMenu.setBounds(area.removeFromTop(30));
     
-    channelStrips[0].setBounds (area.removeFromLeft (channelStripWidth));
-    channelStrips[1].setBounds (area.removeFromLeft (channelStripWidth));
-    channelStrips[2].setBounds (area.removeFromLeft (channelStripWidth));
-    channelStrips[3].setBounds (area.removeFromLeft (channelStripWidth));
+    channelStrips[0] -> setBounds (area.removeFromLeft (channelStripWidth));
+    channelStrips[1] -> setBounds (area.removeFromLeft (channelStripWidth));
+    channelStrips[2] -> setBounds (area.removeFromLeft (channelStripWidth));
+    channelStrips[3] -> setBounds (area.removeFromLeft (channelStripWidth));
 }
