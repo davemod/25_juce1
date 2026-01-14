@@ -57,11 +57,11 @@ public:
     void setEqGain(int band, float value);
     EQState getEqState();
     
-    void muteBand(int band);
-    void unmuteBand(int band);
+    void muteBand(int band, bool isMute);
+    //void unmuteBand(int band);
     
-    void soloBand(int band);
-    void unsoloBand(int band);
+    void soloBand(int band, bool isSolo);
+    //void unsoloBand(int band);
     
 private:
     LinearPhaseFourBandEQ eq;

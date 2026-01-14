@@ -30,22 +30,22 @@ audioProcessor (p)
     // APPLY STATE TO UI
     EQState state = audioProcessor.getEqState();
     
-    channelStrip1.setFaderValue(state.band1Gain);
-    channelStrip2.setFaderValue(state.band2Gain);
-    channelStrip3.setFaderValue(state.band3Gain);
-    channelStrip4.setFaderValue(state.band4Gain);
+    channelStrip1.setFaderValue(state.bandGains[0]);
+    channelStrip2.setFaderValue(state.bandGains[1]);
+    channelStrip3.setFaderValue(state.bandGains[2]);
+    channelStrip4.setFaderValue(state.bandGains[3]);
     
-    channelStrip1.setMuteButtonState(state.band1Mute);
-    channelStrip1.setSoloButtonState(state.band1Solo);
+    channelStrip1.setMuteButtonState(state.bandMute[0]);
+    channelStrip1.setSoloButtonState(state.bandSolo[0]);
     
-    channelStrip2.setMuteButtonState(state.band2Mute);
-    channelStrip2.setSoloButtonState(state.band2Solo);
+    channelStrip2.setMuteButtonState(state.bandMute[1]);
+    channelStrip2.setSoloButtonState(state.bandMute[1]);
     
-    channelStrip3.setMuteButtonState(state.band3Mute);
-    channelStrip3.setSoloButtonState(state.band3Solo);
+    channelStrip3.setMuteButtonState(state.bandMute[2]);
+    channelStrip3.setSoloButtonState(state.bandMute[2]);
     
-    channelStrip4.setMuteButtonState(state.band4Mute);
-    channelStrip4.setSoloButtonState(state.band4Solo);
+    channelStrip4.setMuteButtonState(state.bandMute[3]);
+    channelStrip4.setSoloButtonState(state.bandMute[4]);
     
     // UI CALLBACKS
     channelStrip1.onFaderValueChange = [this](float value) {
@@ -54,13 +54,13 @@ audioProcessor (p)
     };
     
     channelStrip1.onMuteChanged = [this](bool isOn) {
-        if (isOn == audioProcessor.getEqState().band1Mute) { return; }
+        if (isOn == audioProcessor.getEqState().bandMute[0]) { return; }
         else if (isOn) { audioProcessor.muteBand(0); }
         else { audioProcessor.unmuteBand(0); }
     };
     
     channelStrip1.onSoloChanged = [this](bool isOn) {
-        if (isOn == audioProcessor.getEqState().band1Solo) { return; }
+        if (isOn == audioProcessor.getEqState().bandSolo[0]) { return; }
         else if (isOn) { audioProcessor.soloBand(0); }
         else { audioProcessor.unsoloBand(0); }
     };
@@ -71,13 +71,13 @@ audioProcessor (p)
     };
     
     channelStrip2.onMuteChanged = [this](bool isOn) {
-        if (isOn == audioProcessor.getEqState().band2Mute) { return; }
+        if (isOn == audioProcessor.getEqState().bandMute[1]) { return; }
         else if (isOn) { audioProcessor.muteBand(1); }
         else { audioProcessor.unmuteBand(1); }
     };
     
     channelStrip2.onSoloChanged = [this](bool isOn) {
-        if (isOn == audioProcessor.getEqState().band2Solo) { return; }
+        if (isOn == audioProcessor.getEqState().bandSolo[1]) { return; }
         else if (isOn) { audioProcessor.soloBand(1); }
         else { audioProcessor.unsoloBand(1); }
     };
@@ -88,13 +88,13 @@ audioProcessor (p)
     };
     
     channelStrip3.onMuteChanged = [this](bool isOn) {
-        if (isOn == audioProcessor.getEqState().band3Mute) { return; }
+        if (isOn == audioProcessor.getEqState().bandMute[2]) { return; }
         else if (isOn) { audioProcessor.muteBand(2); }
         else { audioProcessor.unmuteBand(2); }
     };
     
     channelStrip3.onSoloChanged = [this](bool isOn) {
-        if (isOn == audioProcessor.getEqState().band3Solo) { return; }
+        if (isOn == audioProcessor.getEqState().bandSolo[2]) { return; }
         else if (isOn) { audioProcessor.soloBand(2); }
         else { audioProcessor.unsoloBand(2); }
     };
@@ -105,13 +105,13 @@ audioProcessor (p)
     };
     
     channelStrip4.onMuteChanged = [this](bool isOn) {
-        if (isOn == audioProcessor.getEqState().band4Mute) { return; }
+        if (isOn == audioProcessor.getEqState().bandMute[3]) { return; }
         else if (isOn) { audioProcessor.muteBand(3); }
         else { audioProcessor.unmuteBand(3); }
     };
     
     channelStrip4.onSoloChanged = [this](bool isOn) {
-        if (isOn == audioProcessor.getEqState().band4Solo) { return; }
+        if (isOn == audioProcessor.getEqState().bandSolo[3]) { return; }
         else if (isOn) { audioProcessor.soloBand(3); }
         else { audioProcessor.unsoloBand(3); }
     };

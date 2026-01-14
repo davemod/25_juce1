@@ -8,6 +8,8 @@
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
+#include <algorithm>
+
 
 //==============================================================================
 HelloWorldAudioProcessor::HelloWorldAudioProcessor()
@@ -187,145 +189,110 @@ EQState HelloWorldAudioProcessor::getEqState() {
     return eqState;
 }
 
-void HelloWorldAudioProcessor::setEqGain(int band, float value) {
-    switch (band) {
-        case 0:
-            eqState.band1Gain = value;
-            break;
-        case 1:
-            eqState.band2Gain = value;
-            break;
-        case 2:
-            eqState.band3Gain = value;
-            break;
-        case 3:
-            eqState.band4Gain = value;
-            break;
-        default:
-            DBG("setEqGain: No such Eq band: " << band);
-            break;
+void HelloWorldAudioProcessor::setEqGain(int band, float value)
+{
+    if ( band < 4 && band >= 0)
+    {
+        eqState.bandGains[band] = value;
+    }
+    else
+    {
+        DBG("tf how'd you find this band!?");
+    }
+    applyEQState();
+}
+
+void HelloWorldAudioProcessor::muteBand(int band, bool isMute) {
+    if ( band < 4 && band >= 0)
+    {
+        eqState.bandMute[band] = isMute;
+    }
+    else
+    {
+        DBG("muteBand: No such Eq band: " << band);
     }
     
     applyEQState();
 }
 
-void HelloWorldAudioProcessor::muteBand(int band) {
-    switch (band) {
-        case 0:
-            eqState.band1Mute = true;
-            break;
-        case 1:
-            eqState.band2Mute = true;
-            break;
-        case 2:
-            eqState.band3Mute = true;
-            break;
-        case 3:
-            eqState.band4Mute = true;
-            break;
-        default:
-            DBG("muteBand: No such Eq band: " << band);
-            break;
-    }
-    
+void HelloWorldAudioProcessor::soloBand(int band, bool isSolo)
+{
+  if ( band < 4 && band >= 0)
+  {
+    eqState.bandSolo[band] = isSolo;
+  }
+  else
+  {
+    DBG("soloBand: No such Eq band: " << band);
+  }
+
     applyEQState();
 }
 
-void HelloWorldAudioProcessor::unmuteBand(int band) {
-    switch (band) {
-        case 0:
-            eqState.band1Mute = false;
-            break;
-        case 1:
-            eqState.band2Mute = false;
-            break;
-        case 2:
-            eqState.band3Mute = false;
-            break;
-        case 3:
-            eqState.band4Mute = false;
-            break;
-        default:
-            DBG("unmuteBand: No such Eq band: " << band);
-            break;
-    }
-    
-    applyEQState();
-}
 
-void HelloWorldAudioProcessor::soloBand(int band) {
-    switch (band) {
-        case 0:
-            eqState.band1Solo = true;
-            break;
-        case 1:
-            eqState.band2Solo = true;
-            break;
-        case 2:
-            eqState.band3Solo = true;
-            break;
-        case 3:
-            eqState.band4Solo = true;
-            break;
-        default:
-            DBG("soloBand: No such Eq band: " << band);
-            break;
-    }
-    
-    applyEQState();
-}
-
-void HelloWorldAudioProcessor::unsoloBand(int band) {
-    switch (band) {
-        case 0:
-            eqState.band1Solo = false;
-            break;
-        case 1:
-            eqState.band2Solo = false;
-            break;
-        case 2:
-            eqState.band3Solo = false;
-            break;
-        case 3:
-            eqState.band4Solo = false;
-            break;
-        default:
-            DBG("unsoloBand: No such Eq band: " << band);
-            break;
-    }
-    
-    applyEQState();
-}
-
-void HelloWorldAudioProcessor::applyEQState() {
-    Array<float> bandGains = {0.0f, 0.0f, 0.0f, 0.0f};
+void HelloWorldAudioProcessor::applyEQState()
+{
+    //Array<float> bandGains = bandGains;
     // TODO: Not sure what should happen if multiple bands are soloed and one of them is also muted...
-    
+
+  const bool anySolo =
+    std::any_of(std::begin(eqState.bandSolo),
+                std::end(eqState.bandSolo),
+                [](bool b) { return b; });
+
+  for (int i = 0; i < 4; ++i)
+  {
+    if (anySolo)
+    {
+      // Solo mode active
+      if (!eqState.bandSolo[i])
+        eqState.bandGains[i] = 0.0f;
+    }
+    else
+    {
+      // No solo → mute logic
+      if (eqState.bandMute[i])
+        eqState.bandGains[i] = 0.0f;
+    }
+  }
+
+/*
+  if (std::any_of(std::begin(eqState.bandSolo), std::end(eqState.bandSolo),
+                 [](bool b) { return b; }))
+  {
+    // set all which are NOT solo to 0
+  }
+  else
+  {
+    // set all which are MUTE to 0
+  }
+
     // BAND 1
-    if ((eqState.band1Mute || eqState.band2Solo || eqState.band3Solo || eqState.band4Solo) && !eqState.band1Solo)
+    if ((eqState.bandMute[0] || eqState.bandSolo[1] || eqState.bandSolo[2] || eqState.bandSolo[3]) && !eqState.bandSolo[0])
         bandGains.set(0, 0.0f);
     else
-        bandGains.set(0, eqState.band1Gain);
-    
+        bandGains.set(0, eqState.bandGains[0]);
+
     // BAND 2
-    if ((eqState.band2Mute || eqState.band1Solo || eqState.band3Solo || eqState.band4Solo) && !eqState.band2Solo)
+    if ((eqState.bandMute[1] || eqState.bandSolo[0] || eqState.bandSolo[2] || eqState.bandSolo[3]) && !eqState.bandSolo[1])
         bandGains.set(1, 0.0f);
     else
-        bandGains.set(1, eqState.band2Gain);
-    
+        bandGains.set(1, eqState.bandGains[1]);
+
     // BAND 3
     if ((eqState.band3Mute || eqState.band1Solo || eqState.band2Solo || eqState.band4Solo) && !eqState.band3Solo)
         bandGains.set(2, 0.0f);
     else
         bandGains.set(2, eqState.band3Gain);
-    
+
     // BAND 4
     if ((eqState.band4Mute || eqState.band1Solo || eqState.band2Solo || eqState.band3Solo) && !eqState.band4Solo)
         bandGains.set(3, 0.0f);
     else
         bandGains.set(3, eqState.band4Gain);
+        */
+
+    //DBG("Applied eq gains: 1: " << bandGains[0] << " 2: " << bandGains[1] << " 3: " << bandGains[2] << " 4: " << bandGains[3]);
     
-    DBG("Applied eq gains: 1: " << bandGains[0] << " 2: " << bandGains[1] << " 3: " << bandGains[2] << " 4: " << bandGains[3]);
-    
-    eq.setBandGains(bandGains);
+   // eq.setBandGains(bandGains);
 }
