@@ -2,4 +2,8 @@ Builds/
 JuceLibraryCode/
 .DS_Store
 .vscode/
-/.clang-format
+.clang-format
+/juce_local.cmake
+/cmake-build-debug/
+/cmake-build-release/
+.idea/
