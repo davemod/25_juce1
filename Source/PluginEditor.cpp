@@ -25,97 +25,31 @@ audioProcessor (p)
     addAndMakeVisible (channelStrip2);
     addAndMakeVisible (channelStrip3);
     addAndMakeVisible (channelStrip4);
+  bindChannelStrip (channelStrip1, 0);
+  bindChannelStrip (channelStrip2, 1);
+  bindChannelStrip (channelStrip3, 2);
+  bindChannelStrip (channelStrip4, 3);
     addAndMakeVisible (presetMenu);
     
     // APPLY STATE TO UI
     EQState state = audioProcessor.getEqState();
-    
-    channelStrip1.setFaderValue(state.bandGains[0]);
-    channelStrip2.setFaderValue(state.bandGains[1]);
-    channelStrip3.setFaderValue(state.bandGains[2]);
-    channelStrip4.setFaderValue(state.bandGains[3]);
-    
-    channelStrip1.setMuteButtonState(state.bandMute[0]);
-    channelStrip1.setSoloButtonState(state.bandSolo[0]);
-    
-    channelStrip2.setMuteButtonState(state.bandMute[1]);
-    channelStrip2.setSoloButtonState(state.bandMute[1]);
-    
-    channelStrip3.setMuteButtonState(state.bandMute[2]);
-    channelStrip3.setSoloButtonState(state.bandMute[2]);
-    
-    channelStrip4.setMuteButtonState(state.bandMute[3]);
-    channelStrip4.setSoloButtonState(state.bandMute[4]);
-    
-    // UI CALLBACKS
-    channelStrip1.onFaderValueChange = [this](float value) {
-        auto gain = juce::Decibels::decibelsToGain(value);
-        audioProcessor.setEqGain(0, gain);
-    };
-    
-    channelStrip1.onMuteChanged = [this](bool isOn) {
-        if (isOn == audioProcessor.getEqState().bandMute[0]) { return; }
-        else if (isOn) { audioProcessor.muteBand(0); }
-        else { audioProcessor.unmuteBand(0); }
-    };
-    
-    channelStrip1.onSoloChanged = [this](bool isOn) {
-        if (isOn == audioProcessor.getEqState().bandSolo[0]) { return; }
-        else if (isOn) { audioProcessor.soloBand(0); }
-        else { audioProcessor.unsoloBand(0); }
-    };
-    
-    channelStrip2.onFaderValueChange = [this](float value) {
-        auto gain = juce::Decibels::decibelsToGain(value);
-        audioProcessor.setEqGain(1, gain);
-    };
-    
-    channelStrip2.onMuteChanged = [this](bool isOn) {
-        if (isOn == audioProcessor.getEqState().bandMute[1]) { return; }
-        else if (isOn) { audioProcessor.muteBand(1); }
-        else { audioProcessor.unmuteBand(1); }
-    };
-    
-    channelStrip2.onSoloChanged = [this](bool isOn) {
-        if (isOn == audioProcessor.getEqState().bandSolo[1]) { return; }
-        else if (isOn) { audioProcessor.soloBand(1); }
-        else { audioProcessor.unsoloBand(1); }
-    };
-    
-    channelStrip3.onFaderValueChange = [this](float value) {
-        auto gain = juce::Decibels::decibelsToGain(value);
-        audioProcessor.setEqGain(2, gain);
-    };
-    
-    channelStrip3.onMuteChanged = [this](bool isOn) {
-        if (isOn == audioProcessor.getEqState().bandMute[2]) { return; }
-        else if (isOn) { audioProcessor.muteBand(2); }
-        else { audioProcessor.unmuteBand(2); }
-    };
-    
-    channelStrip3.onSoloChanged = [this](bool isOn) {
-        if (isOn == audioProcessor.getEqState().bandSolo[2]) { return; }
-        else if (isOn) { audioProcessor.soloBand(2); }
-        else { audioProcessor.unsoloBand(2); }
-    };
-    
-    channelStrip4.onFaderValueChange = [this](float value) {
-        auto gain = juce::Decibels::decibelsToGain(value);
-        audioProcessor.setEqGain(3, gain);
-    };
-    
-    channelStrip4.onMuteChanged = [this](bool isOn) {
-        if (isOn == audioProcessor.getEqState().bandMute[3]) { return; }
-        else if (isOn) { audioProcessor.muteBand(3); }
-        else { audioProcessor.unmuteBand(3); }
-    };
-    
-    channelStrip4.onSoloChanged = [this](bool isOn) {
-        if (isOn == audioProcessor.getEqState().bandSolo[3]) { return; }
-        else if (isOn) { audioProcessor.soloBand(3); }
-        else { audioProcessor.unsoloBand(3); }
-    };
-    
+
+  channelStrip1.setFaderValue (juce::Decibels::gainToDecibels(state.bandGains[0]));
+  channelStrip1.setMuteButtonState(state.bandMute[0]);
+  channelStrip1.setSoloButtonState(state.bandSolo[0]);
+
+  channelStrip2.setFaderValue (juce::Decibels::gainToDecibels(state.bandGains[1]));
+  channelStrip2.setMuteButtonState(state.bandMute[1]);
+  channelStrip2.setSoloButtonState(state.bandSolo[1]);
+
+  channelStrip3.setFaderValue (juce::Decibels::gainToDecibels(state.bandGains[2]));
+  channelStrip3.setMuteButtonState(state.bandMute[2]);
+  channelStrip3.setSoloButtonState(state.bandSolo[2]);
+
+  channelStrip4.setFaderValue (juce::Decibels::gainToDecibels(state.bandGains[3]));
+  channelStrip4.setMuteButtonState(state.bandMute[3]);
+  channelStrip4.setSoloButtonState(state.bandSolo[3]);
+
     bypassToggleButton.setTitle("Bypass");
     bypassToggleButton.setButtonText("Bypass");
     
@@ -149,3 +83,24 @@ void HelloWorldAudioProcessorEditor::resized()
     channelStrip3.setBounds (area.removeFromLeft (channelStripWidth));
     channelStrip4.setBounds (area.removeFromLeft (channelStripWidth));
 }
+
+void HelloWorldAudioProcessorEditor::bindChannelStrip (ChannelStripComponent& strip, int channel)
+{
+  strip.onFaderValueChange = [this, channel](float dB)
+  {
+    audioProcessor.setEqGain(
+      channel,
+      juce::Decibels::decibelsToGain(dB)
+      );
+  };
+
+  strip.onMuteChanged = [this, channel](bool isOn)
+  {
+    audioProcessor.muteBand(channel, isOn);
+  };
+  strip.onSoloChanged = [this, channel](bool isOn)
+  {
+    audioProcessor.soloBand(channel, isOn);
+  };
+}
+

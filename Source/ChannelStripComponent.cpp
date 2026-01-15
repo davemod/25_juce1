@@ -40,7 +40,8 @@ ChannelStripComponent::ChannelStripComponent()
     levelFader.setDoubleClickReturnValue(true, 0.0);
     levelFader.setSliderStyle(Slider::SliderStyle::LinearVertical);
     levelFader.setColour(Slider::textBoxTextColourId, Colours::black);
-    levelFader.setTextBoxStyle(Slider::TextEntryBoxPosition::TextBoxBelow, false, 50, 20);
+    levelFader.setTextBoxStyle(Slider::TextEntryBoxPosition::TextBoxBelow, false, 70, 20);
+  levelFader.setNumDecimalPlacesToDisplay(2);
     levelFader.onValueChange = [this] {
         if(onFaderValueChange) {
             onFaderValueChange(levelFader.getValue());
@@ -69,13 +70,6 @@ void ChannelStripComponent::setSoloButtonState(bool isOn) {
 
 void ChannelStripComponent::paint (juce::Graphics& g)
 {
-    /* This demo code just fills the component's background and
-       draws some placeholder text to get you started.
-
-       You should replace everything in this method with your own
-       drawing code..
-    */
-
     g.fillAll (Colours::beige);   // clear the background
 
     g.setColour (juce::Colours::grey);

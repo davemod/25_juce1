@@ -213,22 +213,28 @@ private:
 };
 
 // TODO: Use this inside Processor
-struct EQState {
-    EQState() = default;
+struct EQState
+{
+  static constexpr int NumBands = 4;
 
-    const static int NumBands { 4 };
-    float bandGains[NumBands]{1.f};
-    bool bandSolo[NumBands]{false};
-    bool bandMute[NumBands]{false};
+  std::array<float, NumBands> bandGains;
+  std::array<bool,  NumBands> bandSolo;
+  std::array<bool,  NumBands> bandMute;
 
-    float getGainForBand(int band) {
-        if ( band < 4 && band >= 0)
-        {
-            return bandGains[band];
-        }
-        else {
-            DBG("getGainForBand: No such band: " << band);
-            return -99.0;
-        }
-    };
+  EQState()
+  {
+    bandGains.fill(1.0f);
+    bandSolo.fill(false);
+    bandMute.fill(false);
+  }
+
+  float getGainForBand(int band) const
+  {
+    if (band >= 0 && band < NumBands)
+      return bandGains[band];
+
+    DBG("getGainForBand: No such band: " << band);
+    return -99.0f;
+  }
 };
+

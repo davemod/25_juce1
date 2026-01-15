@@ -55,14 +55,11 @@ public:
     void setStateInformation (const void* data, int sizeInBytes) override;
     
     void setEqGain(int band, float value);
-    EQState getEqState();
-    
     void muteBand(int band, bool isMute);
-    //void unmuteBand(int band);
-    
     void soloBand(int band, bool isSolo);
-    //void unsoloBand(int band);
-    
+
+  const EQState& getEqState() const noexcept;
+
 private:
     LinearPhaseFourBandEQ eq;
     EQState eqState;

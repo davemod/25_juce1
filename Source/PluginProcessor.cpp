@@ -185,9 +185,11 @@ juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
     return new HelloWorldAudioProcessor();
 }
 
-EQState HelloWorldAudioProcessor::getEqState() {
-    return eqState;
+const EQState& HelloWorldAudioProcessor::getEqState() const noexcept
+{
+  return eqState;
 }
+
 
 void HelloWorldAudioProcessor::setEqGain(int band, float value)
 {
@@ -211,7 +213,6 @@ void HelloWorldAudioProcessor::muteBand(int band, bool isMute) {
     {
         DBG("muteBand: No such Eq band: " << band);
     }
-    
     applyEQState();
 }
 
@@ -225,8 +226,7 @@ void HelloWorldAudioProcessor::soloBand(int band, bool isSolo)
   {
     DBG("soloBand: No such Eq band: " << band);
   }
-
-    applyEQState();
+   applyEQState();
 }
 
 
@@ -256,43 +256,4 @@ void HelloWorldAudioProcessor::applyEQState()
     }
   }
 
-/*
-  if (std::any_of(std::begin(eqState.bandSolo), std::end(eqState.bandSolo),
-                 [](bool b) { return b; }))
-  {
-    // set all which are NOT solo to 0
-  }
-  else
-  {
-    // set all which are MUTE to 0
-  }
-
-    // BAND 1
-    if ((eqState.bandMute[0] || eqState.bandSolo[1] || eqState.bandSolo[2] || eqState.bandSolo[3]) && !eqState.bandSolo[0])
-        bandGains.set(0, 0.0f);
-    else
-        bandGains.set(0, eqState.bandGains[0]);
-
-    // BAND 2
-    if ((eqState.bandMute[1] || eqState.bandSolo[0] || eqState.bandSolo[2] || eqState.bandSolo[3]) && !eqState.bandSolo[1])
-        bandGains.set(1, 0.0f);
-    else
-        bandGains.set(1, eqState.bandGains[1]);
-
-    // BAND 3
-    if ((eqState.band3Mute || eqState.band1Solo || eqState.band2Solo || eqState.band4Solo) && !eqState.band3Solo)
-        bandGains.set(2, 0.0f);
-    else
-        bandGains.set(2, eqState.band3Gain);
-
-    // BAND 4
-    if ((eqState.band4Mute || eqState.band1Solo || eqState.band2Solo || eqState.band3Solo) && !eqState.band4Solo)
-        bandGains.set(3, 0.0f);
-    else
-        bandGains.set(3, eqState.band4Gain);
-        */
-
-    //DBG("Applied eq gains: 1: " << bandGains[0] << " 2: " << bandGains[1] << " 3: " << bandGains[2] << " 4: " << bandGains[3]);
-    
-   // eq.setBandGains(bandGains);
 }

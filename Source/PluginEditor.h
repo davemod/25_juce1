@@ -27,6 +27,8 @@ public:
     void paint (juce::Graphics&) override;
     void resized() override;
 
+  void bindChannelStrip (ChannelStripComponent& strip, int band);
+
 private:
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
