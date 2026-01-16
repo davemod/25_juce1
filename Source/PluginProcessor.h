@@ -66,8 +66,9 @@ public:
 private:
     LinearPhaseFourBandEQ eq;
     EQState eqState;
-    
+    AudioProcessorValueTreeState state;
     void applyEQState();
+    juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (HelloWorldAudioProcessor)
 };

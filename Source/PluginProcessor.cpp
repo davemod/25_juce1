@@ -11,16 +11,10 @@
 
 //==============================================================================
 HelloWorldAudioProcessor::HelloWorldAudioProcessor()
-#ifndef JucePlugin_PreferredChannelConfigurations
      : AudioProcessor (BusesProperties()
-                     #if ! JucePlugin_IsMidiEffect
-                      #if ! JucePlugin_IsSynth
                        .withInput  ("Input",  juce::AudioChannelSet::stereo(), true)
-                      #endif
-                       .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
-                     #endif
-                       )
-#endif
+                       .withOutput ("Output", juce::AudioChannelSet::stereo(), true))
+, state(*this, nullptr, "HelloWorldState", createParameterLayout())
 {
     DBG ("PluginProcessor ()");
     eqState = EQState();
@@ -234,4 +228,13 @@ void HelloWorldAudioProcessor::applyEQState()
     DBG("Applied eq gains: | 1: " << bandGains[0] << " | 2: " << bandGains[1] << " | 3: " << bandGains[2] << " | 4: " << bandGains[3]);
     
     eq.setBandGains(bandGains);
+}
+
+juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout() {
+    auto layout = juce::AudioProcessorValueTreeState::ParameterLayout();
+    
+    // TODO: Add all parameters
+    layout.add (std::make_unique<AudioParameterBool> (ParameterID("MuteBand1", 1), "Mute Band 1", false));
+    
+    return layout;
 }
