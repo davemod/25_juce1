@@ -250,19 +250,21 @@ void HelloWorldAudioProcessor::applyEQState()
     {
       // Solo mode active
       if (!eqState.bandSolo[i])
+      {
         gain = 0.0f;
         DBG("Check how I solo them on band " << i);
+      }
     }
     else
     {
       // No solo → mute logic
       if (eqState.bandMute[i])
+      {
         gain = 0.0f;
         DBG("We mute now on band " << i);
+      }
     }
     eq.setBandGain(i, gain);
   }
-
-
 
 }
