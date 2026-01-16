@@ -240,23 +240,29 @@ void HelloWorldAudioProcessor::applyEQState()
                 std::end(eqState.bandSolo),
                 [](bool b) { return b; });
 
+
+
   int eqChannels = sizeof(eqState.bandGains) / sizeof(eqState.bandGains[0]);
   for (int i = 0; i < eqChannels; ++i)
   {
+    auto gain = eqState.bandGains[i];
     if (anySolo)
     {
       // Solo mode active
       if (!eqState.bandSolo[i])
-        eqState.bandGains[i] = 0.0f;
+        gain = 0.0f;
         DBG("Check how I solo them on band " << i);
     }
     else
     {
       // No solo → mute logic
       if (eqState.bandMute[i])
-        eqState.bandGains[i] = 0.0f;
+        gain = 0.0f;
         DBG("We mute now on band " << i);
     }
+    eq.setBandGain(i, gain);
   }
+
+
 
 }
