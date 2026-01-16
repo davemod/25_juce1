@@ -13,16 +13,10 @@
 
 //==============================================================================
 HelloWorldAudioProcessor::HelloWorldAudioProcessor()
-#ifndef JucePlugin_PreferredChannelConfigurations
      : AudioProcessor (BusesProperties()
-                     #if ! JucePlugin_IsMidiEffect
-                      #if ! JucePlugin_IsSynth
                        .withInput  ("Input",  juce::AudioChannelSet::stereo(), true)
-                      #endif
-                       .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
-                     #endif
-                       )
-#endif
+                       .withOutput ("Output", juce::AudioChannelSet::stereo(), true))
+    , state(*this, nullptr, "STATE", createParameterLayout ())
 {
     DBG ("PluginProcessor ()");
     eqState = EQState();
@@ -262,7 +256,15 @@ void HelloWorldAudioProcessor::applyEQState()
     }
     eq.setBandGain(i, gain);
   }
+}
 
-
-
+APVTS::ParameterLayout HelloWorldAudioProcessor::createParameterLayout()
+{
+    APVTS::ParameterLayout layout;
+    
+    layout.add (std::make_unique<AudioParameterBool> (ParameterID  ("MuteBand1", 1), "Mute Band 1", false));
+    // add parameters for mute, solo and band gain for each band
+    // see AudioParameterFloat for band gains, use NormalisableRange to define min and max band decibels (-64.0 to +24.0dB)
+    
+    return layout;
 }

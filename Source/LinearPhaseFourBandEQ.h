@@ -5,7 +5,10 @@
 class LinearPhaseFourBandEQ
 {
 public:
-    LinearPhaseFourBandEQ() = default;
+    LinearPhaseFourBandEQ()
+    {
+        DBG ("LinearPhaseFourBandEQ ()");
+    }
 
     // Call this from prepareToPlay
     void prepare (double sampleRate, int samplesPerBlock, int numChannels)

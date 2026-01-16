@@ -11,6 +11,8 @@
 #include <JuceHeader.h>
 #include "LinearPhaseFourBandEQ.h"
 
+using APVTS = AudioProcessorValueTreeState;
+
 //==============================================================================
 /**
 */
@@ -58,13 +60,17 @@ public:
     void muteBand(int band, bool isMute);
     void soloBand(int band, bool isSolo);
 
-  const EQState& getEqState() const noexcept;
+    const EQState& getEqState() const noexcept;
 
 private:
     LinearPhaseFourBandEQ eq;
     EQState eqState;
     
+    APVTS state;
+    
     void applyEQState();
+    APVTS::ParameterLayout createParameterLayout ();
+    
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (HelloWorldAudioProcessor)
 };
