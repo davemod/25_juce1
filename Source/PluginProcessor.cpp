@@ -13,16 +13,10 @@
 
 //==============================================================================
 HelloWorldAudioProcessor::HelloWorldAudioProcessor()
-#ifndef JucePlugin_PreferredChannelConfigurations
      : AudioProcessor (BusesProperties()
-                     #if ! JucePlugin_IsMidiEffect
-                      #if ! JucePlugin_IsSynth
                        .withInput  ("Input",  juce::AudioChannelSet::stereo(), true)
-                      #endif
-                       .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
-                     #endif
-                       )
-#endif
+                       .withOutput ("Output", juce::AudioChannelSet::stereo(), true))
+    , state(*this, nullptr, "STATE", createParameterLayout ())
 {
     DBG ("PluginProcessor ()");
     eqState = EQState();
@@ -267,4 +261,42 @@ void HelloWorldAudioProcessor::applyEQState()
     eq.setBandGain(i, gain);
   }
 
+}
+
+APVTS::ParameterLayout createParameterLayout ()
+{
+  APVTS::ParameterLayout layout;
+  // MUTE buttons
+  layout.add (std::make_unique<AudioParameterBool> (ParameterID ("MuteBand1", 1), "Mute Band 1", false));
+  layout.add (std::make_unique<AudioParameterBool> (ParameterID ("MuteBand2", 1), "Mute Band 2", false));
+  layout.add (std::make_unique<AudioParameterBool> (ParameterID ("MuteBand3", 1), "Mute Band 3", false));
+  layout.add (std::make_unique<AudioParameterBool> (ParameterID ("MuteBand4", 1), "Mute Band 4", false));
+
+  // SOLO buttons
+  layout.add (std::make_unique<AudioParameterBool> (ParameterID ("SoloBand1", 1), "Solo Band 1", false));
+  layout.add (std::make_unique<AudioParameterBool> (ParameterID ("SoloBand2", 1), "Solo Band 2", false));
+  layout.add (std::make_unique<AudioParameterBool> (ParameterID ("SoloBand3", 1), "Solo Band 3", false));
+  layout.add (std::make_unique<AudioParameterBool> (ParameterID ("SoloBand4", 1), "Solo Band 4", false));
+
+  // GAIN Floats
+  layout.add (std::make_unique<AudioParameterFloat> (ParameterID ("GainBand1", 1),  "Gain Band 1",
+    NormalisableRange<float> (
+      Decibels::decibelsToGain(-64.0f), Decibels::decibelsToGain(24.0f), 0.01f),
+      1.0f));
+  layout.add (std::make_unique<AudioParameterFloat> (ParameterID ("GainBand2", 1), "Gain Band 2",
+    NormalisableRange<float> (Decibels::decibelsToGain(-64.0f),
+      Decibels::decibelsToGain(24.0f), 0.01f),
+      1.0f));
+  layout.add (std::make_unique<AudioParameterFloat> (ParameterID ("GainBand3", 1),  "Gain Band 3",
+    NormalisableRange<float> (Decibels::decibelsToGain(-64.0f),
+      Decibels::decibelsToGain(24.0f), 0.01f),
+      1.0f));
+  layout.add (std::make_unique<AudioParameterFloat> (ParameterID ("GainBand4", 1),  "Gain Band 4",
+    NormalisableRange<float> (Decibels::decibelsToGain(-64.0f),
+      Decibels::decibelsToGain(24.0f), 0.01f),
+      1.0f));
+
+  //DONE: Add mute and solo and as well as the FLOATs for the bands!
+  //  Check AudioParameterFloat for band gains, use NormalisableRange to define min and max band decibels (-64.0 to +24.0dB)
+  return layout;
 }

@@ -12,8 +12,9 @@
 #include "LinearPhaseFourBandEQ.h"
 
 //==============================================================================
-/**
-*/
+
+using APVTS = AudioProcessorValueTreeState;
+
 class HelloWorldAudioProcessor  : public juce::AudioProcessor
 {
 public:
@@ -61,10 +62,13 @@ public:
   const EQState& getEqState() const noexcept;
 
 private:
-    LinearPhaseFourBandEQ eq;
-    EQState eqState;
-    
+  LinearPhaseFourBandEQ eq;
+  EQState eqState;
+
+  AudioProcessorValueTreeState state;
+
     void applyEQState();
+  APVTS::ParameterLayout createParameterLayout ();
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (HelloWorldAudioProcessor)
 };
