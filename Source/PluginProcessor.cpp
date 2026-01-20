@@ -227,7 +227,6 @@ void HelloWorldAudioProcessor::soloBand(int band, bool isSolo)
 void HelloWorldAudioProcessor::applyEQState()
 {
     //Array<float> bandGains = bandGains;
-    // TODO: Not sure what should happen if multiple bands are soloed and one of them is also muted...
 
   const bool anySolo =
     std::any_of(std::begin(eqState.bandSolo),
@@ -263,7 +262,7 @@ void HelloWorldAudioProcessor::applyEQState()
 
 }
 
-APVTS::ParameterLayout createParameterLayout ()
+APVTS::ParameterLayout HelloWorldAudioProcessor::createParameterLayout ()
 {
   APVTS::ParameterLayout layout;
   // MUTE buttons

@@ -18,21 +18,22 @@ HelloWorldAudioProcessorEditor::HelloWorldAudioProcessorEditor (HelloWorldAudioP
 AudioProcessorEditor (&p),
 audioProcessor (p)
 {
-    setResizable(true, true);
+
+  setResizable(true, true);
     
-    addAndMakeVisible (bypassToggleButton);
-    addAndMakeVisible (channelStrip1);
-    addAndMakeVisible (channelStrip2);
-    addAndMakeVisible (channelStrip3);
-    addAndMakeVisible (channelStrip4);
+  addAndMakeVisible (bypassToggleButton);
+  addAndMakeVisible (channelStrip1);
+  addAndMakeVisible (channelStrip2);
+  addAndMakeVisible (channelStrip3);
+  addAndMakeVisible (channelStrip4);
   bindChannelStrip (channelStrip1, 0);
   bindChannelStrip (channelStrip2, 1);
   bindChannelStrip (channelStrip3, 2);
   bindChannelStrip (channelStrip4, 3);
-    addAndMakeVisible (presetMenu);
+  addAndMakeVisible (presetMenu);
     
-    // APPLY STATE TO UI
-    EQState state = audioProcessor.getEqState();
+  // APPLY STATE TO UI
+  EQState state = audioProcessor.getEqState();
 
   channelStrip1.setFaderValue (juce::Decibels::gainToDecibels(state.bandGains[0]));
   channelStrip1.setMuteButtonState(state.bandMute[0]);
@@ -50,11 +51,11 @@ audioProcessor (p)
   channelStrip4.setMuteButtonState(state.bandMute[3]);
   channelStrip4.setSoloButtonState(state.bandSolo[3]);
 
-    bypassToggleButton.setTitle("Bypass");
-    bypassToggleButton.setButtonText("Bypass");
+  bypassToggleButton.setTitle("Bypass");
+   bypassToggleButton.setButtonText("Bypass");
     
-    setSize (500, 400);
-    setResizeLimits(300, 200, 900, 600);
+  setSize (500, 400);
+  setResizeLimits(300, 200, 900, 600);
 }
 
 HelloWorldAudioProcessorEditor::~HelloWorldAudioProcessorEditor()
