@@ -213,12 +213,12 @@ private:
 };
 
 // TODO: Use this inside Processor
-struct EQState {
-    EQState() = default;
-    
-    static constexpr int numBands = 4;
-    
-    float bandGains[numBands] = { 1.0f };
-    float bandMutes[numBands] = { false };
-    float bandSolos[numBands] = { false };
-};
+//struct EQState {
+//    EQState() = default;
+//    
+//    static constexpr int numBands = 4;
+//    
+//    float bandGains[numBands] = { 1.0f };
+//    float bandMutes[numBands] = { false };
+//    float bandSolos[numBands] = { false };
+//};

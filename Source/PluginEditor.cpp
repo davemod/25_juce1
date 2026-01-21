@@ -19,37 +19,17 @@ AudioProcessorEditor (&p),
 audioProcessor (p)
 {
     setResizable(true, true);
+
+    AudioProcessorValueTreeState& apvts = audioProcessor.getApvts();
     
-    EQState state = audioProcessor.getEqState();
-    
-    for (int i = 0; i < audioProcessor.getEqState().numBands; i++)
+    for (int i = 0; i < 4; i++)
     {
         auto channelStrip = channelStrips.add(new ChannelStripComponent());
         addAndMakeVisible (channelStrip);
         
-        // Initialize UI state
-        channelStrip -> setFaderValue(state.bandGains[i]);
-        channelStrip -> setMuteButtonState(state.bandMutes[i]);
-        channelStrip -> setSoloButtonState(state.bandSolos[i]);
-        
-        // UI Callbacks
-        channelStrip -> onFaderValueChange = [=](float value)
-        {
-            auto gain = juce::Decibels::decibelsToGain(value);
-            audioProcessor.setEqGain(i, gain);
-        };
-        
-        channelStrip -> onMuteChanged = [=](bool isOn)
-        {
-            if (isOn == audioProcessor.getEqState().bandMutes[i]) { return; }
-            audioProcessor.setMuteBand(i, isOn);
-        };
-        
-        channelStrip -> onSoloChanged = [=](bool isOn)
-        {
-            if (isOn == audioProcessor.getEqState().bandSolos[i]) { return; }
-            audioProcessor.setSoloBand(i, isOn);
-        };
+        soloButtonAttachments.add(std::make_unique<AudioProcessorValueTreeState::ButtonAttachment>(apvts, "solo_band_" + std::to_string(i+1), channelStrips[i] -> getSoloButton()));
+        muteButtonAttachments.add(std::make_unique<AudioProcessorValueTreeState::ButtonAttachment>(apvts, "mute_band_" + std::to_string(i+1), channelStrips[i] -> getMuteButton()));
+        levelFaderAttachments.add(std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(apvts, "gain_band_" + std::to_string(i+1), channelStrips[i] -> getLevelFader()));
     }
     
     addAndMakeVisible (bypassToggleButton);

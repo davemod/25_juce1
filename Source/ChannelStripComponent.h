@@ -35,6 +35,10 @@ public:
     bool isSoloActive();
     bool isMuteActive();
     
+    Button& getMuteButton() { return muteButton; }
+    Button& getSoloButton() { return soloButton; }
+    Slider& getLevelFader() { return levelFader; }
+    
 private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ChannelStripComponent)
     

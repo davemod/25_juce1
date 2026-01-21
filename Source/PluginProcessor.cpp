@@ -17,7 +17,6 @@ HelloWorldAudioProcessor::HelloWorldAudioProcessor()
 , state(*this, nullptr, "HelloWorldState", createParameterLayout())
 {
     DBG ("PluginProcessor ()");
-    eqState = EQState();
 }
 
 HelloWorldAudioProcessor::~HelloWorldAudioProcessor()
@@ -163,12 +162,16 @@ void HelloWorldAudioProcessor::getStateInformation (juce::MemoryBlock& destData)
     // You should use this method to store your parameters in the memory block.
     // You could do that either as raw data, or use the XML or ValueTree classes
     // as intermediaries to make it easy to save and load complex data.
+    auto lState = state.copyState();
+    MemoryOutputStream mos(destData, false);
+    lState.writeToStream(mos);
 }
 
 void HelloWorldAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
     // You should use this method to restore your parameters from this memory block,
     // whose contents will have been created by the getStateInformation() call.
+    state.replaceState(ValueTree::readFromData(data, sizeInBytes));
 }
 
 //==============================================================================
@@ -178,52 +181,49 @@ juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
     return new HelloWorldAudioProcessor();
 }
 
-void HelloWorldAudioProcessor::setEqGain(int band, float gain)
-{
-    eqState.bandGains[band] = gain;
-    applyEQState();
-}
-
-void HelloWorldAudioProcessor::setMuteBand(int band, bool isMuted)
-{
-    eqState.bandMutes[band] = isMuted;
-    applyEQState();
-}
-
-void HelloWorldAudioProcessor::setSoloBand(int band, bool isSolo)
-{
-    eqState.bandSolos[band] = isSolo;
-    applyEQState();
-}
-
 void HelloWorldAudioProcessor::applyEQState()
 {
+    auto gain1 = state.getRawParameterValue("gain_band_1");
+    auto gain2 = state.getRawParameterValue("gain_band_2");
+    auto gain3 = state.getRawParameterValue("gain_band_3");
+    auto gain4 = state.getRawParameterValue("gain_band_4");
+    
+    auto solo1 = state.getRawParameterValue("gain_band_1");
+    auto solo2 = state.getRawParameterValue("gain_band_2");
+    auto solo3 = state.getRawParameterValue("gain_band_3");
+    auto solo4 = state.getRawParameterValue("gain_band_4");
+    
+    auto mute1 = state.getRawParameterValue("gain_band_1");
+    auto mute2 = state.getRawParameterValue("gain_band_2");
+    auto mute3 = state.getRawParameterValue("gain_band_3");
+    auto mute4 = state.getRawParameterValue("gain_band_4");
+    
     Array<float> bandGains = {0.0f, 0.0f, 0.0f, 0.0f};
     // TODO: Not sure what should happen if multiple bands are soloed and one of them is also muted...
     
     // BAND 1
-    if ((eqState.bandMutes[0] || eqState.bandSolos[1] || eqState.bandSolos[2] || eqState.bandSolos[3]) && !eqState.bandSolos[0])
+    if ((mute1 || solo2 || solo3 || solo4) && !solo1)
         bandGains.set(0, 0.0f);
     else
-        bandGains.set(0, eqState.bandGains[0]);
+        bandGains.set(0, gain1);
     
     // BAND 2
-    if ((eqState.bandMutes[1] || eqState.bandSolos[0] || eqState.bandSolos[2] || eqState.bandSolos[3]) && !eqState.bandSolos[1])
+    if ((mute2 || solo1 || solo3 || solo4) && !solo2)
         bandGains.set(1, 0.0f);
     else
-        bandGains.set(1, eqState.bandGains[1]);
+        bandGains.set(1, gain2);
     
     // BAND 3
-    if ((eqState.bandMutes[2] || eqState.bandSolos[0] || eqState.bandSolos[1] || eqState.bandSolos[3]) && !eqState.bandSolos[2])
+    if ((mute3 || solo1 || solo2 || solo4) && !solo3)
         bandGains.set(2, 0.0f);
     else
-        bandGains.set(2, eqState.bandGains[2]);
+        bandGains.set(2, gain3);
     
     // BAND 4
-    if ((eqState.bandMutes[3] || eqState.bandSolos[0] || eqState.bandSolos[1] || eqState.bandSolos[2]) && !eqState.bandSolos[3])
+    if ((mute4 || solo1 || solo2 || solo3) && !solo4)
         bandGains.set(3, 0.0f);
     else
-        bandGains.set(3, eqState.bandGains[3]);
+        bandGains.set(3, gain4);
     
     DBG("Applied eq gains: | 1: " << bandGains[0] << " | 2: " << bandGains[1] << " | 3: " << bandGains[2] << " | 4: " << bandGains[3]);
     
@@ -244,10 +244,34 @@ juce::AudioProcessorValueTreeState::ParameterLayout HelloWorldAudioProcessor::cr
     layout.add (std::make_unique<AudioParameterBool> (ParameterID("solo_band_3", 1), "Solo Band 3", false));
     layout.add (std::make_unique<AudioParameterBool> (ParameterID("solo_band_4", 1), "Solo Band 4", false));
     
-    layout.add (std::make_unique<AudioParameterFloat> (ParameterID("gain_band_1", 1), "Gain Band 1", -69.0f,  24.0f, 0.0));
-    layout.add (std::make_unique<AudioParameterFloat> (ParameterID("gain_band_2", 1), "Gain Band 2", -69.0f,  24.0f, 0.0));
-    layout.add (std::make_unique<AudioParameterFloat> (ParameterID("gain_band_3", 1), "Gain Band 3", -69.0f,  24.0f, 0.0));
-    layout.add (std::make_unique<AudioParameterFloat> (ParameterID("gain_band_4", 1), "Gain Band 4", -69.0f,  24.0f, 0.0));
+    layout.add (std::make_unique<AudioParameterFloat>
+                (
+                 ParameterID("gain_band_1", 1),
+                 "Gain Band 1",
+                 NormalisableRange<float>(-69.0f, 24.0f, 0.01f),
+                 0.0
+                 ));
+    layout.add (std::make_unique<AudioParameterFloat>
+                (
+                 ParameterID("gain_band_2", 1),
+                 "Gain Band 2",
+                 NormalisableRange<float>(-69.0f, 24.0f, 0.01f),
+                 0.0
+                 ));
+    layout.add (std::make_unique<AudioParameterFloat>
+                (
+                 ParameterID("gain_band_3", 1),
+                 "Gain Band 3",
+                 NormalisableRange<float>(-69.0f, 24.0f, 0.01f),
+                 0.0
+                 ));
+    layout.add (std::make_unique<AudioParameterFloat>
+                (
+                 ParameterID("gain_band_4", 1),
+                 "Gain Band 4",
+                 NormalisableRange<float>(-69.0f, 24.0f, 0.01f),
+                 0.0
+                 ));
     
     return layout;
 }

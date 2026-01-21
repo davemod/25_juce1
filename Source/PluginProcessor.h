@@ -54,21 +54,17 @@ public:
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
     
-    const EQState& getEqState() const noexcept
+    AudioProcessorValueTreeState& getApvts()
     {
-        return eqState;
+        return state;
     }
-    
-    void setEqGain(int band, float value);
-    void setMuteBand(int band, bool isMuted);
-    void setSoloBand(int band, bool isSolo);
     
 private:
     LinearPhaseFourBandEQ eq;
-    EQState eqState;
     AudioProcessorValueTreeState state;
     void applyEQState();
     juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
+    
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (HelloWorldAudioProcessor)
 };

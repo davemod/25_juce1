@@ -39,6 +39,10 @@ private:
     
     juce::OwnedArray<ChannelStripComponent> channelStrips;
     
+    juce::OwnedArray<AudioProcessorValueTreeState::ButtonAttachment> soloButtonAttachments;
+    juce::OwnedArray<AudioProcessorValueTreeState::ButtonAttachment> muteButtonAttachments;
+    juce::OwnedArray<AudioProcessorValueTreeState::SliderAttachment> levelFaderAttachments;
+    
     PresetMenuComponent presetMenu;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (HelloWorldAudioProcessorEditor)
