@@ -230,11 +230,24 @@ void HelloWorldAudioProcessor::applyEQState()
     eq.setBandGains(bandGains);
 }
 
-juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout() {
+juce::AudioProcessorValueTreeState::ParameterLayout HelloWorldAudioProcessor::createParameterLayout()
+{
     auto layout = juce::AudioProcessorValueTreeState::ParameterLayout();
     
-    // TODO: Add all parameters
-    layout.add (std::make_unique<AudioParameterBool> (ParameterID("MuteBand1", 1), "Mute Band 1", false));
+    layout.add (std::make_unique<AudioParameterBool> (ParameterID("mute_band_1", 1), "Mute Band 1", false));
+    layout.add (std::make_unique<AudioParameterBool> (ParameterID("mute_band_2", 1), "Mute Band 2", false));
+    layout.add (std::make_unique<AudioParameterBool> (ParameterID("mute_band_3", 1), "Mute Band 3", false));
+    layout.add (std::make_unique<AudioParameterBool> (ParameterID("mute_band_4", 1), "Mute Band 4", false));
+    
+    layout.add (std::make_unique<AudioParameterBool> (ParameterID("solo_band_1", 1), "Solo Band 1", false));
+    layout.add (std::make_unique<AudioParameterBool> (ParameterID("solo_band_2", 1), "Solo Band 2", false));
+    layout.add (std::make_unique<AudioParameterBool> (ParameterID("solo_band_3", 1), "Solo Band 3", false));
+    layout.add (std::make_unique<AudioParameterBool> (ParameterID("solo_band_4", 1), "Solo Band 4", false));
+    
+    layout.add (std::make_unique<AudioParameterFloat> (ParameterID("gain_band_1", 1), "Gain Band 1", -69.0f,  24.0f, 0.0));
+    layout.add (std::make_unique<AudioParameterFloat> (ParameterID("gain_band_2", 1), "Gain Band 2", -69.0f,  24.0f, 0.0));
+    layout.add (std::make_unique<AudioParameterFloat> (ParameterID("gain_band_3", 1), "Gain Band 3", -69.0f,  24.0f, 0.0));
+    layout.add (std::make_unique<AudioParameterFloat> (ParameterID("gain_band_4", 1), "Gain Band 4", -69.0f,  24.0f, 0.0));
     
     return layout;
 }
