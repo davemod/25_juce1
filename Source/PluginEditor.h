@@ -39,9 +39,9 @@ private:
     
     juce::OwnedArray<ChannelStripComponent> channelStrips;
     
-    juce::OwnedArray<AudioProcessorValueTreeState::ButtonAttachment> soloButtonAttachments;
-    juce::OwnedArray<AudioProcessorValueTreeState::ButtonAttachment> muteButtonAttachments;
-    juce::OwnedArray<AudioProcessorValueTreeState::SliderAttachment> levelFaderAttachments;
+    juce::OwnedArray<APVTS::ButtonAttachment> soloButtonAttachments;
+    juce::OwnedArray<APVTS::ButtonAttachment> muteButtonAttachments;
+    juce::OwnedArray<APVTS::SliderAttachment> levelFaderAttachments;
     
     PresetMenuComponent presetMenu;
 

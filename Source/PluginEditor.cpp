@@ -9,7 +9,6 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 
-
 #define MYMACRO DBG("My Macro Print")
 
 //==============================================================================
@@ -20,16 +19,16 @@ audioProcessor (p)
 {
     setResizable(true, true);
 
-    AudioProcessorValueTreeState& apvts = audioProcessor.getApvts();
+    APVTS& apvts = audioProcessor.getApvts();
     
     for (int i = 0; i < 4; i++)
     {
         auto channelStrip = channelStrips.add(new ChannelStripComponent());
         addAndMakeVisible (channelStrip);
         
-        soloButtonAttachments.add(std::make_unique<AudioProcessorValueTreeState::ButtonAttachment>(apvts, "solo_band_" + std::to_string(i+1), channelStrips[i] -> getSoloButton()));
-        muteButtonAttachments.add(std::make_unique<AudioProcessorValueTreeState::ButtonAttachment>(apvts, "mute_band_" + std::to_string(i+1), channelStrips[i] -> getMuteButton()));
-        levelFaderAttachments.add(std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(apvts, "gain_band_" + std::to_string(i+1), channelStrips[i] -> getLevelFader()));
+        soloButtonAttachments.add(std::make_unique<APVTS::ButtonAttachment>(apvts, ID::bandSolo(i), channelStrips[i] -> getSoloButton()));
+        muteButtonAttachments.add(std::make_unique<APVTS::ButtonAttachment>(apvts, ID::bandMute(i), channelStrips[i] -> getMuteButton()));
+        levelFaderAttachments.add(std::make_unique<APVTS::SliderAttachment>(apvts, ID::bandGain(i), channelStrips[i] -> getLevelFader()));
     }
     
     addAndMakeVisible (bypassToggleButton);

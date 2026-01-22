@@ -10,6 +10,10 @@
 
 #include <JuceHeader.h>
 #include "LinearPhaseFourBandEQ.h"
+#include "HelloWorldParameterIDs.h"
+
+using APVTS = juce::AudioProcessorValueTreeState;
+using ID = HelloWorldParameterID;
 
 //==============================================================================
 /**
@@ -54,16 +58,13 @@ public:
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
     
-    AudioProcessorValueTreeState& getApvts()
-    {
-        return state;
-    }
+    APVTS& getApvts() { return state; }
     
 private:
     LinearPhaseFourBandEQ eq;
-    AudioProcessorValueTreeState state;
+    APVTS state;
     void applyEQState();
-    juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
+    APVTS::ParameterLayout createParameterLayout();
     
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (HelloWorldAudioProcessor)

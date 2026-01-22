@@ -183,95 +183,52 @@ juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 
 void HelloWorldAudioProcessor::applyEQState()
 {
-    auto gain1 = state.getRawParameterValue("gain_band_1");
-    auto gain2 = state.getRawParameterValue("gain_band_2");
-    auto gain3 = state.getRawParameterValue("gain_band_3");
-    auto gain4 = state.getRawParameterValue("gain_band_4");
+    std::vector<float> gains;
+    std::vector<bool> solos;
+    std::vector<bool> mutes;
     
-    auto solo1 = state.getRawParameterValue("gain_band_1");
-    auto solo2 = state.getRawParameterValue("gain_band_2");
-    auto solo3 = state.getRawParameterValue("gain_band_3");
-    auto solo4 = state.getRawParameterValue("gain_band_4");
-    
-    auto mute1 = state.getRawParameterValue("gain_band_1");
-    auto mute2 = state.getRawParameterValue("gain_band_2");
-    auto mute3 = state.getRawParameterValue("gain_band_3");
-    auto mute4 = state.getRawParameterValue("gain_band_4");
+    for(int i = 0; i < eq.numBands; i++)
+    {
+        gains[i] = * state.getRawParameterValue(ID::bandGain(i));
+        solos[i] = * state.getRawParameterValue(ID::bandSolo(i));
+        mutes[i] = * state.getRawParameterValue(ID::bandMute(i));
+    };
     
     Array<float> bandGains = {0.0f, 0.0f, 0.0f, 0.0f};
+    
     // TODO: Not sure what should happen if multiple bands are soloed and one of them is also muted...
-    
-    // BAND 1
-    if ((mute1 || solo2 || solo3 || solo4) && !solo1)
-        bandGains.set(0, 0.0f);
-    else
-        bandGains.set(0, gain1);
-    
-    // BAND 2
-    if ((mute2 || solo1 || solo3 || solo4) && !solo2)
-        bandGains.set(1, 0.0f);
-    else
-        bandGains.set(1, gain2);
-    
-    // BAND 3
-    if ((mute3 || solo1 || solo2 || solo4) && !solo3)
-        bandGains.set(2, 0.0f);
-    else
-        bandGains.set(2, gain3);
-    
-    // BAND 4
-    if ((mute4 || solo1 || solo2 || solo3) && !solo4)
-        bandGains.set(3, 0.0f);
-    else
-        bandGains.set(3, gain4);
+    for(int i = 0; i < eq.numBands; i++)
+    {
+        bool anyOtherSoloed = std::any_of(solos.begin(), solos.end(), [=](int j) { return j == i ? false : solos[i];});
+        
+        if ((mutes[i] || anyOtherSoloed) && !solos[i])
+            bandGains.set(i, 0.0f);
+        else
+            bandGains.set(0, gains[i]);
+    };
     
     DBG("Applied eq gains: | 1: " << bandGains[0] << " | 2: " << bandGains[1] << " | 3: " << bandGains[2] << " | 4: " << bandGains[3]);
     
     eq.setBandGains(bandGains);
 }
 
-juce::AudioProcessorValueTreeState::ParameterLayout HelloWorldAudioProcessor::createParameterLayout()
+APVTS::ParameterLayout HelloWorldAudioProcessor::createParameterLayout()
 {
-    auto layout = juce::AudioProcessorValueTreeState::ParameterLayout();
-    
-    layout.add (std::make_unique<AudioParameterBool> (ParameterID("mute_band_1", 1), "Mute Band 1", false));
-    layout.add (std::make_unique<AudioParameterBool> (ParameterID("mute_band_2", 1), "Mute Band 2", false));
-    layout.add (std::make_unique<AudioParameterBool> (ParameterID("mute_band_3", 1), "Mute Band 3", false));
-    layout.add (std::make_unique<AudioParameterBool> (ParameterID("mute_band_4", 1), "Mute Band 4", false));
-    
-    layout.add (std::make_unique<AudioParameterBool> (ParameterID("solo_band_1", 1), "Solo Band 1", false));
-    layout.add (std::make_unique<AudioParameterBool> (ParameterID("solo_band_2", 1), "Solo Band 2", false));
-    layout.add (std::make_unique<AudioParameterBool> (ParameterID("solo_band_3", 1), "Solo Band 3", false));
-    layout.add (std::make_unique<AudioParameterBool> (ParameterID("solo_band_4", 1), "Solo Band 4", false));
-    
-    layout.add (std::make_unique<AudioParameterFloat>
-                (
-                 ParameterID("gain_band_1", 1),
-                 "Gain Band 1",
-                 NormalisableRange<float>(-69.0f, 24.0f, 0.01f),
-                 0.0
-                 ));
-    layout.add (std::make_unique<AudioParameterFloat>
-                (
-                 ParameterID("gain_band_2", 1),
-                 "Gain Band 2",
-                 NormalisableRange<float>(-69.0f, 24.0f, 0.01f),
-                 0.0
-                 ));
-    layout.add (std::make_unique<AudioParameterFloat>
-                (
-                 ParameterID("gain_band_3", 1),
-                 "Gain Band 3",
-                 NormalisableRange<float>(-69.0f, 24.0f, 0.01f),
-                 0.0
-                 ));
-    layout.add (std::make_unique<AudioParameterFloat>
-                (
-                 ParameterID("gain_band_4", 1),
-                 "Gain Band 4",
-                 NormalisableRange<float>(-69.0f, 24.0f, 0.01f),
-                 0.0
-                 ));
+    auto layout = APVTS::ParameterLayout();
+    for (int i = 0; i < eq.numBands; i++)
+    {
+        layout.add (std::make_unique<AudioParameterBool>
+                    (ParameterID(ID::bandMute(i), 1), "Mute Band " + std::to_string(i), false));
+        layout.add (std::make_unique<AudioParameterBool>
+                    (ParameterID(ID::bandSolo(i), 1), "Solo Band " + std::to_string(i), false));
+        layout.add (std::make_unique<AudioParameterFloat>
+                    (
+                     ParameterID(ID::bandGain(i), 1),
+                     "Gain Band " + std::to_string(i),
+                     NormalisableRange<float>(-69.0f, 24.0f, 0.01f),
+                     0.0
+                     ));
+    }
     
     return layout;
 }

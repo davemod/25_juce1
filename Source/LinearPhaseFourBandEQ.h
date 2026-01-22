@@ -6,6 +6,8 @@ class LinearPhaseFourBandEQ
 {
 public:
     LinearPhaseFourBandEQ() = default;
+    
+    static constexpr int numBands = 4;
 
     // Call this from prepareToPlay
     void prepare (double sampleRate, int samplesPerBlock, int numChannels)
@@ -211,14 +213,3 @@ private:
     juce::AudioBuffer<float> originalBuffer;
     juce::AudioBuffer<float> lp1Buffer, lp2Buffer, lp3Buffer;
 };
-
-// TODO: Use this inside Processor
-//struct EQState {
-//    EQState() = default;
-//    
-//    static constexpr int numBands = 4;
-//    
-//    float bandGains[numBands] = { 1.0f };
-//    float bandMutes[numBands] = { false };
-//    float bandSolos[numBands] = { false };
-//};
