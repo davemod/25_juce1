@@ -263,8 +263,22 @@ APVTS::ParameterLayout HelloWorldAudioProcessor::createParameterLayout()
     APVTS::ParameterLayout layout;
     
     layout.add (std::make_unique<AudioParameterBool> (ParameterID  ("MuteBand1", 1), "Mute Band 1", false));
-    // add parameters for mute, solo and band gain for each band
-    // see AudioParameterFloat for band gains, use NormalisableRange to define min and max band decibels (-64.0 to +24.0dB)
+    layout.add (std::make_unique<AudioParameterBool> (ParameterID  ("MuteBand2", 1), "Mute Band 2", false));
+    layout.add (std::make_unique<AudioParameterBool> (ParameterID  ("MuteBand3", 1), "Mute Band 3", false));
+    layout.add (std::make_unique<AudioParameterBool> (ParameterID  ("MuteBand4", 1), "Mute Band 4", false));
+    
+    layout.add (std::make_unique<AudioParameterBool> (ParameterID  ("SoloBand1", 1), "Solo Band 1", false));
+    layout.add (std::make_unique<AudioParameterBool> (ParameterID  ("SoloBand2", 1), "Solo Band 2", false));
+    layout.add (std::make_unique<AudioParameterBool> (ParameterID  ("SoloBand3", 1), "Solo Band 3", false));
+    layout.add (std::make_unique<AudioParameterBool> (ParameterID  ("SoloBand4", 1), "Solo Band 4", false));
+    
+    NormalisableRange<float> gainRange{ -64.f, 24.f, 0.01f };
+    gainRange.setSkewForCentre(0.f);
+    
+    layout.add (std::make_unique<AudioParameterFloat> (ParameterID  ("GainBand1", 1), "Gain Band 1", gainRange, 0.f));
+    layout.add (std::make_unique<AudioParameterFloat> (ParameterID  ("GainBand2", 1), "Gain Band 2", gainRange, 0.f));
+    layout.add (std::make_unique<AudioParameterFloat> (ParameterID  ("GainBand3", 1), "Gain Band 3", gainRange, 0.f));
+    layout.add (std::make_unique<AudioParameterFloat> (ParameterID  ("GainBand4", 1), "Gain Band 4", gainRange, 0.f));
     
     return layout;
 }
