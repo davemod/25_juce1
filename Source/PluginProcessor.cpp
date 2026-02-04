@@ -194,8 +194,6 @@ void HelloWorldAudioProcessor::applyEQState()
         mutes[i] = * state.getRawParameterValue(ID::bandMute(i));
     };
     
-    DBG("APVTS Gains: " << gains[0] << " | " << gains[1] << " | " << gains[2] << " | " << gains[3]);
-    
     Array<float> bandGains = {0.0f, 0.0f, 0.0f, 0.0f};
     
     for(int i = 0; i < eq.numBands; i++)
