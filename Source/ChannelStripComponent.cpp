@@ -17,25 +17,11 @@ ChannelStripComponent::ChannelStripComponent()
     soloButton.setButtonText("s");
     soloButton.setClickingTogglesState(true);
     soloButton.setColour(TextButton::buttonOnColourId, Colours::blue);
-    soloButton.onClick = [this] ()
-    {
-        if (onSoloChanged)
-        {
-            onSoloChanged(soloButton.getToggleState());
-        }
-    };
     addAndMakeVisible(soloButton);
     
     muteButton.setButtonText("m");
     muteButton.setClickingTogglesState(true);
     muteButton.setColour(TextButton::buttonOnColourId, Colours::darkorange);
-    muteButton.onClick = [this] ()
-    {
-        if (onMuteChanged)
-        {
-            onMuteChanged(muteButton.getToggleState());
-        }
-    };
     addAndMakeVisible(muteButton);
     
     levelFader.setRange(-69.0, 6);
@@ -45,13 +31,6 @@ ChannelStripComponent::ChannelStripComponent()
     levelFader.setSliderStyle(Slider::SliderStyle::LinearVertical);
     levelFader.setColour(Slider::textBoxTextColourId, Colours::black);
     levelFader.setTextBoxStyle(Slider::TextEntryBoxPosition::TextBoxBelow, false, 50, 20);
-    levelFader.onValueChange = [this]
-    {
-        if(onFaderValueChange)
-        {
-            onFaderValueChange(levelFader.getValue());
-        }
-    };
     addAndMakeVisible(levelFader);
     
     setSize(50, 500);

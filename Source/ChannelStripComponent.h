@@ -24,16 +24,9 @@ public:
     void paint (juce::Graphics&) override;
     void resized() override;
     
-    std::function<void(float value)> onFaderValueChange;
-    std::function<void(bool isOn)> onMuteChanged;
-    std::function<void(bool isOn)> onSoloChanged;
-    
     void setFaderValue(float value);
     void setMuteButtonState(bool isOn);
     void setSoloButtonState(bool isOn);
-    
-    bool isSoloActive();
-    bool isMuteActive();
     
     Button& getMuteButton() { return muteButton; }
     Button& getSoloButton() { return soloButton; }
