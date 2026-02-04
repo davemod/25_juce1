@@ -130,7 +130,6 @@ void HelloWorldAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
     auto totalNumInputChannels  = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
 
-    
     // DBG ("Buffer Size: " << buffer.getNumSamples ());
     
     // In case we have more outputs than inputs, this code clears any output
@@ -141,7 +140,8 @@ void HelloWorldAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
     // this code if your algorithm always overwrites all the output channels.
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
-        
+    
+    applyEQState();
     eq.processBlock(buffer);
 }
 
@@ -183,9 +183,9 @@ juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 
 void HelloWorldAudioProcessor::applyEQState()
 {
-    std::vector<float> gains;
-    std::vector<bool> solos;
-    std::vector<bool> mutes;
+    std::vector<float> gains(eq.numBands, 0.0f);
+    std::vector<bool> solos(eq.numBands, false);
+    std::vector<bool> mutes(eq.numBands, false);
     
     for(int i = 0; i < eq.numBands; i++)
     {
@@ -194,9 +194,10 @@ void HelloWorldAudioProcessor::applyEQState()
         mutes[i] = * state.getRawParameterValue(ID::bandMute(i));
     };
     
+    DBG("APVTS Gains: " << gains[0] << " | " << gains[1] << " | " << gains[2] << " | " << gains[3]);
+    
     Array<float> bandGains = {0.0f, 0.0f, 0.0f, 0.0f};
     
-    // TODO: Not sure what should happen if multiple bands are soloed and one of them is also muted...
     for(int i = 0; i < eq.numBands; i++)
     {
         bool anyOtherSoloed = std::any_of(solos.begin(), solos.end(), [=](int j) { return j == i ? false : solos[i];});
@@ -204,7 +205,10 @@ void HelloWorldAudioProcessor::applyEQState()
         if ((mutes[i] || anyOtherSoloed) && !solos[i])
             bandGains.set(i, 0.0f);
         else
-            bandGains.set(0, gains[i]);
+        {
+            float gain = Decibels::decibelsToGain(gains[i]);
+            bandGains.set(i, gain);
+        }
     };
     
     DBG("Applied eq gains: | 1: " << bandGains[0] << " | 2: " << bandGains[1] << " | 3: " << bandGains[2] << " | 4: " << bandGains[3]);
