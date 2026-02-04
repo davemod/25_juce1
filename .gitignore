@@ -2,3 +2,9 @@ Builds/
 JuceLibraryCode/
 .DS_Store
 .vscode/
+.clang-format
+.idea/
+Source/.idea/
+cmake-build-debug/
+cmake-build-release/
+juce_local.cmake
