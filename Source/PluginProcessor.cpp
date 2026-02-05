@@ -223,11 +223,15 @@ APVTS::ParameterLayout HelloWorldAudioProcessor::createParameterLayout()
                     (ParameterID(ID::bandMute(i), 1), "Mute Band " + std::to_string(i), false));
         layout.add (std::make_unique<AudioParameterBool>
                     (ParameterID(ID::bandSolo(i), 1), "Solo Band " + std::to_string(i), false));
+        
+        NormalisableRange<float> gainRange { -69.f, 24.f, 0.01f };
+        gainRange.setSkewForCentre(0.f);
+        
         layout.add (std::make_unique<AudioParameterFloat>
                     (
                      ParameterID(ID::bandGain(i), 1),
                      "Gain Band " + std::to_string(i),
-                     NormalisableRange<float>(-69.0f, 24.0f, 0.01f),
+                     gainRange,
                      0.0
                      ));
     }
