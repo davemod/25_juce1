@@ -18,7 +18,7 @@
 class ChannelStripComponent  : public juce::Component
 {
 public:
-    ChannelStripComponent();
+    ChannelStripComponent(AudioProcessorValueTreeState& state, int band);
     ~ChannelStripComponent() override;
 
     void paint (juce::Graphics&) override;
@@ -38,4 +38,9 @@ private:
     Slider levelFader;
     TextButton soloButton;
     TextButton muteButton;
+    
+    AudioProcessorValueTreeState::SliderAttachment levelAttachment;
+    AudioProcessorValueTreeState::ButtonAttachment soloAttachment;
+    AudioProcessorValueTreeState::ButtonAttachment muteAttachment;
+    
 };

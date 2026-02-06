@@ -23,12 +23,8 @@ audioProcessor (p)
     
     for (int i = 0; i < 4; i++)
     {
-        auto channelStrip = channelStrips.add(new ChannelStripComponent());
+        auto channelStrip = channelStrips.add(new ChannelStripComponent(apvts, i));
         addAndMakeVisible (channelStrip);
-        
-        soloButtonAttachments.add(std::make_unique<APVTS::ButtonAttachment>(apvts, ID::bandSolo(i), channelStrips[i] -> getSoloButton()));
-        muteButtonAttachments.add(std::make_unique<APVTS::ButtonAttachment>(apvts, ID::bandMute(i), channelStrips[i] -> getMuteButton()));
-        levelFaderAttachments.add(std::make_unique<APVTS::SliderAttachment>(apvts, ID::bandGain(i), channelStrips[i] -> getLevelFader()));
     }
     
     addAndMakeVisible (bypassToggleButton);

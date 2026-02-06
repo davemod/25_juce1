@@ -37,11 +37,7 @@ private:
     ToggleButton bypassToggleButton;
     
     juce::OwnedArray<ChannelStripComponent> channelStrips;
-    
-    juce::OwnedArray<APVTS::ButtonAttachment> soloButtonAttachments;
-    juce::OwnedArray<APVTS::ButtonAttachment> muteButtonAttachments;
-    juce::OwnedArray<APVTS::SliderAttachment> levelFaderAttachments;
-    
+
     PresetMenuComponent presetMenu;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (HelloWorldAudioProcessorEditor)
