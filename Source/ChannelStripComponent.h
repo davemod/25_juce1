@@ -12,13 +12,15 @@
 
 #include <JuceHeader.h>
 
+using APVTS = AudioProcessorValueTreeState;
+
 //==============================================================================
 /*
 */
 class ChannelStripComponent  : public juce::Component
 {
 public:
-    ChannelStripComponent();
+    ChannelStripComponent(APVTS& state, int band);
     ~ChannelStripComponent() override;
 
     void paint (juce::Graphics&) override;
@@ -36,9 +38,21 @@ public:
     bool isMuteActive();
     
 private:
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ChannelStripComponent)
+    APVTS& state;
     
     Slider levelFader;
     TextButton soloButton;
     TextButton muteButton;
+    
+    APVTS::SliderAttachment levelAttachment;
+    APVTS::ButtonAttachment soloAttachment;
+    APVTS::ButtonAttachment muteAttachment;
+    
+    
+    
+    // 1. attachments reinbringen für levelFader, soloButton, muteButton
+    // 2. übergebe im ctor das band und erstelle daraus die jeweiligen parameterids für die attachments
+    // 3. cleanup, wir brauchen kein onSoloChanged, onFaderValueChange etc mehr.
+    
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ChannelStripComponent)
 };

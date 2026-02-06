@@ -39,10 +39,10 @@ private:
     TextButton textButton { "Start" };
     ToggleButton bypassToggleButton;
     
-    ChannelStripComponent channelStrip1;
-    ChannelStripComponent channelStrip2;
-    ChannelStripComponent channelStrip3;
-    ChannelStripComponent channelStrip4;
+    ChannelStripComponent channelStrip1{ audioProcessor.getState (), 1 };
+    ChannelStripComponent channelStrip2{ audioProcessor.getState (), 2 };
+    ChannelStripComponent channelStrip3{ audioProcessor.getState (), 3 };
+    ChannelStripComponent channelStrip4{ audioProcessor.getState (), 4 };
     
     PresetMenuComponent presetMenu;
 

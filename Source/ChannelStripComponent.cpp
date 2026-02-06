@@ -12,43 +12,48 @@
 #include "ChannelStripComponent.h"
 
 //==============================================================================
-ChannelStripComponent::ChannelStripComponent()
+ChannelStripComponent::ChannelStripComponent(APVTS& state, int band)
+:
+state(state),
+levelAttachment(state, "GainBand" + (String)band, levelFader),
+soloAttachment(state, "SoloBand" + (String)band, soloButton),
+muteAttachment(state, "MuteBand" + (String)band, muteButton)
 {
     soloButton.setButtonText("s");
     soloButton.setClickingTogglesState(true);
     soloButton.setColour(TextButton::buttonOnColourId, Colours::blue);
-    soloButton.onClick = [this] ()
-    {
-        if (onSoloChanged) {
-            onSoloChanged(soloButton.getToggleState());
-        }
-    };
+//    soloButton.onClick = [this] ()
+//    {
+//        if (onSoloChanged) {
+//            onSoloChanged(soloButton.getToggleState());
+//        }
+//    };
     addAndMakeVisible(soloButton);
     
     muteButton.setButtonText("m");
     muteButton.setClickingTogglesState(true);
     muteButton.setColour(TextButton::buttonOnColourId, Colours::darkorange);
-    muteButton.onClick = [this] ()
-    {
-        if (onMuteChanged) {
-            onMuteChanged(muteButton.getToggleState());
-        }
-    };
+//    muteButton.onClick = [this] ()
+//    {
+//        if (onMuteChanged) {
+//            onMuteChanged(muteButton.getToggleState());
+//        }
+//    };
     addAndMakeVisible(muteButton);
     
-    levelFader.setRange(-69.0, 6);
-    levelFader.setTextValueSuffix(" dB");
-    levelFader.setValue(0.0);
-    levelFader.setDoubleClickReturnValue(true, 0.0);
+//    levelFader.setRange(-69.0, 6);
+//    levelFader.setTextValueSuffix(" dB");
+//    levelFader.setValue(0.0);
+//    levelFader.setDoubleClickReturnValue(true, 0.0);
     levelFader.setSliderStyle(Slider::SliderStyle::LinearVertical);
     levelFader.setColour(Slider::textBoxTextColourId, Colours::black);
     levelFader.setTextBoxStyle(Slider::TextEntryBoxPosition::TextBoxBelow, false, 70, 20);
-  levelFader.setNumDecimalPlacesToDisplay(2);
-    levelFader.onValueChange = [this] {
-        if(onFaderValueChange) {
-            onFaderValueChange(levelFader.getValue());
-        }
-    };
+//  levelFader.setNumDecimalPlacesToDisplay(2);
+//    levelFader.onValueChange = [this] {
+//        if(onFaderValueChange) {
+//            onFaderValueChange(levelFader.getValue());
+//        }
+//    };
     addAndMakeVisible(levelFader);
     
     setSize(50, 500);
@@ -59,15 +64,15 @@ ChannelStripComponent::~ChannelStripComponent()
 }
 
 void ChannelStripComponent::setFaderValue(float value) {
-    levelFader.setValue(value);
+//    levelFader.setValue(value);
 }
 
 void ChannelStripComponent::setMuteButtonState(bool isOn) {
-    muteButton.setToggleState(isOn, NotificationType::dontSendNotification);
+//    muteButton.setToggleState(isOn, NotificationType::dontSendNotification);
 }
 
 void ChannelStripComponent::setSoloButtonState(bool isOn) {
-    soloButton.setToggleState(isOn, NotificationType::dontSendNotification);
+//    soloButton.setToggleState(isOn, NotificationType::dontSendNotification);
 }
 
 void ChannelStripComponent::paint (juce::Graphics& g)

@@ -62,6 +62,8 @@ public:
 
     const EQState& getEqState() const noexcept;
 
+    APVTS& getState () { return state; }
+    
 private:
     LinearPhaseFourBandEQ eq;
     EQState eqState;
