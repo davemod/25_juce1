@@ -19,14 +19,6 @@ HelloWorldAudioProcessorEditor::HelloWorldAudioProcessorEditor(
     auto channelStrip = channelStrips.add(new ChannelStripComponent(apvts, i));
     addAndMakeVisible(channelStrip);
 
-    /*
-    soloButtonAttachments.add(std::make_unique<APVTS::ButtonAttachment>(
-        apvts, ID::bandSolo(i), channelStrips[i]->getSoloButton()));
-    muteButtonAttachments.add(std::make_unique<APVTS::ButtonAttachment>(
-        apvts, ID::bandMute(i), channelStrips[i]->getMuteButton()));
-    levelFaderAttachments.add(std::make_unique<APVTS::SliderAttachment>(
-        apvts, ID::bandGain(i), channelStrips[i]->getLevelFader()));
-  */
   }
 
   addAndMakeVisible(bypassToggleButton);
@@ -34,6 +26,8 @@ HelloWorldAudioProcessorEditor::HelloWorldAudioProcessorEditor(
 
   bypassToggleButton.setTitle("Bypass");
   bypassToggleButton.setButtonText("Bypass");
+
+  //setWantsKeyboardFocus(true);
 
   setSize(500, 400);
   setResizeLimits(300, 200, 900, 600);
@@ -69,3 +63,16 @@ void HelloWorldAudioProcessorEditor::resized()
     channelStrips[i]->setBounds(area.removeFromLeft(channelStripWidth));
   }
 }
+
+/*
+bool HelloWorldAudioProcessorEditor::keyPressed (const juce::KeyPress& key)
+{
+  // Check if the key pressed is the Spacebar
+  if (key.getKeyCode() == juce::KeyPress::spaceKey)
+  {
+    DBG("A space bar has been presserino");
+    return false;
+  }
+  return true;
+}
+*/
