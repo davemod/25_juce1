@@ -29,16 +29,12 @@ muteAttachment(state, HelloWorldParameterID::bandMute (band), muteButton)
     muteButton.setColour(TextButton::buttonOnColourId, Colours::darkorange);
     addAndMakeVisible(muteButton);
     
-    levelFader.setRange(-69.0, 6);
     levelFader.setTextValueSuffix(" dB");
-    levelFader.setValue(0.0);
     levelFader.setDoubleClickReturnValue(true, 0.0);
     levelFader.setSliderStyle(Slider::SliderStyle::LinearVertical);
     levelFader.setColour(Slider::textBoxTextColourId, Colours::black);
-    levelFader.setTextBoxStyle(Slider::TextEntryBoxPosition::TextBoxBelow, false, 50, 20);
+    levelFader.setTextBoxStyle(Slider::TextEntryBoxPosition::TextBoxBelow, false, 70, 20);
     addAndMakeVisible(levelFader);
-    
-    setSize(50, 500);
 }
 
 ChannelStripComponent::~ChannelStripComponent()
