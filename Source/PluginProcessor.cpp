@@ -192,12 +192,11 @@ void HelloWorldAudioProcessor::applyEQState()
 
   Array<float> bandGains = {0.0f, 0.0f, 0.0f, 0.0f};
 
+  bool anySoloed = std::any_of(solos.begin(), solos.end(), [](bool s) { return s; });
+
   for (int i = 0; i < eq.numBands; i++)
   {
-
-    bool anySoloed = std::any_of(solos.begin(), solos.end(), [](bool s) { return s; });
-
-    // Super unclean but it works for now.
+    // Solo overrides mute, always
     if (!solos[i] && (mutes[i] || anySoloed))
       bandGains.set(i, 0.0f);
     else
