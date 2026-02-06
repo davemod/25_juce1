@@ -3,27 +3,32 @@
 
 #include <JuceHeader.h>
 
-class ChannelStripComponent  : public juce::Component
+
+class ChannelStripComponent : public juce::Component
 {
 public:
-    ChannelStripComponent();
-    ~ChannelStripComponent() override;
+  ChannelStripComponent(AudioProcessorValueTreeState &state, int band);
+  ~ChannelStripComponent() override;
 
-    void paint (juce::Graphics&) override;
-    void resized() override;
-    
-    void setFaderValue(float value);
-    void setMuteButtonState(bool isOn);
-    void setSoloButtonState(bool isOn);
-    
-    Button& getMuteButton() { return muteButton; }
-    Button& getSoloButton() { return soloButton; }
-    Slider& getLevelFader() { return levelFader; }
-    
+  void paint(juce::Graphics &) override;
+  void resized() override;
+
+  void setFaderValue(float value);
+  void setMuteButtonState(bool isOn);
+  void setSoloButtonState(bool isOn);
+
+  Button &getMuteButton() { return muteButton; }
+  Button &getSoloButton() { return soloButton; }
+  Slider &getLevelFader() { return levelFader; }
+
 private:
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ChannelStripComponent)
-    
-    Slider levelFader;
-    TextButton soloButton;
-    TextButton muteButton;
+  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ChannelStripComponent)
+
+  Slider levelFader;
+  TextButton soloButton;
+  TextButton muteButton;
+
+  AudioProcessorValueTreeState::SliderAttachment levelAttachment;
+  AudioProcessorValueTreeState::ButtonAttachment soloAttachment;
+  AudioProcessorValueTreeState::ButtonAttachment muteAttachment;
 };
