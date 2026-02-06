@@ -66,6 +66,10 @@ private:
     void applyEQState();
     APVTS::ParameterLayout createParameterLayout();
     
+    std::vector<float> gains {0.,0., 0., 0.};
+    std::vector<bool> solos {false, false, false, false};
+    std::vector<bool> mutes {false, false, false, false};
+    
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (HelloWorldAudioProcessor)
 };

@@ -142,7 +142,9 @@ void HelloWorldAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
         
+    applyEQState();
     eq.processBlock(buffer);
+
 }
 
 //==============================================================================
@@ -183,9 +185,7 @@ juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 
 void HelloWorldAudioProcessor::applyEQState()
 {
-    std::vector<float> gains;
-    std::vector<bool> solos;
-    std::vector<bool> mutes;
+  
     
     for(int i = 0; i < eq.numBands; i++)
     {
@@ -204,7 +204,8 @@ void HelloWorldAudioProcessor::applyEQState()
         if ((mutes[i] || anyOtherSoloed) && !solos[i])
             bandGains.set(i, 0.0f);
         else
-            bandGains.set(0, gains[i]);
+            float inputGain = juce::Decibels::decibelsToGain(gains[i]);
+            bandGains.set(i, gains[i]);
     };
     
     DBG("Applied eq gains: | 1: " << bandGains[0] << " | 2: " << bandGains[1] << " | 3: " << bandGains[2] << " | 4: " << bandGains[3]);
