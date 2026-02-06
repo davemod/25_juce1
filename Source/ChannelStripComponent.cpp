@@ -22,7 +22,7 @@ ChannelStripComponent::ChannelStripComponent()
   levelFader.setSliderStyle(Slider::SliderStyle::LinearVertical);
   levelFader.setColour(Slider::textBoxTextColourId, Colours::black);
   levelFader.setTextBoxStyle(Slider::TextEntryBoxPosition::TextBoxBelow, false,
-                             50, 20);
+                             70, 20);
   addAndMakeVisible(levelFader);
 
   setSize(50, 500);

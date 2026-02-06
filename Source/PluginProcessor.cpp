@@ -198,7 +198,7 @@ void HelloWorldAudioProcessor::applyEQState()
     bool anySoloed = std::any_of(solos.begin(), solos.end(), [](bool s) { return s; });
 
     // Super unclean but it works for now.
-    if ((anySoloed && !solos[i]) || (!solos[i] && mutes[i]))
+    if (!solos[i] && (mutes[i] || anySoloed))
       bandGains.set(i, 0.0f);
     else
     {
