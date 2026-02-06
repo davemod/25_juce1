@@ -12,7 +12,8 @@
 #include "PresetMenuComponent.h"
 
 //==============================================================================
-PresetMenuComponent::PresetMenuComponent()
+PresetMenuComponent::PresetMenuComponent(AudioProcessorValueTreeState& state)
+: state (state)
 {
     addAndMakeVisible(presetChooser);
     presetChooser.addItem("Supa Scoopa", 1);
@@ -57,7 +58,7 @@ void PresetMenuComponent::openLoadFileChooser()
  
         // loadPresetFile (presetFile);
         
-        // TODO: load preset file
+        // TODO: load preset file and set APVTS accordingly
     });
 }
 

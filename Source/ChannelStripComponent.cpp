@@ -29,9 +29,7 @@ muteAttachment(state, HelloWorldParameterID::bandMute(band), muteButton)
     muteButton.setColour(TextButton::buttonOnColourId, Colours::darkorange);
     addAndMakeVisible(muteButton);
     
-    levelFader.setRange(-69.0, 6);
     levelFader.setTextValueSuffix(" dB");
-    levelFader.setValue(0.0);
     levelFader.setDoubleClickReturnValue(true, 0.0);
     levelFader.setSliderStyle(Slider::SliderStyle::LinearVertical);
     levelFader.setColour(Slider::textBoxTextColourId, Colours::black);

@@ -18,13 +18,15 @@
 class PresetMenuComponent  : public juce::Component
 {
 public:
-    PresetMenuComponent();
+    PresetMenuComponent(AudioProcessorValueTreeState& state);
     ~PresetMenuComponent() override;
 
     void paint (juce::Graphics&) override;
     void resized() override;
 
 private:
+    AudioProcessorValueTreeState& state;
+    
     String currentPreset;
     
     ComboBox presetChooser;
