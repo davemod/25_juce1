@@ -7,8 +7,6 @@ class LinearPhaseFourBandEQ
 public:
     LinearPhaseFourBandEQ() = default;
     
-    static constexpr int numBands = 4;
-
     // Call this from prepareToPlay
     void prepare (double sampleRate, int samplesPerBlock, int numChannels)
     {

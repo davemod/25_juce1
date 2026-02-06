@@ -2,18 +2,19 @@
 
 #include "PluginEditor.h"
 #include "PluginProcessor.h"
+#include "Identifiers.h"
 
 #define MYMACRO DBG("My Macro Print")
 
 HelloWorldAudioProcessorEditor::HelloWorldAudioProcessorEditor(
     HelloWorldAudioProcessor &p)
-    : AudioProcessorEditor(&p), audioProcessor(p)
+    : AudioProcessorEditor(&p), audioProcessor(p), presetMenu(p.getApvts())
 {
   setResizable(true, true);
 
   APVTS &apvts = audioProcessor.getApvts();
 
-  for (int i = 0; i < numBands; i++)
+  for (int i = 0; i < ProjectConstants::numBands; i++)
   {
     auto channelStrip = channelStrips.add(new ChannelStripComponent(apvts, i));
     addAndMakeVisible(channelStrip);
@@ -63,7 +64,7 @@ void HelloWorldAudioProcessorEditor::resized()
 
   // Trying something
   // will this cause issues with apvts?
-  for (int i = 0; i < numBands; i++)
+  for (int i = 0; i < ProjectConstants::numBands; i++)
   {
     channelStrips[i]->setBounds(area.removeFromLeft(channelStripWidth));
   }

@@ -3,7 +3,9 @@
 #include "PresetMenuComponent.h"
 
 //==============================================================================
-PresetMenuComponent::PresetMenuComponent()
+PresetMenuComponent::PresetMenuComponent(AudioProcessorValueTreeState &state)
+  :
+state (state)
 {
     addAndMakeVisible(presetChooser);
     presetChooser.addItem("Supa Scoopa", 1);

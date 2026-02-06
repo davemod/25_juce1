@@ -1,12 +1,12 @@
 
 #pragma once
 
-#include "HelloWorldParameterIDs.h"
+#include "Identifiers.h"
 #include "LinearPhaseFourBandEQ.h"
 #include <JuceHeader.h>
 
 using APVTS = juce::AudioProcessorValueTreeState;
-using ID = HelloWorldParameterID;
+namespace ID = EqParameterID;
 
 //==============================================================================
 /**
@@ -52,8 +52,6 @@ public:
   void setStateInformation(const void *data, int sizeInBytes) override;
 
   APVTS &getApvts() { return state; }
-
-  int getNumEqBands() const { return eq.numBands; }
 
 private:
   LinearPhaseFourBandEQ eq;

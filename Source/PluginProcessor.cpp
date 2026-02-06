@@ -1,6 +1,7 @@
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
+#include "Identifiers.h"
 
 //==============================================================================
 HelloWorldAudioProcessor::HelloWorldAudioProcessor()
@@ -183,7 +184,7 @@ void HelloWorldAudioProcessor::applyEQState()
   std::vector<bool> solos{false, false, false, false};
   std::vector<bool> mutes{false, false, false, false};
 
-  for (int i = 0; i < eq.numBands; i++)
+  for (int i = 0; i < ProjectConstants::numBands; i++)
   {
     gains[i] = *state.getRawParameterValue(ID::bandGain(i));
     solos[i] = *state.getRawParameterValue(ID::bandSolo(i));
@@ -194,7 +195,7 @@ void HelloWorldAudioProcessor::applyEQState()
 
   bool anySoloed = std::any_of(solos.begin(), solos.end(), [](bool s) { return s; });
 
-  for (int i = 0; i < eq.numBands; i++)
+  for (int i = 0; i < ProjectConstants::numBands; i++)
   {
     // Solo overrides mute, always
     if (!solos[i] && (mutes[i] || anySoloed))
@@ -207,7 +208,7 @@ void HelloWorldAudioProcessor::applyEQState()
 
   };
 
-  DBG("Applied eq gains: | 1: " << bandGains[0] << " | 2: " << bandGains[1] << " | 3: " << bandGains[2] << " | 4: " << bandGains[3]);
+  // DBG("Applied eq gains: | 1: " << bandGains[0] << " | 2: " << bandGains[1] << " | 3: " << bandGains[2] << " | 4: " << bandGains[3]);
 
   eq.setBandGains(bandGains);
 }
@@ -215,20 +216,20 @@ void HelloWorldAudioProcessor::applyEQState()
 APVTS::ParameterLayout HelloWorldAudioProcessor::createParameterLayout()
 {
   auto layout = APVTS::ParameterLayout();
-  for (int i = 0; i < eq.numBands; i++)
+  for (int i = 0; i < ProjectConstants::numBands; i++)
   {
     layout.add(std::make_unique<AudioParameterBool>(
-        ParameterID(ID::bandMute(i), 1), "Mute Band " + std::to_string(i),
+        juce::ParameterID(ID::bandMute(i), 1), "Mute Band " + std::to_string(i),
         false));
     layout.add(std::make_unique<AudioParameterBool>(
-        ParameterID(ID::bandSolo(i), 1), "Solo Band " + std::to_string(i),
+        juce::ParameterID(ID::bandSolo(i), 1), "Solo Band " + std::to_string(i),
         false));
 
     NormalisableRange<float> gainRange {-69.0f, 24.0f, 0.01f };
     gainRange.setSkewForCentre(0.f);
 
     layout.add(std::make_unique<AudioParameterFloat>(
-        ParameterID(ID::bandGain(i), 1), "Gain Band " + std::to_string(i),
+        juce::ParameterID(ID::bandGain(i), 1), "Gain Band " + std::to_string(i),
         gainRange, 0.0));
   }
 

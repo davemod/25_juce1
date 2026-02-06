@@ -99,7 +99,7 @@ target_sources(${PROJECT_NAME}
         Source/PluginProcessor.h
         Source/PresetMenuComponent.cpp
         Source/PresetMenuComponent.h
-        Source/HelloWorldParameterIDs.h)
+        Source/Identifiers.h)
 
 #file(GLOB_RECURSE PROJECT_SOURCES
 #        "Source/*.cpp"

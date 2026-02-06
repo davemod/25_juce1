@@ -40,7 +40,5 @@ private:
 
   PresetMenuComponent presetMenu;
 
-  int numBands = audioProcessor.getNumEqBands();
-
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(HelloWorldAudioProcessorEditor)
 };

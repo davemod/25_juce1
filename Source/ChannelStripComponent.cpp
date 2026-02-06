@@ -1,14 +1,15 @@
 
 #include "ChannelStripComponent.h"
+#include "Identifiers.h"
 #include <JuceHeader.h>
-#include "HelloWorldParameterIDs.h"
 
 //==============================================================================
 ChannelStripComponent::ChannelStripComponent(AudioProcessorValueTreeState& state, int band)
   :
-levelAttachment(state, HelloWorldParameterID::bandGain (band), levelFader),
-muteAttachment(state, HelloWorldParameterID::bandMute (band), muteButton),
-soloAttachment(state, HelloWorldParameterID::bandSolo (band), soloButton)
+levelAttachment(state, EqParameterID::bandGain(band), levelFader),
+soloAttachment(state, EqParameterID::bandSolo(band), soloButton),
+muteAttachment(state, EqParameterID::bandMute(band), muteButton)
+
 {
   soloButton.setButtonText("s");
   soloButton.setClickingTogglesState(true);
