@@ -5,7 +5,7 @@
 
 #define MYMACRO DBG("My Macro Print")
 
-//==============================================================================
+
 HelloWorldAudioProcessorEditor::HelloWorldAudioProcessorEditor (HelloWorldAudioProcessor& p)
 :
 AudioProcessorEditor (&p),
@@ -14,8 +14,10 @@ audioProcessor (p)
     setResizable(true, true);
 
     APVTS& apvts = audioProcessor.getApvts();
-    
-    for (int i = 0; i < 4; i++)
+
+  int numBands = audioProcessor.getNumEqBands();
+
+    for (int i = 0; i < numBands; i++)
     {
         auto channelStrip = channelStrips.add(new ChannelStripComponent());
         addAndMakeVisible (channelStrip);

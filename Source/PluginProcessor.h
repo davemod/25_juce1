@@ -52,6 +52,8 @@ public:
     void setStateInformation (const void* data, int sizeInBytes) override;
     
     APVTS& getApvts() { return state; }
+
+  int getNumEqBands() const { return eq.numBands; }
     
 private:
     LinearPhaseFourBandEQ eq;

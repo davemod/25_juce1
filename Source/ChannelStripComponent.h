@@ -3,9 +3,6 @@
 
 #include <JuceHeader.h>
 
-//==============================================================================
-/*
-*/
 class ChannelStripComponent  : public juce::Component
 {
 public:
