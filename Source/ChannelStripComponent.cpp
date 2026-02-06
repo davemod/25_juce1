@@ -40,21 +40,6 @@ ChannelStripComponent::~ChannelStripComponent()
 {
 }
 
-void ChannelStripComponent::setFaderValue(float value)
-{
-    levelFader.setValue(value);
-}
-
-void ChannelStripComponent::setMuteButtonState(bool isOn)
-{
-    muteButton.setToggleState(isOn, NotificationType::dontSendNotification);
-}
-
-void ChannelStripComponent::setSoloButtonState(bool isOn)
-{
-    soloButton.setToggleState(isOn, NotificationType::dontSendNotification);
-}
-
 void ChannelStripComponent::paint (juce::Graphics& g)
 {
     /* This demo code just fills the component's background and

@@ -24,10 +24,6 @@ public:
     void paint (juce::Graphics&) override;
     void resized() override;
     
-    void setFaderValue(float value);
-    void setMuteButtonState(bool isOn);
-    void setSoloButtonState(bool isOn);
-    
     Button& getMuteButton() { return muteButton; }
     Button& getSoloButton() { return soloButton; }
     Slider& getLevelFader() { return levelFader; }
