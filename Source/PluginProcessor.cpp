@@ -133,6 +133,8 @@ void HelloWorldAudioProcessor::processBlock(juce::AudioBuffer<float> &buffer,
   for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
     buffer.clear(i, 0, buffer.getNumSamples());
 
+  applyEQState();
+
   eq.processBlock(buffer);
 }
 
@@ -192,19 +194,21 @@ void HelloWorldAudioProcessor::applyEQState()
 
   for (int i = 0; i < eq.numBands; i++)
   {
-    bool anyOtherSoloed = std::any_of(solos.begin(), solos.end(), [=](int j)
-                                      { return j == i ? false : solos[i]; });
 
-    if ((mutes[i] || anyOtherSoloed) && !solos[i])
+    bool anySoloed = std::any_of(solos.begin(), solos.end(), [](bool s) { return s; });
+
+    // Super unclean but it works for now.
+    if ((anySoloed && !solos[i]) || (!solos[i] && mutes[i]))
       bandGains.set(i, 0.0f);
     else
     {
       float gain = Decibels::decibelsToGain(gains[i]);
       bandGains.set(i, gain);
     }
+
   };
 
-  DBG("Applied eq gains: | 1: " << bandGains[0] << " | 2: " << bandGains[3] << " | 3: " << bandGains[2] << " | 4: " << bandGains[3]);
+  DBG("Applied eq gains: | 1: " << bandGains[0] << " | 2: " << bandGains[1] << " | 3: " << bandGains[2] << " | 4: " << bandGains[3]);
 
   eq.setBandGains(bandGains);
 }
