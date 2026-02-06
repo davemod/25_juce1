@@ -11,6 +11,12 @@ HelloWorldAudioProcessor::HelloWorldAudioProcessor()
               .withOutput("Output", juce::AudioChannelSet::stereo(), true)),
       state(*this, nullptr, "HelloWorldState", createParameterLayout())
 {
+  // Initialize the juce::Array with the correct amount of bands.
+  for (int i = 0; i < ProjectConstants::numBands; ++i)
+  {
+    bandGains.add(1.0f); // Default to unity gain
+  }
+
   DBG("PluginProcessor ()");
 }
 
@@ -180,9 +186,9 @@ juce::AudioProcessor *JUCE_CALLTYPE createPluginFilter()
 void HelloWorldAudioProcessor::applyEQState()
 {
 
-  std::vector<float> gains{0.0f, 0.0f, 0.0f, 0.0f};
-  std::vector<bool> solos{false, false, false, false};
-  std::vector<bool> mutes{false, false, false, false};
+  std::vector<float> gains (ProjectConstants::numBands, 0.0f);
+  std::vector<bool> solos (ProjectConstants::numBands, false);
+  std::vector<bool> mutes(ProjectConstants::numBands, false);
 
   for (int i = 0; i < ProjectConstants::numBands; i++)
   {
@@ -191,7 +197,10 @@ void HelloWorldAudioProcessor::applyEQState()
     mutes[i] = *state.getRawParameterValue(ID::bandMute(i));
   };
 
-  Array<float> bandGains = {0.0f, 0.0f, 0.0f, 0.0f};
+  for (int i = 0; i < ProjectConstants::numBands; i++)
+  {
+    bandGains.set(i, 0.0f);
+  }
 
   bool anySoloed = std::any_of(solos.begin(), solos.end(), [](bool s) { return s; });
 
@@ -199,7 +208,7 @@ void HelloWorldAudioProcessor::applyEQState()
   {
     // Solo overrides mute, always
     if (!solos[i] && (mutes[i] || anySoloed))
-      bandGains.set(i, 0.0f);
+      bandGains.set(i, 0.0f) ;
     else
     {
       float gain = Decibels::decibelsToGain(gains[i]);

@@ -59,6 +59,8 @@ private:
   void applyEQState();
   APVTS::ParameterLayout createParameterLayout();
 
+  juce::Array<float> bandGains;
+
   //==============================================================================
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(HelloWorldAudioProcessor)
 };
