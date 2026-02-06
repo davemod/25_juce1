@@ -15,7 +15,8 @@
 HelloWorldAudioProcessorEditor::HelloWorldAudioProcessorEditor (HelloWorldAudioProcessor& p)
 :
 AudioProcessorEditor (&p),
-audioProcessor (p)
+audioProcessor (p),
+presetMenu (p.getApvts())
 {
     setResizable(true, true);
 
