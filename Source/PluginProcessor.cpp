@@ -183,10 +183,7 @@ juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 
 void HelloWorldAudioProcessor::applyEQState()
 {
-    std::vector<float> gains;
-    std::vector<bool> solos;
-    std::vector<bool> mutes;
-    
+
     for(int i = 0; i < eq.numBands; i++)
     {
         gains[i] = * state.getRawParameterValue(ID::bandGain(i));
@@ -194,7 +191,8 @@ void HelloWorldAudioProcessor::applyEQState()
         mutes[i] = * state.getRawParameterValue(ID::bandMute(i));
     };
     
-    Array<float> bandGains = {0.0f, 0.0f, 0.0f, 0.0f};
+    Array<float> bandGains = {0.0f, 0.0f, 0.0f, 0.0f}; // Wir haben einmal die gains vom Fader, einmal die Gains vom Playback.
+  // Wenn ein Band muted ist, soll der Fade nicht auf den minimum-Wert gleiten!
     
     // TODO: Not sure what should happen if multiple bands are soloed and one of them is also muted...
     for(int i = 0; i < eq.numBands; i++)
@@ -204,6 +202,7 @@ void HelloWorldAudioProcessor::applyEQState()
         if ((mutes[i] || anyOtherSoloed) && !solos[i])
             bandGains.set(i, 0.0f);
         else
+          float inputGain = juce::Decibels::decibelsToGain(gains[i]);
             bandGains.set(0, gains[i]);
     };
     

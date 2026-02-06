@@ -90,7 +90,6 @@ juce_generate_juce_header(${PROJECT_NAME})
 
 target_sources(${PROJECT_NAME}
         PRIVATE
-        Source/Cello.h
         Source/ChannelStripComponent.cpp
         Source/ChannelStripComponent.h
         Source/LinearPhaseFourBandEQ.h
