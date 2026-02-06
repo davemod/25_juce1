@@ -1,3 +1,4 @@
+
 #include <JuceHeader.h>
 #include "ChannelStripComponent.h"
 

@@ -1,12 +1,3 @@
-/*
-  ==============================================================================
-
-    PresetMenuComponent.cpp
-    Created: 21 Nov 2025 9:41:00am
-    Author:  eddoard
-
-  ==============================================================================
-*/
 
 #include <JuceHeader.h>
 #include "PresetMenuComponent.h"
