@@ -1,7 +1,7 @@
 
 #include "PluginProcessor.h"
-#include "PluginEditor.h"
 #include "Identifiers.h"
+#include "PluginEditor.h"
 
 //==============================================================================
 HelloWorldAudioProcessor::HelloWorldAudioProcessor()
@@ -159,10 +159,12 @@ juce::AudioProcessorEditor *HelloWorldAudioProcessor::createEditor()
 //==============================================================================
 void HelloWorldAudioProcessor::getStateInformation(juce::MemoryBlock &destData)
 {
-  // You should use this method to store your parameters in the memory block.
-  // You could do that either as raw data, or use the XML or ValueTree classes
-  // as intermediaries to make it easy to save and load complex data.
   auto lState = state.copyState();
+
+  lState.setProperty("winWidth", lastUIWidth, nullptr);
+  lState.setProperty("winHeight", lastUIHeight, nullptr);
+
+
   MemoryOutputStream mos(destData, false);
   lState.writeToStream(mos);
 }
@@ -173,7 +175,16 @@ void HelloWorldAudioProcessor::setStateInformation(const void *data,
   // You should use this method to restore your parameters from this memory
   // block, whose contents will have been created by the getStateInformation()
   // call.
-  state.replaceState(ValueTree::readFromData(data, sizeInBytes));
+  //state.replaceState(ValueTree::readFromData(data, sizeInBytes));
+  auto lState = juce::ValueTree::readFromData(data, sizeInBytes);
+
+  if (lState.isValid())
+  {
+    state.replaceState(lState);
+
+    lastUIWidth = lState.getProperty("winWidth", lastUIWidth);
+    lastUIHeight = lState.getProperty("winHeight", lastUIHeight);
+  }
 }
 
 //==============================================================================
@@ -186,8 +197,8 @@ juce::AudioProcessor *JUCE_CALLTYPE createPluginFilter()
 void HelloWorldAudioProcessor::applyEQState()
 {
 
-  std::vector<float> gains (ProjectConstants::numBands, 0.0f);
-  std::vector<bool> solos (ProjectConstants::numBands, false);
+  std::vector<float> gains(ProjectConstants::numBands, 0.0f);
+  std::vector<bool> solos(ProjectConstants::numBands, false);
   std::vector<bool> mutes(ProjectConstants::numBands, false);
 
   for (int i = 0; i < ProjectConstants::numBands; i++)
@@ -202,22 +213,23 @@ void HelloWorldAudioProcessor::applyEQState()
     bandGains.set(i, 0.0f);
   }
 
-  bool anySoloed = std::any_of(solos.begin(), solos.end(), [](bool s) { return s; });
+  bool anySoloed =
+      std::any_of(solos.begin(), solos.end(), [](bool s) { return s; });
 
   for (int i = 0; i < ProjectConstants::numBands; i++)
   {
     // Solo overrides mute, always
     if (!solos[i] && (mutes[i] || anySoloed))
-      bandGains.set(i, 0.0f) ;
+      bandGains.set(i, 0.0f);
     else
     {
       float gain = Decibels::decibelsToGain(gains[i]);
       bandGains.set(i, gain);
     }
-
   };
 
-  // DBG("Applied eq gains: | 1: " << bandGains[0] << " | 2: " << bandGains[1] << " | 3: " << bandGains[2] << " | 4: " << bandGains[3]);
+  // DBG("Applied eq gains: | 1: " << bandGains[0] << " | 2: " << bandGains[1]
+  // << " | 3: " << bandGains[2] << " | 4: " << bandGains[3]);
 
   eq.setBandGains(bandGains);
 }
@@ -234,7 +246,7 @@ APVTS::ParameterLayout HelloWorldAudioProcessor::createParameterLayout()
         juce::ParameterID(ID::bandSolo(i), 1), "Solo Band " + std::to_string(i),
         false));
 
-    NormalisableRange<float> gainRange {-69.0f, 24.0f, 0.01f };
+    NormalisableRange<float> gainRange{-69.0f, 24.0f, 0.01f};
     gainRange.setSkewForCentre(0.f);
 
     layout.add(std::make_unique<AudioParameterFloat>(

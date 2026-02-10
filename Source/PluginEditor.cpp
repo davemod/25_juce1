@@ -29,7 +29,7 @@ HelloWorldAudioProcessorEditor::HelloWorldAudioProcessorEditor(
 
   //setWantsKeyboardFocus(true);
 
-  setSize(500, 400);
+  setSize(audioProcessor.getSavedWidth(), audioProcessor.getSavedHeight());
   setResizeLimits(300, 200, 900, 600);
 }
 
@@ -49,15 +49,13 @@ void HelloWorldAudioProcessorEditor::paint(juce::Graphics &g)
 
 void HelloWorldAudioProcessorEditor::resized()
 {
-  // This is generally where you'll want to lay out the positions of any
-  // subcomponents in your editor.
+  audioProcessor.setSavedSize(getWidth(), getHeight());
+
   auto area = getLocalBounds();
   auto channelStripWidth = area.getWidth() / 4;
 
   presetMenu.setBounds(area.removeFromTop(30));
 
-  // Trying something
-  // will this cause issues with apvts?
   for (int i = 0; i < ProjectConstants::numBands; i++)
   {
     channelStrips[i]->setBounds(area.removeFromLeft(channelStripWidth));

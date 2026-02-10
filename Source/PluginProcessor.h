@@ -53,11 +53,23 @@ public:
 
   APVTS &getApvts() { return state; }
 
+  int getSavedWidth() const { return lastUIWidth; }
+  int getSavedHeight() const { return lastUIHeight; }
+
+  void setSavedSize (int width, int height)
+  {
+    lastUIWidth = width;
+    lastUIHeight = height;
+  }
+
 private:
   LinearPhaseFourBandEQ eq;
   APVTS state;
   void applyEQState();
   APVTS::ParameterLayout createParameterLayout();
+
+  int lastUIWidth {500};
+  int lastUIHeight {400};
 
   juce::Array<float> bandGains;
 
