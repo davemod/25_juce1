@@ -103,25 +103,21 @@ void PresetMenuComponent::resized()
 void PresetMenuComponent::nextPreset()
 {
   int amnt = presetChooser.getNumItems();
-  int id = presetChooser.getSelectedId();
+  int id = presetChooser.getSelectedId() - 1; //to zero base
 
-  id = (id % amnt) + 1; // This logic is super janky but it works
+  id = (id + 1) % amnt;
 
-  presetChooser.setSelectedId(id);
+  presetChooser.setSelectedId(id + 1); //and back
   DBG("amnt: " << amnt << "\nid: " << id);
 }
 
 void PresetMenuComponent::previousPreset()
 {
   int amnt = presetChooser.getNumItems();
-  int id = presetChooser.getSelectedId();
+  int id = presetChooser.getSelectedId() - 1; //to zero base
 
-  id--;
-  if (id == 0)
-  {
-    id = amnt;
-  }
+  id = (id -1 + amnt) % amnt;
 
-  presetChooser.setSelectedId(id);
+  presetChooser.setSelectedId(id + 1); //and back
   DBG("amnt: " << amnt << "\nid: " << id);
 }
