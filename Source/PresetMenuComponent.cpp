@@ -8,10 +8,12 @@ PresetMenuComponent::PresetMenuComponent(AudioProcessorValueTreeState &state)
 {
   addAndMakeVisible(presetChooser);
   presetChooser.addItem("Awesome Anton", 1);
-  presetChooser.addItem("Edgy Energy", 2);
+  presetChooser.addItem("Edgy Eddy", 2);
   presetChooser.addItem("Jolly Jasper", 3);
-  presetChooser.addItem("Narcotic Niko", 4);
+  presetChooser.addItem("Neato Niko", 4);
   presetChooser.setSelectedId(4);
+  // Can we find all the files in the preset folder and append them to the
+  // presetChooser?
 
   addAndMakeVisible(loadButton);
   loadButton.setButtonText("Load");
@@ -19,6 +21,7 @@ PresetMenuComponent::PresetMenuComponent(AudioProcessorValueTreeState &state)
 
   addAndMakeVisible(saveButton);
   saveButton.setButtonText("Save");
+  saveButton.onClick = [this] { openSaveFileChooser(); };
 
   addAndMakeVisible(nextButton);
   nextButton.setButtonText(">");
@@ -38,40 +41,75 @@ void PresetMenuComponent::openLoadFileChooser()
                         .getChildFile(ProjectInfo::projectName)
                         .getChildFile("Presets");
 
+  initialDir.createDirectory();
+
   DBG("initialDir: " + initialDir.getFullPathName());
 
   presetFileChooser =
-      std::make_unique<FileChooser>("Load Preset...", initialDir, "*.json");
+      std::make_unique<FileChooser>("Load Preset...", initialDir, "*.xml");
 
   auto folderChooserFlags = FileBrowserComponent::openMode;
 
-  presetFileChooser->launchAsync(folderChooserFlags,
-                                 [this](const FileChooser &chooser)
-                                 {
-                                   File presetFile(chooser.getResult());
+  presetFileChooser->launchAsync(folderChooserFlags, [this](const FileChooser &chooser)
+{
+    File presetFile = chooser.getResult();
 
-                                   // loadPresetFile (presetFile);
-                                   // Something with APVTS, probably
-                                   // TODO: load preset file
-                                 });
+    // 1. Verify the file is valid (handles the user hitting 'Cancel')
+    if (presetFile.existsAsFile())
+    {
+        // 2. Read the file and parse it as XML
+        // XmlDocument::parse handles the heavy lifting of reading the text
+        auto xmlElement = juce::XmlDocument::parse(presetFile);
+
+        if (xmlElement != nullptr)
+        {
+            // 3. Convert the XML back into a ValueTree
+            auto loadedTree = juce::ValueTree::fromXml(*xmlElement);
+
+            // 4. Update the APVTS. This instantly updates your UI sliders too!
+            state.replaceState(loadedTree);
+        }
+    }
+});
 }
 
 void PresetMenuComponent::openSaveFileChooser()
 {
-  auto dir = File::getSpecialLocation(File::userDocumentsDirectory);
-  presetFileChooser =
-      std::make_unique<FileChooser>("Load Preset...", File(), "*.json");
 
-  auto folderChooserFlags = FileBrowserComponent::saveMode;
+  auto initialDir = File::getSpecialLocation(File::userDocumentsDirectory)
+                        .getChildFile(ProjectInfo::companyName)
+                        .getChildFile(ProjectInfo::projectName)
+                        .getChildFile("Presets");
 
-  presetFileChooser->launchAsync(folderChooserFlags,
-                                 [this](const FileChooser &chooser)
-                                 {
-                                   File presetFile(chooser.getResult());
-                                   // Save the current apvts state, probably
-                                   // into a .json
-                                   // TODO: save preset file
-                                 });
+  initialDir.createDirectory();
+
+  // 1. Setup the chooser
+  presetFileChooser = std::make_unique<juce::FileChooser>("Save Preset...",initialDir,
+                                                          "*.xml"); // Using .xml for easier loading later
+
+  auto folderChooserFlags = juce::FileBrowserComponent::saveMode | juce::FileBrowserComponent::canSelectFiles;
+
+  presetFileChooser->launchAsync(folderChooserFlags, [this](const juce::FileChooser& chooser)
+  {
+      juce::File resultFile = chooser.getResult();
+
+      // Check if the user actually picked a file (didn't hit cancel)
+      if (resultFile != juce::File{})
+      {
+          // 2. Get the ValueTree from the APVTS
+          // 'state' is your AudioProcessorValueTreeState
+          juce::ValueTree myTree = state.copyState();
+
+          // 3. Convert that Tree into an XML element, easier than JSON
+          std::unique_ptr<juce::XmlElement> xml = myTree.createXml();
+
+          if (xml != nullptr)
+          {
+              // 4. Write that XML to the file as a string
+              resultFile.replaceWithText(xml->toString());
+          }
+      }
+  });
 }
 
 void PresetMenuComponent::paint(juce::Graphics &g)
@@ -103,21 +141,21 @@ void PresetMenuComponent::resized()
 void PresetMenuComponent::nextPreset()
 {
   int amnt = presetChooser.getNumItems();
-  int id = presetChooser.getSelectedId() - 1; //to zero base
+  int id = presetChooser.getSelectedId() - 1; // to zero base
 
   id = (id + 1) % amnt;
 
-  presetChooser.setSelectedId(id + 1); //and back
+  presetChooser.setSelectedId(id + 1); // and back
   DBG("amnt: " << amnt << "\nid: " << id);
 }
 
 void PresetMenuComponent::previousPreset()
 {
   int amnt = presetChooser.getNumItems();
-  int id = presetChooser.getSelectedId() - 1; //to zero base
+  int id = presetChooser.getSelectedId() - 1; // to zero base
 
-  id = (id -1 + amnt) % amnt;
+  id = (id - 1 + amnt) % amnt;
 
-  presetChooser.setSelectedId(id + 1); //and back
+  presetChooser.setSelectedId(id + 1); // and back
   DBG("amnt: " << amnt << "\nid: " << id);
 }
