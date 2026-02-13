@@ -32,6 +32,8 @@ private:
   void loadPresetFile(File &);
   void openSaveFileChooser();
   void savePresetFile(File &);
+  void nextPreset();
+  void previousPreset();
 
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PresetMenuComponent)
 };
