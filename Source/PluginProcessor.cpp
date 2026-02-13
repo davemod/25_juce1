@@ -209,7 +209,7 @@ void HelloWorldAudioProcessor::applyEQState()
         }
     };
     
-    DBG("Applied eq gains: | 1: " << bandGains[0] << " | 2: " << bandGains[1] << " | 3: " << bandGains[2] << " | 4: " << bandGains[3]);
+//    DBG("Applied eq gains: | 1: " << bandGains[0] << " | 2: " << bandGains[1] << " | 3: " << bandGains[2] << " | 4: " << bandGains[3]);
     
     eq.setBandGains(bandGains);
 }
