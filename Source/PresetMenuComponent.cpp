@@ -36,19 +36,14 @@ PresetMenuComponent::~PresetMenuComponent() {}
 
 void PresetMenuComponent::openLoadFileChooser()
 {
-  auto initialDir = File::getSpecialLocation(File::userDocumentsDirectory)
-                        .getChildFile(ProjectInfo::companyName)
-                        .getChildFile(ProjectInfo::projectName)
-                        .getChildFile("Presets");
-
-  initialDir.createDirectory();
-
-  DBG("initialDir: " + initialDir.getFullPathName());
+  auto initialDir = getInitialDirectory();
 
   presetFileChooser =
-      std::make_unique<FileChooser>("Load Preset...", initialDir, "*.xml");
+      std::make_unique<FileChooser>("Load Preset...", initialDir, "*." + getFileExtension());
 
-  auto folderChooserFlags = FileBrowserComponent::openMode;
+  auto folderChooserFlags = FileBrowserComponent::openMode |
+    FileBrowserComponent::canSelectFiles;
+
 
   presetFileChooser->launchAsync(folderChooserFlags, [this](const FileChooser &chooser)
 {
@@ -75,27 +70,22 @@ void PresetMenuComponent::openLoadFileChooser()
 
 void PresetMenuComponent::openSaveFileChooser()
 {
+  auto initialDir = getInitialDirectory();
 
-  auto initialDir = File::getSpecialLocation(File::userDocumentsDirectory)
-                        .getChildFile(ProjectInfo::companyName)
-                        .getChildFile(ProjectInfo::projectName)
-                        .getChildFile("Presets");
-
-  initialDir.createDirectory();
-
-  // 1. Setup the chooser
-  presetFileChooser = std::make_unique<juce::FileChooser>("Save Preset...",initialDir,
-                                                          "*.xml"); // Using .xml for easier loading later
+  presetFileChooser = std::make_unique<juce::FileChooser>("Save Preset As...",initialDir,
+                                                          "*." + getFileExtension()); // Using .xml for easier loading later
 
   auto folderChooserFlags = juce::FileBrowserComponent::saveMode | juce::FileBrowserComponent::canSelectFiles;
 
   presetFileChooser->launchAsync(folderChooserFlags, [this](const juce::FileChooser& chooser)
   {
       juce::File resultFile = chooser.getResult();
-
+/*
       // Check if the user actually picked a file (didn't hit cancel)
       if (resultFile != juce::File{})
-      {
+
+
+        {
           // 2. Get the ValueTree from the APVTS
           // 'state' is your AudioProcessorValueTreeState
           juce::ValueTree myTree = state.copyState();
@@ -107,7 +97,7 @@ void PresetMenuComponent::openSaveFileChooser()
           {
               // 4. Write that XML to the file as a string
               resultFile.replaceWithText(xml->toString());
-          }
+          }*/
       }
   });
 }
@@ -159,3 +149,59 @@ void PresetMenuComponent::previousPreset()
   presetChooser.setSelectedId(id + 1); // and back
   DBG("amnt: " << amnt << "\nid: " << id);
 }
+
+
+File PresetMenuComponent::getInitialDirectory()
+{
+  auto initialDir = File::getSpecialLocation(File::userDocumentsDirectory)
+  .getChildFile(ProjectInfo::companyName)
+                        .getChildFile(ProjectInfo::projectName)
+                        .getChildFile("Presets");
+
+  if (!initialDir.isDirectory() )
+      initialDir.deleteFile();
+
+  if (!initialDir.exists())
+    initialDir.createDirectory();
+
+  DBG ("Presets initial directory: " <<
+    initialDir.getFullPathName());
+
+  return initialDir;
+}
+
+String PresetMenuComponent::getFileExtension()
+{
+  return "hfm";
+}
+
+void PresetMenuComponent::loadPresetFile(File & file)
+{
+  // please pass a valid file
+  jassert (file.getFullPathName().isNotEmpty());
+  if (file.getFullPathName().isEmpty ())
+    return;
+
+  //create stream from our file
+  FileInputStream fis { file };
+  auto newState = ValueTree::readFromStream(fis);
+
+  // replace state in our AudioProcessorValutTreeState
+  state.replaceState(newState);
+
+}
+
+void PresetMenuComponent::savePresetFile(File & file)
+{
+  // please pass a valid file
+  jassert (file.getFullPathName().isNotEmpty());
+  if (file.getFullPathName().isEmpty ())
+    return;
+
+  auto lState = state.copyState();
+
+  juce::FileOutputStream fos{ file };
+  lState.writeToStream(fos);
+
+}
+

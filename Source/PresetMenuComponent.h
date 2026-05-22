@@ -35,5 +35,8 @@ private:
   void nextPreset();
   void previousPreset();
 
+  File getInitialDirectory ();
+  String getFileExtension ();
+
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PresetMenuComponent)
 };

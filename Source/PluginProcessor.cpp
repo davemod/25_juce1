@@ -163,7 +163,7 @@ void HelloWorldAudioProcessor::getStateInformation(juce::MemoryBlock &destData)
 
   lState.setProperty("winWidth", lastUIWidth, nullptr);
   lState.setProperty("winHeight", lastUIHeight, nullptr);
-
+// Is this even a good idea? Will this be included in presets?
 
   MemoryOutputStream mos(destData, false);
   lState.writeToStream(mos);
